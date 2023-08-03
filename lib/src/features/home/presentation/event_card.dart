@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:flutter_svg/flutter_svg.dart';
+
 class EventCard extends StatelessWidget {
   const EventCard({
     super.key,
@@ -23,8 +25,9 @@ class EventCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(borderRadius),
         color: Colors.grey.shade800,
       ),
-      child: Image.asset(
+      child: SvgPicture.asset(
         imageAsset,
+        semanticsLabel: "Event logo",
       ),
     );
   }
