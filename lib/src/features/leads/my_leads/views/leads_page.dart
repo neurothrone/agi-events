@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../core/widgets/primary_button.dart';
-import '../../add_lead/add_lead_sheet.dart';
+import '../../add_lead/views/add_lead_sheet.dart';
 import '../widgets/lead_row.dart';
 import '../widgets/text_row_button.dart';
 

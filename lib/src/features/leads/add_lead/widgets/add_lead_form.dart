@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/widgets/primary_button.dart';
-import '../../../core/widgets/custom_text_form_field.dart';
+import '../../../../core/widgets/primary_button.dart';
+import '../../../../core/widgets/custom_text_form_field.dart';
 
 class AddLeadForm extends StatefulWidget {
   const AddLeadForm({

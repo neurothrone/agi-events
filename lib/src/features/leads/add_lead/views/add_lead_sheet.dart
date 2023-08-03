@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/widgets/primary_button.dart';
-import 'add_lead_form.dart';
+import '../../../../core/widgets/primary_button.dart';
+import '../widgets/add_lead_form.dart';
 
 class AddLeadSheet extends StatelessWidget {
   const AddLeadSheet({super.key});
