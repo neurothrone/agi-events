@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/constants/assets_constants.dart';
+import '../../leads/my_leads/views/leads_page.dart';
 import 'event_item.dart';
 
 class ComingEvents extends StatelessWidget {
@@ -22,11 +24,19 @@ class ComingEvents extends StatelessWidget {
         children: List.generate(4, (index) {
           return EventItem(
             onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const LeadsPage(
+                    imageAsset: AssetsConstant.signPrintScandinaviaLogo,
+                  ),
+                ),
+              );
               debugPrint("ℹ️ -> EventItem tapped.");
             },
             title: "Sign & Print Scandinavia 2023",
             subtitle: "19-21 Sep",
-            imageAsset: "assets/images/event-sample.png",
+            imageAsset: AssetsConstant.signPrintScandinaviaLogo,
           );
         }),
       ),
