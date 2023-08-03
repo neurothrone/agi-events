@@ -10,6 +10,11 @@ dependencies:
   flutter:
     sdk: flutter
 
+  cupertino_icons: ^1.0.5
+  firebase_core: ^2.15.0
+  # Firebase Realtime Database
+  firebase_database: ^10.2.4
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -17,3 +22,5 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/images/
