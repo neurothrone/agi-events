@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'coming_events.dart';
+import 'coming_events_grid.dart';
 import 'home_header.dart';
 
 class HomeContent extends StatelessWidget {
@@ -14,7 +14,7 @@ class HomeContent extends StatelessWidget {
       child: CustomScrollView(
         slivers: [
           HomeHeader(),
-          ComingEvents(),
+          ComingEventsGrid(),
         ],
       ),
     );

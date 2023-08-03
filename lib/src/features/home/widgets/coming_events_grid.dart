@@ -4,8 +4,8 @@ import '../../../core/constants/assets_constants.dart';
 import '../../leads/my_leads/views/leads_page.dart';
 import 'event_item.dart';
 
-class ComingEvents extends StatelessWidget {
-  const ComingEvents({super.key});
+class ComingEventsGrid extends StatelessWidget {
+  const ComingEventsGrid({super.key});
 
   @override
   Widget build(BuildContext context) {
