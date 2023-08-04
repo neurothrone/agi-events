@@ -4,23 +4,25 @@ class CustomTextFormField extends StatelessWidget {
   const CustomTextFormField({
     super.key,
     this.controller,
-    required this.label,
+    this.labelText,
     required this.hintText,
     this.keyboardType,
     this.maxLines,
     this.readOnly,
     this.isRequired = true,
     this.primaryColor = Colors.blue,
+    this.filled = false,
   });
 
   final TextEditingController? controller;
-  final String label;
+  final String? labelText;
   final String hintText;
   final bool isRequired;
   final TextInputType? keyboardType;
   final int? maxLines;
   final bool? readOnly;
   final Color primaryColor;
+  final bool? filled;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +36,7 @@ class CustomTextFormField extends StatelessWidget {
       keyboardType: keyboardType ?? TextInputType.text,
       cursorColor: primaryColor,
       decoration: InputDecoration(
-        filled: false,
+        filled: filled,
         enabledBorder: OutlineInputBorder(
           borderSide: const BorderSide(
             color: Colors.grey,
@@ -49,7 +51,7 @@ class CustomTextFormField extends StatelessWidget {
           ),
           borderRadius: BorderRadius.circular(10.0),
         ),
-        labelText: isRequired ? "$label*" : label,
+        labelText: isRequired ? "$labelText*" : labelText,
         labelStyle: const TextStyle(
           color: Colors.white,
           fontSize: 16.0,
