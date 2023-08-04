@@ -28,7 +28,7 @@ class ComingEventsGrid extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) => const LeadsPage(
-                    imageAsset: AssetsConstant.signPrintScandinaviaLogo,
+                    imageAsset: AssetsConstants.signPrintScandinaviaLogo,
                   ),
                 ),
               );
@@ -36,7 +36,7 @@ class ComingEventsGrid extends StatelessWidget {
             },
             title: "Sign & Print Scandinavia 2023",
             subtitle: "19-21 Sep",
-            imageAsset: AssetsConstant.signPrintScandinaviaLogo,
+            imageAsset: AssetsConstants.signPrintScandinaviaLogo,
           );
         }),
       ),
