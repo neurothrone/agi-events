@@ -22,6 +22,15 @@ class _AddLeadFormState extends State<AddLeadForm> {
   final _zipCodeController = TextEditingController();
   final _cityController = TextEditingController();
 
+  // Initially form is not valid since all fields are empty
+  final ValueNotifier<bool> _isFormValid = ValueNotifier(false);
+
+  @override
+  void initState() {
+    super.initState();
+    _addFormValidationListeners();
+  }
+
   @override
   void dispose() {
     _firstNameController.dispose();
@@ -33,6 +42,32 @@ class _AddLeadFormState extends State<AddLeadForm> {
     _zipCodeController.dispose();
     _cityController.dispose();
     super.dispose();
+  }
+
+  void _addFormValidationListeners() {
+    _firstNameController.addListener(() {
+      _isFormValid.value = _isAllRequiredInputValid();
+    });
+    _lastNameController.addListener(() {
+      _isFormValid.value = _isAllRequiredInputValid();
+    });
+    _companyController.addListener(() {
+      _isFormValid.value = _isAllRequiredInputValid();
+    });
+    _emailController.addListener(() {
+      _isFormValid.value = _isAllRequiredInputValid();
+    });
+  }
+
+  bool _isAllRequiredInputValid() {
+    final isFormNotValid = [
+      _firstNameController.text.isEmpty,
+      _lastNameController.text.isEmpty,
+      _companyController.text.isEmpty,
+      _emailController.text.isEmpty,
+    ].any((isNotValid) => isNotValid);
+
+    return !isFormNotValid;
   }
 
   void _addLead() {}
@@ -105,10 +140,15 @@ class _AddLeadFormState extends State<AddLeadForm> {
             isRequired: false,
           ),
           const SizedBox(height: 40.0),
-          PrimaryButton(
-            onPressed: _addLead,
-            label: "Next",
-            height: 60.0,
+          ValueListenableBuilder(
+            valueListenable: _isFormValid,
+            builder: (_, bool isFormValid, __) {
+              return PrimaryButton(
+                onPressed: isFormValid ? _addLead : null,
+                label: "Next",
+                height: 60.0,
+              );
+            },
           ),
         ],
       ),
