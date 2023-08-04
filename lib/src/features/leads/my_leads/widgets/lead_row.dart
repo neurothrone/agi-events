@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../views/lead_detail_page.dart';
+
 class LeadRow extends StatelessWidget {
   const LeadRow({
     super.key,
@@ -7,29 +9,43 @@ class LeadRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    return Column(
       children: [
-        SizedBox(height: 10.0),
-        Row(
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text("John Doe"),
-                Text("AGI Events"),
-              ],
-            ),
-            Spacer(),
-            Text(
-              "10:18, 18 Aug",
-              style: TextStyle(
-                color: Colors.white54,
+        InkWell(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const LeadDetailPage(),
               ),
-            ),
-          ],
+            );
+          },
+          child: const Column(
+            children: [
+              SizedBox(height: 10.0),
+              Row(
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("John Doe"),
+                      Text("AGI Events"),
+                    ],
+                  ),
+                  Spacer(),
+                  Text(
+                    "10:18, 18 Aug",
+                    style: TextStyle(
+                      color: Colors.white54,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 10.0),
+            ],
+          ),
         ),
-        SizedBox(height: 10.0),
-        Divider(color: Colors.white12),
+        const Divider(color: Colors.white12),
       ],
     );
   }
