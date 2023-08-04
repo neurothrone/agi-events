@@ -9,6 +9,7 @@ import '../../../../core/widgets/primary_button.dart';
 import '../../add_lead/views/add_lead_sheet.dart';
 import '../widgets/lead_row.dart';
 import '../widgets/text_row_button.dart';
+import 'lead_detail_page.dart';
 
 class LeadsPage extends StatelessWidget {
   const LeadsPage({
@@ -18,7 +19,7 @@ class LeadsPage extends StatelessWidget {
 
   final String imageAsset;
 
-  final bool hasItems = false;
+  final bool hasItems = true;
 
   void _shareLeads() {}
 
@@ -28,7 +29,7 @@ class LeadsPage extends StatelessWidget {
       isScrollControlled: true,
       builder: (BuildContext context) {
         return const FractionallySizedBox(
-          heightFactor: 0.95,
+          heightFactor: 0.9,
           child: AddLeadSheet(),
         );
       },
@@ -50,12 +51,17 @@ class LeadsPage extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0),
-        child: PrimaryButton(
-          onPressed: _scanNewLead,
-          label: "Scan new lead",
-          height: 50.0,
+      bottomNavigationBar: SafeArea(
+        minimum: Platform.isIOS
+            ? const EdgeInsets.only(bottom: 20.0)
+            : EdgeInsets.zero,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: PrimaryButton(
+            onPressed: _scanNewLead,
+            label: "Scan new lead",
+            height: 50.0,
+          ),
         ),
       ),
       body: SafeArea(
