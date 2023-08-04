@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class HomeBackground extends StatelessWidget {
-  const HomeBackground({
+class EventsPageBackground extends StatelessWidget {
+  const EventsPageBackground({
     super.key,
   });
 

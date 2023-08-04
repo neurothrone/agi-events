@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class HomeHeader extends StatelessWidget {
-  const HomeHeader({super.key});
+class EventsPageHeader extends StatelessWidget {
+  const EventsPageHeader({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,17 +14,17 @@ class HomeHeader extends StatelessWidget {
       ),
       sliver: SliverList(
         delegate: SliverChildListDelegate([
-          const HomeTitleText(),
+          const EventsPageTitleText(),
           const SizedBox(height: 40.0),
-          const HomeSubtitleText(),
+          const EventsPageSubtitleText(),
         ]),
       ),
     );
   }
 }
 
-class HomeTitleText extends StatelessWidget {
-  const HomeTitleText({
+class EventsPageTitleText extends StatelessWidget {
+  const EventsPageTitleText({
     super.key,
   });
 
@@ -40,8 +40,8 @@ class HomeTitleText extends StatelessWidget {
   }
 }
 
-class HomeSubtitleText extends StatelessWidget {
-  const HomeSubtitleText({super.key});
+class EventsPageSubtitleText extends StatelessWidget {
+  const EventsPageSubtitleText({super.key});
 
   @override
   Widget build(BuildContext context) {

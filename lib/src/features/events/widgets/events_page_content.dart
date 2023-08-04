@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 import 'coming_events_grid.dart';
-import 'home_header.dart';
+import 'events_page_header.dart';
 
-class HomeContent extends StatelessWidget {
-  const HomeContent({
+class EventsPageContent extends StatelessWidget {
+  const EventsPageContent({
     super.key,
   });
 
@@ -13,7 +13,7 @@ class HomeContent extends StatelessWidget {
     return const SafeArea(
       child: CustomScrollView(
         slivers: [
-          HomeHeader(),
+          EventsPageHeader(),
           ComingEventsGrid(),
         ],
       ),
