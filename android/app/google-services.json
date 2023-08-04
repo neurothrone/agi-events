@@ -1,0 +1,83 @@
+{
+  "project_info": {
+    "project_number": "17995575553",
+    "firebase_url": "https://agi-sandbox-90b17-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "agi-sandbox-90b17",
+    "storage_bucket": "agi-sandbox-90b17.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:17995575553:android:9ea5e43484d9f756b3ab00",
+        "android_client_info": {
+          "package_name": "tech.neurothrone.agi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "17995575553-ek168ueeskj4nutd12rhqodpbkrn9dl4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDTJTtgwxY-BqmjLjHKQTaiDFVAagPmfsk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "17995575553-ek168ueeskj4nutd12rhqodpbkrn9dl4.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "17995575553-jk07t7q65lpn0hbnauofbp6q6a34bdah.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "tech.neurothrone.agi"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:17995575553:android:41c7e9315cdee752b3ab00",
+        "android_client_info": {
+          "package_name": "tech.neurothrone.agi_events"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "17995575553-ek168ueeskj4nutd12rhqodpbkrn9dl4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDTJTtgwxY-BqmjLjHKQTaiDFVAagPmfsk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "17995575553-ek168ueeskj4nutd12rhqodpbkrn9dl4.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "17995575553-jk07t7q65lpn0hbnauofbp6q6a34bdah.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "tech.neurothrone.agi"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
