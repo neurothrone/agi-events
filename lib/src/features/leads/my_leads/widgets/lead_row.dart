@@ -28,8 +28,18 @@ class LeadRow extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("John Doe"),
-                      Text("AGI Events"),
+                      Text(
+                        "John Doe",
+                        style: TextStyle(fontSize: 17.0),
+                      ),
+                      Text(
+                        "AGI Events",
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 15.0,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
                     ],
                   ),
                   Spacer(),
@@ -37,6 +47,7 @@ class LeadRow extends StatelessWidget {
                     "10:18, 18 Aug",
                     style: TextStyle(
                       color: Colors.white54,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
                 ],
