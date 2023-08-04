@@ -18,26 +18,29 @@ class TextRowButton extends StatelessWidget {
         Text(
           text,
           style: const TextStyle(
-            fontSize: 18.0,
+            fontSize: 22.0,
             fontWeight: FontWeight.w700,
           ),
         ),
         const Spacer(),
-        Container(
-          decoration: BoxDecoration(
-            color: Colors.blue,
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-          child: Material(
-            color: Colors.transparent,
-            child: InkWell(
-              onTap: onTap,
+        Padding(
+          padding: const EdgeInsets.only(bottom: 4.0),
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.blue,
               borderRadius: BorderRadius.circular(10.0),
-              child: const Padding(
-                padding: EdgeInsets.all(6.0),
-                child: Icon(
-                  Icons.add,
-                  color: Colors.white,
+            ),
+            child: Material(
+              color: Colors.transparent,
+              child: InkWell(
+                onTap: onTap,
+                borderRadius: BorderRadius.circular(10.0),
+                child: const Padding(
+                  padding: EdgeInsets.all(6.0),
+                  child: Icon(
+                    Icons.add,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),
