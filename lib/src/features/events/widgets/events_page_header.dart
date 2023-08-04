@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/constants/constants.dart';
+
 class EventsPageHeader extends StatelessWidget {
   const EventsPageHeader({super.key});
 
@@ -31,7 +33,7 @@ class EventsPageTitleText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Text(
-      "Welcome to\nAGI Events",
+      "Welcome to\n${AppConstants.appTitle}",
       style: TextStyle(
         fontSize: 28.0,
         fontWeight: FontWeight.bold,

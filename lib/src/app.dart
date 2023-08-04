@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'core/constants/constants.dart';
 import 'core/theme/app_theme.dart';
 import 'features/events/views/events_page.dart';
 
@@ -11,6 +12,7 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: AppTheme.theme,
+      title: AppConstants.appTitle,
       home: const EventsPage(),
     );
   }
