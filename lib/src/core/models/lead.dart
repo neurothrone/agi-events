@@ -49,4 +49,36 @@ class Lead {
         " hashedString: $hashedString,\n"
         '}';
   }
+
+  Lead copyWith({
+    String? firstName,
+    String? lastName,
+    String? company,
+    String? email,
+    String? phone,
+    String? position,
+    String? countryCode,
+    String? address,
+    String? zipCode,
+    String? city,
+    String? notes,
+    DateTime? scannedAt,
+    String? hashedString,
+  }) {
+    return Lead(
+      firstName: firstName ?? this.firstName,
+      lastName: lastName ?? this.lastName,
+      company: company ?? this.company,
+      email: email ?? this.email,
+      phone: phone ?? this.phone,
+      position: position ?? this.position,
+      countryCode: countryCode ?? this.countryCode,
+      address: address ?? this.address,
+      zipCode: zipCode ?? this.zipCode,
+      city: city ?? this.city,
+      notes: notes ?? this.notes,
+      scannedAt: scannedAt ?? this.scannedAt,
+      hashedString: hashedString ?? this.hashedString,
+    );
+  }
 }
