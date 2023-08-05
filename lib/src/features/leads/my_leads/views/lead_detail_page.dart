@@ -1,11 +1,15 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 
+import '../../../../core/models/models.dart';
 import '../../../../core/widgets/custom_text_form_field.dart';
 
 class LeadDetailPage extends StatelessWidget {
-  const LeadDetailPage({super.key});
+  const LeadDetailPage({
+    super.key,
+    required this.lead,
+  });
+
+  final Lead lead;
 
   @override
   Widget build(BuildContext context) {
@@ -24,35 +28,36 @@ class LeadDetailPage extends StatelessWidget {
           ),
         ],
       ),
-      body: const SafeArea(
+      body: SafeArea(
         child: SingleChildScrollView(
-          padding: EdgeInsets.all(20.0),
+          padding: const EdgeInsets.all(20.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              const Text(
                 "Contact Information",
                 style: TextStyle(
                   fontSize: 24.0,
                 ),
               ),
-              SizedBox(height: 10.0),
-              Text("Anders Andersson"),
-              SizedBox(height: 10.0),
-              Text("AddBrand"),
-              SizedBox(height: 10.0),
-              Text("anders.andersson@example.com"),
-              SizedBox(height: 10.0),
-              Text("tel: 123456789"),
-              SizedBox(height: 40.0),
-              Text(
+              const SizedBox(height: 10.0),
+              Text(lead.fullName),
+              const SizedBox(height: 10.0),
+              Text(lead.company),
+              const SizedBox(height: 10.0),
+              Text(lead.email),
+              const SizedBox(height: 10.0),
+              if (lead.phone != null) Text("tel: ${lead.phone}"),
+              const SizedBox(height: 40.0),
+              const Text(
                 "Additional Information",
                 style: TextStyle(
                   fontSize: 24.0,
                 ),
               ),
-              SizedBox(height: 10.0),
-              CustomTextFormField(
+              const SizedBox(height: 10.0),
+              // TODO: controller
+              const CustomTextFormField(
                 hintText: "Enter text here...",
                 maxLines: 10,
                 isRequired: false,
