@@ -1,5 +1,5 @@
-import '../../../core/models/models.dart';
-import '../../../core/utils/utils.dart';
+import '../../core/models/models.dart';
+import '../../core/utils/utils.dart';
 
 extension ListLeadCsvExtensions on List<Lead> {
   List<List<String>> toCsvDataRows() {

@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/models/models.dart';
-import '../../csv/csv.dart';
+import '../../../csv/csv.dart';
 
 final leadsControllerProvider =
     StateNotifierProvider<LeadsController, AsyncValue<List<Lead>>>((ref) {

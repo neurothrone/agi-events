@@ -1,6 +1,27 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/constants/app_constants.dart';
+import '../../../../core/utils/utils.dart';
+import '../../add_lead/views/add_lead_sheet.dart';
+
+class AddLeadTextRowButton extends StatelessWidget {
+  const AddLeadTextRowButton({super.key});
+
+  void _showAddLeadSheet(BuildContext context) {
+    showCustomBottomSheet(
+      context: context,
+      child: const AddLeadSheet(),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return TextRowButton(
+      text: "Your leads",
+      onTap: () => _showAddLeadSheet(context),
+    );
+  }
+}
 
 class TextRowButton extends StatelessWidget {
   const TextRowButton({
