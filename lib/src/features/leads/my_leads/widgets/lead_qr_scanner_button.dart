@@ -4,9 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/constants/constants.dart';
 import '../../../../core/utils/utils.dart';
+import '../../../../core/utils/enums/enums.dart';
 import '../../../../core/widgets/primary_button.dart';
-import '../../qr_scanning/qr_scanner_sheet.dart';
-import '../../qr_scanning/scan_type.dart';
+import '../../qr_scan/views/qr_scanner_sheet.dart';
 
 class LeadQrScannerButton extends ConsumerWidget {
   const LeadQrScannerButton({super.key});
