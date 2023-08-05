@@ -23,6 +23,8 @@ dependencies:
   share_plus: ^7.1.0
   # State Management
   flutter_riverpod: ^2.3.6
+  # Date formatting
+  intl: ^0.18.1
 
 dev_dependencies:
   flutter_test:
