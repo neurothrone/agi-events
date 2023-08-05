@@ -1,0 +1,933 @@
+{
+  "sopno398628": {
+    "exhibitor": {
+      "00103eb2bc20ca78bf7234c65041373c92c40560": {
+        "data": {
+          "checkInTimestamps": [
+            "2023-02-08 08:07:56"
+          ],
+          "company": "Ricoh",
+          "email": "morten.harte@ricoh.no",
+          "exhibitionId": "sopno398628",
+          "firstName": "Morten",
+          "lastName": "Harte",
+          "phone": "+47 905 28 687",
+          "registeredAtDate": "2023-02-03  09:46:09",
+          "userCategory": "exhibitor"
+        }
+      },
+      "017135bf883afabbc90d98fd1827dae03c57e98d": {
+        "data": {
+          "checkInTimestamps": [
+            "2023-02-08 14:02:58"
+          ],
+          "company": "Luth Gruppen AS",
+          "email": "pm@luthgruppen.no",
+          "exhibitionId": "sopno398628",
+          "firstName": "Petter",
+          "lastName": "Mokastet",
+          "phone": "90252557",
+          "registeredAtDate": "2023-01-12  08:40:14",
+          "userCategory": "exhibitor"
+        }
+      },
+      "027777ac2051bb27dbfa211934977d1cd564a63c": {
+        "data": {
+          "checkInTimestamps": [
+            "2023-02-08 09:12:14"
+          ],
+          "company": "Brectus Norway AS",
+          "email": "kjetil@brectus.com",
+          "exhibitionId": "sopno398628",
+          "firstName": "Kjetil",
+          "lastName": "Clemetsen",
+          "phone": " 90 71 46 55",
+          "registeredAtDate": "2023-02-07  16:38:03",
+          "userCategory": "exhibitor"
+        }
+      },
+      "0574e8e93bbc1a5f196f49f103e1a69be88f71a1": {
+        "data": {
+          "checkInTimestamps": [
+            "2023-02-07 15:36:40"
+          ],
+          "company": "Spandex AS",
+          "email": "tore.aaserud@spandex.com",
+          "exhibitionId": "sopno398628",
+          "firstName": "Tore",
+          "lastName": "Aaserud",
+          "phone": "92808875",
+          "registeredAtDate": "2023-01-11  10:35:49",
+          "userCategory": "exhibitor"
+        }
+      },
+      "feaf7d96137159823fd6e924b866027f04701ae5": {
+        "data": {
+          "checkInTimestamps": [
+            "2023-02-08 08:32:19"
+          ],
+          "company": "Xerox",
+          "email": "dag@xpartner.no",
+          "exhibitionId": "sopno398628",
+          "firstName": "Dag Erik",
+          "lastName": "Jørgensen",
+          "phone": "0047 992 29 797",
+          "registeredAtDate": "2023-01-23  09:52:38",
+          "userCategory": "exhibitor"
+        }
+      }
+    },
+    "visitor": {
+      "01671e138a62787f8ce141f3d161ff6ea4338a6e": {
+        "data": {
+          "addressField": "Skiveien 54",
+          "checkInTimestamps": [
+            "2023-02-08 10:47:42"
+          ],
+          "city": "Kolbotn",
+          "company": "Expon skilt og dekor",
+          "countryCode": "47",
+          "decisionMaker": "no",
+          "email": "nicolae@expon.no",
+          "exhibitionId": "sopno398628",
+          "firstName": "Nicolae O.",
+          "interests": [
+            "skilt",
+            "Digitaltrykk",
+            "materialer",
+            "storformat"
+          ],
+          "investing": "dontPlanToInvest",
+          "lastName": "Sirb",
+          "newsletter": true,
+          "phone": 47968180,
+          "position": "säljare",
+          "registeredAtDate": "2023-02-07  16:38:38",
+          "terms": true,
+          "userCategory": "visitor",
+          "zipcode": "1410"
+        }
+      },
+      "017c9621467d1b1fa5208d91c2add4a2b1e07262": {
+        "data": {
+          "addressField": "Hans Michelsensvei 10",
+          "city": "HEIMDAL",
+          "company": "Heimdal Nye Trykkeri AS",
+          "countryCode": "+47",
+          "decisionMaker": "yes",
+          "email": "arve@heimdaltrykkeri.no",
+          "exhibitionId": "sopno398628",
+          "firstName": "Arve",
+          "interests": [
+            "Digitaltrykk",
+            "ferdiggjøring"
+          ],
+          "investing": "planToInvest2024",
+          "lastName": "Holm",
+          "newsletter": false,
+          "phone": 90602970,
+          "position": "vd-ägare-styrelse",
+          "registeredAtDate": "2023-02-01  08:49:24",
+          "terms": true,
+          "userCategory": "visitor",
+          "zipcode": "7080"
+        }
+      },
+      "01e8d43703436ea1e1f7f029b09b26c359ea3590": {
+        "data": {
+          "addressField": "Ole Deviks vei 16",
+          "city": "Oslo",
+          "company": "Prototyper as",
+          "countryCode": "47",
+          "decisionMaker": "yes",
+          "email": "truls@prototyper.as",
+          "exhibitionId": "sopno398628",
+          "firstName": "Truls",
+          "interests": [
+            "storformat",
+            "Digitaltrykk",
+            "promotion"
+          ],
+          "investing": "planToInvest2023",
+          "lastName": "Rognerud",
+          "newsletter": false,
+          "phone": 93404331,
+          "position": "vd-ägare-styrelse",
+          "registeredAtDate": "2023-01-20  14:33:00",
+          "terms": true,
+          "userCategory": "visitor",
+          "zipcode": "0666"
+        }
+      },
+      "02185d44196e8b99dea8eebe5e7abb9ea7567db4": {
+        "data": {
+          "addressField": "Gigstadsvei 24",
+          "checkInTimestamps": [
+            "2023-02-09 09:23:55"
+          ],
+          "city": "Hønefoss",
+          "company": "P60 Drift AS",
+          "countryCode": "+47",
+          "decisionMaker": "no",
+          "email": "tommybye91@hotmail.com",
+          "exhibitionId": "sopno398628",
+          "firstName": "Tommy",
+          "interests": [
+            "materialer",
+            "storformat",
+            "skilt"
+          ],
+          "investing": "dontPlanToInvest",
+          "lastName": "Bye",
+          "newsletter": false,
+          "phone": 92091878,
+          "position": "efterbehandling",
+          "registeredAtDate": "2023-01-26  15:49:54",
+          "terms": true,
+          "userCategory": "visitor",
+          "zipcode": "3511"
+        }
+      },
+      "02388ec040c447063b0a5266511475f0af8cdbd7": {
+        "data": {
+          "addressField": "Økernveien 121",
+          "checkInTimestamps": [
+            "2023-02-09 13:39:02"
+          ],
+          "city": "Oslo",
+          "company": "Konsis",
+          "countryCode": "47",
+          "decisionMaker": "yes",
+          "email": "andre@konsis.no",
+          "exhibitionId": "sopno398628",
+          "firstName": "André",
+          "interests": [
+            "materialer",
+            "emballasje",
+            "storformat",
+            "skilt",
+            "trykkeri",
+            "ferdiggjøring",
+            "Digitaltrykk"
+          ],
+          "investing": "planToInvest2023",
+          "lastName": "Bratli",
+          "newsletter": false,
+          "phone": 95045500,
+          "position": "vd-ägare-styrelse",
+          "registeredAtDate": "2023-02-07  10:37:39",
+          "terms": true,
+          "userCategory": "visitor",
+          "zipcode": "0579"
+        }
+      },
+      "02a90e88fd1483be4e7d0dfea4aa82ea9d791a70": {
+        "data": {
+          "addressField": "Enebakkveien 443",
+          "checkInTimestamps": [
+            "2023-02-08 10:22:39"
+          ],
+          "city": "Oslo",
+          "company": "ROLF OTTESEN AS",
+          "countryCode": "+47",
+          "decisionMaker": "no",
+          "email": "joe@ottesen.no",
+          "exhibitionId": "sopno398628",
+          "firstName": "Joe",
+          "interests": [
+            "screen-silke"
+          ],
+          "investing": "dontPlanToInvest",
+          "lastName": "Ottesen",
+          "newsletter": false,
+          "phone": 41523940,
+          "position": "prepress-medarbetare",
+          "registeredAtDate": "2023-01-09  20:19:57",
+          "terms": true,
+          "userCategory": "visitor",
+          "zipcode": "1290"
+        }
+      },
+      "02b54631393704644babe76bdd222a8d116a4f4f": {
+        "data": {
+          "addressField": "Farum Gydevej 37",
+          "checkInTimestamps": [
+            "2023-02-08 11:18:16"
+          ],
+          "city": "Farum",
+          "company": "Roland DG ",
+          "countryCode": "45",
+          "decisionMaker": "yes",
+          "email": "msigsgaard@rolanddg.com",
+          "exhibitionId": "sopno398628",
+          "firstName": "Martin",
+          "interests": [
+            "storformat"
+          ],
+          "investing": "dontPlanToInvest",
+          "lastName": "Sigsgaard",
+          "newsletter": true,
+          "phone": 23417282,
+          "position": "säljare",
+          "registeredAtDate": "2023-02-07  10:05:30",
+          "terms": true,
+          "userCategory": "visitor",
+          "zipcode": "3520"
+        }
+      },
+      "02b65b91b088a17a0fc085c60f27054e4bfc465f": {
+        "data": {
+          "addressField": "Romsveien 160",
+          "checkInTimestamps": [
+            "2023-02-08 10:46:38"
+          ],
+          "city": "Tønsberg",
+          "company": "Final Touch AS",
+          "countryCode": "+47",
+          "decisionMaker": "yes",
+          "email": "tra@ftr.no",
+          "exhibitionId": "sopno398628",
+          "firstName": "Thomas",
+          "interests": [
+            "promotion",
+            "materialer",
+            "skilt",
+            "ferdiggjøring",
+            "Digitaltrykk"
+          ],
+          "investing": "planToInvest2023",
+          "lastName": "Roberg-askim",
+          "newsletter": true,
+          "phone": 90228823,
+          "position": "produktionschef",
+          "registeredAtDate": "2023-01-17  11:29:19",
+          "terms": true,
+          "userCategory": "visitor",
+          "zipcode": "3114"
+        }
+      },
+      "02e6f0219be94cbdf70f89431545b1ace959001c": {
+        "data": {
+          "addressField": "Solgaard Skog 150",
+          "checkInTimestamps": [
+            "2023-02-08 10:21:44"
+          ],
+          "city": "Moss",
+          "company": "Kraftex AS",
+          "countryCode": "47",
+          "decisionMaker": "yes",
+          "email": "knut@kraftex.no",
+          "exhibitionId": "sopno398628",
+          "firstName": "Knut Ivar",
+          "interests": [
+            "screen-silke",
+            "materialer",
+            "storformat",
+            "skilt",
+            "Digitaltrykk"
+          ],
+          "investing": "planToInvest2024",
+          "lastName": "Andersen",
+          "newsletter": true,
+          "phone": 69252530,
+          "position": "produktionschef",
+          "registeredAtDate": "2023-01-25  08:21:47",
+          "terms": true,
+          "userCategory": "visitor",
+          "zipcode": "1599"
+        }
+      },
+      "ffc6f707ae86d67e9ff31b3cf0000420e29c5cc5": {
+        "data": {
+          "addressField": "Øyro 39",
+          "city": "Os",
+          "company": "Loops AS",
+          "countryCode": "+47",
+          "decisionMaker": "influence",
+          "email": "per@loops.no",
+          "exhibitionId": "sopno398628",
+          "firstName": "Per-arvid",
+          "interests": [
+            "storformat",
+            "skilt",
+            "promotion",
+            "materialer"
+          ],
+          "investing": "planToInvest2023",
+          "lastName": "Hansen",
+          "newsletter": false,
+          "phone": 41433302,
+          "position": "produktionschef",
+          "registeredAtDate": "2022-12-08  08:19:12",
+          "terms": true,
+          "userCategory": "visitor",
+          "zipcode": "5200"
+        }
+      },
+      "ffcdf0237c2b3c15ebe75c9b6579012cb96bafa5": {
+        "data": {
+          "addressField": "Vestre Svanholmen 9",
+          "checkInTimestamps": [
+            "2023-02-08 12:55:45"
+          ],
+          "city": "Sandnes",
+          "company": "Toyota Sørvest AS",
+          "countryCode": "+47",
+          "decisionMaker": "yes",
+          "email": "tore.ulseth@sorvest.toyota.no",
+          "exhibitionId": "sopno398628",
+          "firstName": "Tore",
+          "interests": [
+            "materialer",
+            "trykkeri",
+            "Digitaltrykk"
+          ],
+          "investing": "planToInvest2023",
+          "lastName": "Ulseth",
+          "newsletter": false,
+          "phone": 92097660,
+          "position": "produktionschef",
+          "registeredAtDate": "2023-01-24  07:59:04",
+          "terms": true,
+          "userCategory": "visitor",
+          "zipcode": "4313"
+        }
+      },
+      "ffeefbd0431fa0dfd357aed4a17a3b8fa34d382e": {
+        "data": {
+          "addressField": "Liaveien 18",
+          "city": "Rasta ",
+          "company": "Odin's Wrapping ",
+          "countryCode": "47",
+          "decisionMaker": "influence",
+          "email": "post@odinswrapping.ni",
+          "exhibitionId": "sopno398628",
+          "firstName": "Ivonne",
+          "interests": [
+            "Digitaltrykk",
+            "ferdiggjøring",
+            "skilt",
+            "trykkeri",
+            "promotion",
+            "materialer"
+          ],
+          "investing": "dontPlanToInvest",
+          "lastName": "Hurtado",
+          "newsletter": true,
+          "phone": 93807442,
+          "position": "kreativ-formgiver",
+          "registeredAtDate": "2023-01-20  23:32:17",
+          "terms": true,
+          "userCategory": "visitor",
+          "zipcode": "1476"
+        }
+      },
+      "fff2f85973912601b1e0e0551fca7467e15bacb9": {
+        "data": {
+          "addressField": "Dronningensgate 4C",
+          "checkInTimestamps": [
+            "2023-02-08 13:30:32"
+          ],
+          "city": "Fredrikstad",
+          "company": "Ricoh Norge As",
+          "countryCode": "+47",
+          "decisionMaker": "yes",
+          "email": "frode.kaspersen@ricoh.no",
+          "exhibitionId": "sopno398628",
+          "firstName": "Frode",
+          "interests": [
+            "Digitaltrykk",
+            "ferdiggjøring",
+            "emballasje",
+            "screen-silke",
+            "storformat",
+            "skilt",
+            "trykkeri",
+            "bokbinderi",
+            "konvertering"
+          ],
+          "investing": "dontPlanToInvest",
+          "lastName": "Kaspersen",
+          "newsletter": false,
+          "phone": 91608139,
+          "position": "vd-ägare-styrelse",
+          "registeredAtDate": "2023-02-02  15:16:14",
+          "terms": true,
+          "userCategory": "visitor",
+          "zipcode": "1606"
+        }
+      }
+    }
+  },
+  "sopse295842": {
+    "exhibitor": {
+      "0038045b6a04c9fe5172b1e950be054bb438e4af": {
+        "data": {
+          "company": "Network Innovation",
+          "email": "thomas.lundgren@ni.se",
+          "exhibitionId": "sopse295842",
+          "firstName": "Thomas",
+          "lastName": "Lundgren",
+          "phone": "070-9347723",
+          "registeredAtDate": "2023-06-15  10:38:26",
+          "userCategory": "exhibitor"
+        }
+      },
+      "0148014acc5ff0ac670aadfcaa10562dbdc44289": {
+        "data": {
+          "company": "AGI Publishing House",
+          "email": "emilracerbil@gmail.com",
+          "exhibitionId": "sopse295842",
+          "firstName": "Emil",
+          "lastName": "Hammarström",
+          "phone": "12345789",
+          "registeredAtDate": "2023-02-13  16:25:57",
+          "userCategory": "exhibitor"
+        }
+      },
+      "04ac75ee76a3e22a53f69b43769e70cb4dad1cac": {
+        "data": {
+          "company": "Spandex",
+          "email": "magnus.garpedal@spandex.com",
+          "exhibitionId": "sopse295842",
+          "firstName": "Magnus",
+          "lastName": "Garpedal",
+          "phone": "0709944296",
+          "registeredAtDate": "2023-06-15  11:12:31",
+          "userCategory": "exhibitor"
+        }
+      },
+      "050995190334867f6e09c67e8f8b134b65ace698": {
+        "data": {
+          "company": "Ricoh",
+          "email": "michael.christodoulakis@ricoh.se",
+          "exhibitionId": "sopse295842",
+          "firstName": "Michael",
+          "lastName": "Christodoulakis",
+          "phone": "0735833908",
+          "registeredAtDate": "2023-03-03  11:01:43",
+          "userCategory": "exhibitor"
+        }
+      },
+      "09c257a70e743bddd09f224b86c44f6e15c795a8": {
+        "data": {
+          "company": "Spandex",
+          "email": "thomas.martensson@spandex.com",
+          "exhibitionId": "sopse295842",
+          "firstName": "Thomas",
+          "lastName": "Mårtensson",
+          "phone": "0739441052",
+          "registeredAtDate": "2023-06-15  11:12:31",
+          "userCategory": "exhibitor"
+        }
+      },
+      "0e8d67a3bd89a845e107bd0d546d8baeccf50c39": {
+        "data": {
+          "company": "Heidelberg",
+          "email": "palle.nissen@heidelberg.com",
+          "exhibitionId": "sopse295842",
+          "firstName": "Palle",
+          "lastName": "Kirner Nissen",
+          "phone": "+45 40 77 62 40",
+          "registeredAtDate": "2023-07-31  09:34:39",
+          "userCategory": "exhibitor"
+        }
+      },
+      "172e4dfdae508c5d5659fd447b16985fe3637aaa": {
+        "data": {
+          "company": "Heidelberg",
+          "email": "oscar.runesson@heidelberg.com",
+          "exhibitionId": "sopse295842",
+          "firstName": "Oscar",
+          "lastName": "Runesson Stenmark",
+          "phone": "+46733118084",
+          "registeredAtDate": "2023-07-31  09:34:39",
+          "userCategory": "exhibitor"
+        }
+      },
+      "191bb926af996cdb8ed8b9f524af94dab569088f": {
+        "data": {
+          "company": "Danish Label Coating",
+          "email": "ple@danish-label-coating.dk",
+          "exhibitionId": "sopse295842",
+          "firstName": "Pia",
+          "lastName": "Lenz",
+          "phone": "+4596340900",
+          "registeredAtDate": "2023-03-03  09:50:30",
+          "userCategory": "exhibitor"
+        }
+      },
+      "fd200291ae5e9b982b6b9fce3b8825d6e4b7018f": {
+        "data": {
+          "company": "Spandex",
+          "email": "joakim.rutgersson@spandex.com",
+          "exhibitionId": "sopse295842",
+          "firstName": "Joakim",
+          "lastName": "Rutgersson",
+          "phone": "0702845929",
+          "registeredAtDate": "2023-06-15  11:13:30",
+          "userCategory": "exhibitor"
+        }
+      }
+    },
+    "visitor": {
+      "0067d3edac627bcc2a73357812c1ce33a4d696e4": {
+        "data": {
+          "addressField": "Drottninggatan 16",
+          "city": "LINKÖPING",
+          "company": "Region Östergötland",
+          "countryCode": "46",
+          "decisionMaker": "yes",
+          "email": "sandra.mari.karlsson@regionostergotland.se",
+          "exhibitionId": "sopse295842",
+          "firstName": "Sandra",
+          "interests": [
+            "material",
+            "storformat",
+            "skylt",
+            "Digitaltryck"
+          ],
+          "investing": "planToInvest2024",
+          "lastName": "Karlsson",
+          "newsletter": false,
+          "phone": 724638324,
+          "position": "kreativ",
+          "registeredAtDate": "2023-05-25  08:39:16",
+          "terms": true,
+          "userCategory": "visitor",
+          "zipcode": "581 85"
+        }
+      },
+      "01687f3db56fc212601c0cd1eb4b3cb4f7715c1b": {
+        "data": {
+          "addressField": "Mörby 427",
+          "city": "Stora Mellösa",
+          "company": "Söderlunds SKYLTprodukter AB",
+          "countryCode": "+46",
+          "decisionMaker": "influence",
+          "email": "kaffeosemla@hotmail.com",
+          "exhibitionId": "sopse295842",
+          "firstName": "Elin",
+          "interests": [
+            "material",
+            "skylt"
+          ],
+          "investing": "planToInvest2023",
+          "lastName": "Nordin",
+          "newsletter": false,
+          "phone": 704554380,
+          "position": "vd-ägare-styrelse",
+          "registeredAtDate": "2023-07-02  11:06:17",
+          "terms": true,
+          "userCategory": "visitor",
+          "zipcode": "71592"
+        }
+      },
+      "01a16aec47fcdec439b7499c85a50fbf774085d7": {
+        "data": {
+          "addressField": "Celsiusgatan 2",
+          "city": "Stockholm ",
+          "company": "Galleri Grip",
+          "countryCode": "+46",
+          "decisionMaker": "yes",
+          "email": "info@gallerigrip.se",
+          "exhibitionId": "sopse295842",
+          "firstName": "Nina",
+          "interests": [
+            "skylt",
+            "promotion"
+          ],
+          "investing": "planToInvest2023",
+          "lastName": "Frodin",
+          "newsletter": false,
+          "phone": 761444410,
+          "position": "vd-ägare-styrelse",
+          "registeredAtDate": "2023-05-09  22:31:23",
+          "terms": true,
+          "userCategory": "visitor",
+          "zipcode": "11230"
+        }
+      },
+      "01c97390d690913383732737a9b2aaa98bd95fcd": {
+        "data": {
+          "addressField": "Vetestigen 23",
+          "city": "Tungelsta ",
+          "company": "CV Graphics",
+          "countryCode": "+46",
+          "decisionMaker": "influence",
+          "email": "valbergchristian@gmail.com",
+          "exhibitionId": "sopse295842",
+          "firstName": "Christian",
+          "interests": [
+            "storformat",
+            "skylt",
+            "material"
+          ],
+          "investing": "dontPlanToInvest",
+          "lastName": "Valberg",
+          "newsletter": false,
+          "phone": 707353960,
+          "position": "vd-ägare-styrelse",
+          "registeredAtDate": "2023-04-28  14:49:16",
+          "terms": true,
+          "userCategory": "visitor",
+          "zipcode": "13755"
+        }
+      },
+      "042b61ad7397f7064a09e7c04b9d7e4ba54a7c16": {
+        "data": {
+          "addressField": "Blåkullavägen 6",
+          "city": "Almunge",
+          "company": "Dish Hantverk & Design ",
+          "countryCode": "+46",
+          "decisionMaker": "yes",
+          "email": "order@dishdesign.se",
+          "exhibitionId": "sopse295842",
+          "firstName": "Mattias",
+          "interests": [
+            "material",
+            "förpackning",
+            "skylt",
+            "tryckeri",
+            "Digitaltryck"
+          ],
+          "investing": "planToInvest2023",
+          "lastName": "Rosenqvist",
+          "newsletter": false,
+          "phone": 709997601,
+          "position": "vd-ägare-styrelse",
+          "registeredAtDate": "2023-04-27  07:44:48",
+          "terms": true,
+          "userCategory": "visitor",
+          "zipcode": "74172"
+        }
+      },
+      "0519f1622611bae0e4ed46bf9596aeec7e0f5b42": {
+        "data": {
+          "addressField": "Stora Åvägen 21",
+          "city": "Askim",
+          "company": "REBOA advertising ",
+          "countryCode": "+46",
+          "decisionMaker": "influence",
+          "email": "info@reboa.se",
+          "exhibitionId": "sopse295842",
+          "firstName": "Zana",
+          "interests": [
+            "material",
+            "promotion",
+            "förpackning",
+            "skylt",
+            "Digitaltryck"
+          ],
+          "investing": "planToInvest2024",
+          "lastName": "Penjweni",
+          "newsletter": false,
+          "phone": 704901901,
+          "position": "grafisk-formgivare",
+          "registeredAtDate": "2023-05-03  11:38:31",
+          "terms": true,
+          "userCategory": "visitor",
+          "zipcode": "43634"
+        }
+      },
+      "056ad05d20b18868cb61a12ae7e2b807dfd0537e": {
+        "data": {
+          "addressField": "Box 7223",
+          "city": "Täby",
+          "company": "Riksarkivet",
+          "countryCode": "+46",
+          "decisionMaker": "no",
+          "email": "maria.balke@riksarkivet.se",
+          "exhibitionId": "sopse295842",
+          "firstName": "Maria",
+          "interests": [
+            "material",
+            "förpackning",
+            "screen",
+            "skylt",
+            "tryckeri",
+            "bokbinderi",
+            "Digitaltryck",
+            "promotion",
+            "storformat",
+            "konvertering",
+            "färdiggörning"
+          ],
+          "investing": "dontPlanToInvest",
+          "lastName": "Balke",
+          "newsletter": false,
+          "phone": 767798007,
+          "position": "grafisk-formgivare",
+          "registeredAtDate": "2023-07-04  12:08:28",
+          "terms": true,
+          "userCategory": "visitor",
+          "zipcode": "18713"
+        }
+      },
+      "07303c7b10440b075f08fbfbcb39587e408acfa7": {
+        "data": {
+          "addressField": "Hertig Johans gata 5d",
+          "city": "Vadstena",
+          "company": "Norramon AB",
+          "countryCode": "+46",
+          "decisionMaker": "yes",
+          "email": "konstcenter@gmail.com",
+          "exhibitionId": "sopse295842",
+          "firstName": "Hans",
+          "interests": [
+            "material",
+            "förpackning"
+          ],
+          "investing": "planToInvest2023",
+          "lastName": "Öhman",
+          "newsletter": false,
+          "phone": 725422050,
+          "position": "vd-ägare-styrelse",
+          "registeredAtDate": "2023-05-06  09:42:54",
+          "terms": true,
+          "userCategory": "visitor",
+          "zipcode": "59240"
+        }
+      },
+      "fbcc4b202d517f346f4f7e9951a7689686151480": {
+        "data": {
+          "addressField": "Bohusgatan 4",
+          "city": "Göteborg",
+          "company": "Marketmatch",
+          "countryCode": "+46",
+          "decisionMaker": "influence",
+          "email": "tomashardafsegerstad@gmail.com",
+          "exhibitionId": "sopse295842",
+          "firstName": "Tomas",
+          "interests": [
+            "förpackning",
+            "material",
+            "promotion"
+          ],
+          "investing": "dontPlanToInvest",
+          "lastName": "Hårdafsegerstad",
+          "newsletter": false,
+          "phone": 703007900,
+          "position": "marknad-kommunikation",
+          "registeredAtDate": "2023-05-16  11:03:09",
+          "terms": true,
+          "userCategory": "visitor",
+          "zipcode": "41139"
+        }
+      },
+      "fded9ea12bce42a930394603b15a7187c361b585": {
+        "data": {
+          "addressField": "Sköntorpsvägen 128",
+          "city": "Årsta",
+          "company": "Burnanform",
+          "countryCode": "+46",
+          "decisionMaker": "influence",
+          "email": "info@burmamform.se",
+          "exhibitionId": "sopse295842",
+          "firstName": "Miro",
+          "interests": [
+            "material",
+            "förpackning",
+            "bokbinderi",
+            "tryckeri"
+          ],
+          "investing": "dontPlanToInvest",
+          "lastName": "Burman",
+          "newsletter": false,
+          "phone": 762893921,
+          "position": "grafisk-formgivare",
+          "registeredAtDate": "2023-05-18  23:31:02",
+          "terms": true,
+          "userCategory": "visitor",
+          "zipcode": "12053"
+        }
+      },
+      "fe87f39d693d328ea59b2e0b5a3764aa971ceb91": {
+        "data": {
+          "addressField": "Trädgårdstorpsvägen 8",
+          "city": "Tullinge",
+          "company": "Egen",
+          "countryCode": "+46",
+          "decisionMaker": "no",
+          "email": "juha.w@live.se",
+          "exhibitionId": "sopse295842",
+          "firstName": "Juha",
+          "interests": [
+            "storformat",
+            "screen",
+            "förpackning",
+            "färdiggörning",
+            "Digitaltryck",
+            "bokbinderi",
+            "skylt",
+            "material"
+          ],
+          "investing": "planToInvest2024",
+          "lastName": "Väänänen",
+          "newsletter": false,
+          "phone": 705603646,
+          "position": "grafisk-formgivare",
+          "registeredAtDate": "2023-08-02  08:29:51",
+          "terms": true,
+          "userCategory": "visitor",
+          "zipcode": "14654"
+        }
+      },
+      "ff1c2a2dc80927e8e585a23cb680265e44e1f3f9": {
+        "data": {
+          "addressField": "Sved 49",
+          "city": "Hudiksvall ",
+          "company": "Prepmedia ",
+          "countryCode": "46",
+          "decisionMaker": "influence",
+          "email": "anna@prepmedia.se",
+          "exhibitionId": "sopse295842",
+          "firstName": "Anna",
+          "interests": [
+            "promotion",
+            "material",
+            "förpackning",
+            "Digitaltryck",
+            "konvertering"
+          ],
+          "investing": "dontPlanToInvest",
+          "lastName": "Martinsson",
+          "newsletter": false,
+          "phone": 760443897,
+          "position": "grafisk-formgivare",
+          "registeredAtDate": "2023-05-15  20:00:03",
+          "terms": true,
+          "userCategory": "visitor",
+          "zipcode": "82494"
+        }
+      },
+      "ff5d99b9b9d958a364927d9db794a8768a6db601": {
+        "data": {
+          "addressField": "Betongvägen 9",
+          "city": "Göteborg",
+          "company": "Chalmers digitaltryck",
+          "countryCode": "+46",
+          "decisionMaker": "influence",
+          "email": "petrame@chalmers.se",
+          "exhibitionId": "sopse295842",
+          "firstName": "Petra",
+          "interests": [
+            "storformat",
+            "Digitaltryck",
+            "bokbinderi",
+            "material"
+          ],
+          "investing": "planToInvest2024",
+          "lastName": "Melander",
+          "newsletter": false,
+          "phone": 317728006,
+          "position": "tryckeri",
+          "registeredAtDate": "2023-06-29  14:55:15",
+          "terms": true,
+          "userCategory": "visitor",
+          "zipcode": "41296"
+        }
+      }
+    }
+  }
+}
