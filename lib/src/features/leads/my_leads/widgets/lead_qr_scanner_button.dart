@@ -37,6 +37,7 @@ class LeadQrScannerButton extends ConsumerWidget {
     return PrimaryButton(
       onPressed: () => _scanNewLead(context, ref),
       label: "Scan new lead",
+      icon: Icons.qr_code_scanner_rounded,
       height: 50.0,
       backgroundColor: AppConstants.primaryBlueLighter,
     );
