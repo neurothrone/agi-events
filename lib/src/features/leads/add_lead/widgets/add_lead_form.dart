@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/widgets/primary_button.dart';
 import '../../../../core/widgets/custom_text_form_field.dart';
+import '../data/leads_controller.dart';
 
 class AddLeadForm extends StatefulWidget {
   const AddLeadForm({
@@ -70,7 +72,24 @@ class _AddLeadFormState extends State<AddLeadForm> {
     return !isFormNotValid;
   }
 
-  void _addLead() {}
+  void _addLead(WidgetRef ref) {
+    ref.read(leadsControllerProvider("eventId").notifier).addLead(
+          firstName: _firstNameController.text,
+          lastName: _lastNameController.text,
+          company: _companyController.text,
+          email: _emailController.text,
+          phone:
+              _phoneController.text.isNotEmpty ? _phoneController.text : null,
+          position:
+              _phoneController.text.isNotEmpty ? _phoneController.text : null,
+          address:
+              _phoneController.text.isNotEmpty ? _phoneController.text : null,
+          zipCode:
+              _phoneController.text.isNotEmpty ? _phoneController.text : null,
+          city: _phoneController.text.isNotEmpty ? _phoneController.text : null,
+        );
+    Navigator.pop(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -143,10 +162,14 @@ class _AddLeadFormState extends State<AddLeadForm> {
           ValueListenableBuilder(
             valueListenable: _isFormValid,
             builder: (_, bool isFormValid, __) {
-              return PrimaryButton(
-                onPressed: isFormValid ? _addLead : null,
-                label: "Next",
-                height: 60.0,
+              return Consumer(
+                builder: (context, WidgetRef ref, child) {
+                  return PrimaryButton(
+                    onPressed: isFormValid ? () => _addLead(ref) : null,
+                    label: "Next",
+                    height: 60.0,
+                  );
+                },
               );
             },
           ),
