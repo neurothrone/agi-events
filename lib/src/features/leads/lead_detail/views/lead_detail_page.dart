@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/constants/constants.dart';
 import '../../../../core/models/models.dart';
 import '../widgets/contact_information.dart';
 import '../widgets/notes_text_area.dart';
@@ -36,14 +37,33 @@ class _LeadDetailPageState extends State<LeadDetailPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
-        title: const Text("Lead"),
-        actions: [
-          SaveNotesButton(
-            lead: widget.lead,
-            notesController: _notesController,
-          ),
-        ],
+        automaticallyImplyLeading: false,
+        titleSpacing: 0.0, // Remove default title spacing
+        title: Stack(
+          alignment: Alignment.center,
+          children: [
+            const Text("Lead"),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                TextButton(
+                  onPressed: () {},
+                  child: const Text(
+                    "Cancel",
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      color: AppConstants.destructive,
+                    ),
+                  ),
+                ),
+                SaveNotesButton(
+                  lead: widget.lead,
+                  notesController: _notesController,
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
