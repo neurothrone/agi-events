@@ -7,5 +7,5 @@ class AssetsConstants {
   static const String signPrintScandinaviaLogo =
       "$_basePath/SOPSE-Logo-White.svg";
 
-  static const String testData = "assets/data/testdata.json";
+  static const String localJsonData = "assets/data/testdata.json";
 }
