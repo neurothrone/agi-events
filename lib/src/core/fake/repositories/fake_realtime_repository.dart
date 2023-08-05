@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'realtime_repository.dart';
+import '../../interfaces/repositories/realtime_repository.dart';
 
 late Map<String, dynamic> localJsonData;
 

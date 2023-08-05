@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/firebase/repositories/firebase_realtime_repository.dart';
-import '../../../../core/interfaces/repositories/fake_realtime_repository.dart';
+import '../../../../core/fake/repositories/fake_realtime_repository.dart';
 import '../../../../core/interfaces/repositories/realtime_repository.dart';
 
 final eventsControllerProvider =
