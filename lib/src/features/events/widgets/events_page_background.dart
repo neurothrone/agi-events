@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/constants/app_constants.dart';
+
 class EventsPageBackground extends StatelessWidget {
   const EventsPageBackground({
     super.key,
@@ -23,10 +25,13 @@ class EventsPageBackground extends StatelessWidget {
                 : 0.39,
             1.0
           ],
-          colors: [
-            Colors.blue.shade900,
+          colors: const [
+            AppConstants.primaryBlue,
             Colors.black,
             Colors.black,
+            // Colors.blue.shade900,
+            // Colors.black,
+            // Colors.black,
           ],
         ),
       ),

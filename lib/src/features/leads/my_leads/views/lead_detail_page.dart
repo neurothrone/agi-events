@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/constants/app_constants.dart';
 import '../../../../core/models/models.dart';
 import '../../../../core/widgets/custom_text_form_field.dart';
 
@@ -15,14 +16,16 @@ class LeadDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: const Text("Lead"),
         actions: [
           TextButton(
             onPressed: () {},
-            child: const Text(
+            child: Text(
               "Save",
               style: TextStyle(
                 fontSize: 18.0,
+                color: AppConstants.primaryBlueLightest,
               ),
             ),
           ),

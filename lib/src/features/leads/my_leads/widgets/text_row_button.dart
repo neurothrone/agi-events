@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/constants/app_constants.dart';
+
 class TextRowButton extends StatelessWidget {
   const TextRowButton({
     super.key,
@@ -27,7 +29,8 @@ class TextRowButton extends StatelessWidget {
           padding: const EdgeInsets.only(bottom: 4.0),
           child: Container(
             decoration: BoxDecoration(
-              color: Colors.blue,
+              // color: Colors.blue,
+              color: AppConstants.primaryBlueLighter,
               borderRadius: BorderRadius.circular(10.0),
             ),
             child: Material(

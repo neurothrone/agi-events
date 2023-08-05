@@ -8,7 +8,7 @@ Future<T?> showCustomBottomSheet<T>({
 }) async {
   return await showModalBottomSheet(
     context: context,
-    backgroundColor: AppConstants.primaryColor,
+    backgroundColor: AppConstants.primaryBlueLighter,
     elevation: 2.0,
     showDragHandle: true,
     useSafeArea: true,

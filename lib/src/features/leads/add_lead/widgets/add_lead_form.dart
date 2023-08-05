@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/constants/app_constants.dart';
 import '../../../../core/widgets/primary_button.dart';
 import '../../../../core/widgets/custom_text_form_field.dart';
 import '../data/leads_controller.dart';
@@ -168,6 +169,7 @@ class _AddLeadFormState extends State<AddLeadForm> {
                     onPressed: isFormValid ? () => _addLead(ref) : null,
                     label: "Next",
                     height: 60.0,
+                    backgroundColor: AppConstants.primaryBlueLighter,
                   );
                 },
               );

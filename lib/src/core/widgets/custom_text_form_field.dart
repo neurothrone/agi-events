@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../constants/app_constants.dart';
+
 class CustomTextFormField extends StatelessWidget {
   const CustomTextFormField({
     super.key,
@@ -10,7 +12,7 @@ class CustomTextFormField extends StatelessWidget {
     this.maxLines,
     this.readOnly,
     this.isRequired = true,
-    this.primaryColor = Colors.blue,
+    this.primaryColor,
     this.filled = false,
   });
 
@@ -21,7 +23,7 @@ class CustomTextFormField extends StatelessWidget {
   final TextInputType? keyboardType;
   final int? maxLines;
   final bool? readOnly;
-  final Color primaryColor;
+  final Color? primaryColor;
   final bool? filled;
 
   @override
@@ -34,7 +36,7 @@ class CustomTextFormField extends StatelessWidget {
       ),
       maxLines: maxLines ?? 1,
       keyboardType: keyboardType ?? TextInputType.text,
-      cursorColor: primaryColor,
+      cursorColor: primaryColor ?? AppConstants.primaryBlueLightest,
       decoration: InputDecoration(
         filled: filled,
         enabledBorder: OutlineInputBorder(
@@ -46,26 +48,25 @@ class CustomTextFormField extends StatelessWidget {
         ),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: primaryColor,
+            color: primaryColor ?? AppConstants.primaryBlueLightest,
             width: 1.5,
           ),
           borderRadius: BorderRadius.circular(10.0),
         ),
         labelText: isRequired ? "$labelText*" : labelText,
         labelStyle: const TextStyle(
-          color: Colors.white,
+          color: Colors.grey,
           fontSize: 16.0,
-          fontWeight: FontWeight.bold,
         ),
         hintText: hintText,
         hintStyle: const TextStyle(
           color: Colors.grey,
-          fontWeight: FontWeight.w400,
+          fontSize: 16.0,
         ),
         floatingLabelBehavior: FloatingLabelBehavior.auto,
         floatingLabelStyle: TextStyle(
-          color: primaryColor,
-          fontSize: 18.0,
+          color: primaryColor ?? AppConstants.primaryBlueLightest,
+          fontSize: 20.0,
           fontWeight: FontWeight.bold,
         ),
       ),
