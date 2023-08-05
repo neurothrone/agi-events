@@ -4,4 +4,6 @@ extension StringFormat on DateTime {
   /// Formats the [DateTime] into a [String] in the format:
   /// 14:20, 5 Aug
   String get formatted => DateFormat("hh:mm, d MMM").format(this);
+
+  String get formattedForExport => DateFormat("HH:mm E d MMM y").format(this);
 }
