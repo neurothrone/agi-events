@@ -14,6 +14,8 @@ class AppConstants {
   static const Color primaryBlue = darkSlateBlue;
   static const Color secondaryBlue = dodgerBlue;
 
+  static const Color destructive = Color(0xFFCD5C5C);
+
   // Color.lerp() will only return null if both colors passed to it are null
   static Color primaryBlueLighter = Color.lerp(
         primaryBlue,
