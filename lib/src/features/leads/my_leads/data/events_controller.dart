@@ -2,18 +2,21 @@ import 'package:flutter/foundation.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/firebase/repositories/firebase_realtime_repository.dart';
+import '../../../../core/fake/data/providers.dart';
 import '../../../../core/fake/repositories/fake_realtime_repository.dart';
 import '../../../../core/interfaces/repositories/realtime_repository.dart';
 
 final eventsControllerProvider =
     StateNotifierProvider<EventsController, AsyncValue<List<String>>>((ref) {
+  // Firebase Realtime database
   // final RealtimeRepository realtimeRepository = ref.watch(
   //   firebaseRealtimeRepositoryProvider,
   // );
 
+  // Fake Realtime database
+  final jsonData = ref.watch(fakeDataFutureProvider);
   final RealtimeRepository realtimeRepository = ref.watch(
-    fakeRealtimeRepositoryProvider,
+    fakeRealtimeRepositoryProvider(jsonData),
   );
 
   return EventsController(realtimeRepository: realtimeRepository);
@@ -85,7 +88,7 @@ class EventsController extends StateNotifier<AsyncValue<List<String>>> {
           .toList();
 
       debugPrint("ℹ️ -> Length: ${dataList.length}");
-    } catch (exception, stacktrace) {
+    } catch (exception) {
       debugPrint("❌ -> Failed to parse map. Exception: $exception");
     }
   }

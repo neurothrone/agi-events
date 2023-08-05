@@ -2,10 +2,17 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../interfaces/repositories/realtime_repository.dart';
 
-late Map<String, dynamic> localJsonData;
-
-final fakeRealtimeRepositoryProvider = Provider<FakeRealtimeRepository>((ref) {
-  return FakeRealtimeRepository(data: localJsonData);
+final fakeRealtimeRepositoryProvider =
+    Provider.family<FakeRealtimeRepository, AsyncValue<Map<String, dynamic>>>(
+        (ref, jsonData) {
+  // Check if data is available
+  if (jsonData is AsyncData<Map<String, dynamic>>) {
+    // Data is available
+    return FakeRealtimeRepository(data: jsonData.value);
+  } else {
+    // Data is not yet available
+    return const FakeRealtimeRepository(data: {});
+  }
 });
 
 class FakeRealtimeRepository implements RealtimeRepository {
