@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/extensions/datetime_extensions.dart';
-import '../../../../core/models/lead.dart';
+import '../../../../core/models/models.dart';
+import '../../../../core/utils/utils.dart';
 import '../views/lead_detail_page.dart';
 
 class LeadRow extends StatelessWidget {
