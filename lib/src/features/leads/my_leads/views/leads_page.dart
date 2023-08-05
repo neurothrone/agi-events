@@ -38,6 +38,8 @@ class LeadsPage extends StatelessWidget {
       },
     );
 
+    // TODO: validate if QR Code is compatible
+
     // Scanned Exhibitor id: 0038045b6a04c9fe5172b1e950be054bb438e4af
     // Scanned Visitor id: 01a16aec47fcdec439b7499c85a50fbf774085d7
     debugPrint("ℹ️ -> QR Code: $qrCode");
@@ -52,11 +54,8 @@ class LeadsPage extends StatelessWidget {
         actions: [
           Consumer(
             builder: (context, WidgetRef ref, child) {
-              final List<Lead>? leads = ref
-                  .watch(
-                    leadsControllerProvider(eventId),
-                  )
-                  .value;
+              final List<Lead>? leads =
+                  ref.watch(leadsControllerProvider).value;
 
               return IconButton(
                 onPressed:

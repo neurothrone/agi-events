@@ -4,18 +4,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/models/models.dart';
 
-final leadsControllerProvider = StateNotifierProvider.family<LeadsController,
-    AsyncValue<List<Lead>>, String>((ref, eventId) {
-  return LeadsController(eventId: eventId);
+final leadsControllerProvider =
+    StateNotifierProvider<LeadsController, AsyncValue<List<Lead>>>((ref) {
+  return LeadsController();
 });
 
 class LeadsController extends StateNotifier<AsyncValue<List<Lead>>> {
-  LeadsController({
-    required String eventId,
-  })  : _eventId = eventId,
-        super(const AsyncData([]));
-
-  final String _eventId;
+  LeadsController() : super(const AsyncData([]));
 
   Future<void> addLead({
     required String firstName,
@@ -28,6 +23,8 @@ class LeadsController extends StateNotifier<AsyncValue<List<Lead>>> {
     String? zipCode,
     String? city,
   }) async {
+    final List<Lead> currentLeads = List.from(state.value ?? []);
+
     try {
       state = const AsyncValue.loading();
 
@@ -50,17 +47,13 @@ class LeadsController extends StateNotifier<AsyncValue<List<Lead>>> {
 
       // TODO: add to leads in event [database]
 
-      // TODO: update UI "Your leads" with [newLead] appended to top of list
+      currentLeads.insert(0, newLead);
+      state = AsyncValue.data(currentLeads);
 
-      final List<Lead> leads = List.from(state.value ?? []);
-      leads.add(newLead);
-      state = AsyncValue.data(leads);
-      debugPrint("✅ -> Successfully added a Lead.");
-
-      // TODO: navigate to Lead Detail page with [newLead]
+      // debugPrint("✅ -> Successfully added a Lead.");
     } catch (exception, stacktrace) {
       debugPrint(
-        "❌ -> Unexpected error while creating adding a Lead. Error: $exception",
+        "❌ -> Unexpected error while adding a Lead. Error: $exception",
       );
       state = AsyncValue.error(exception.toString(), stacktrace);
     }

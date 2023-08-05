@@ -35,7 +35,7 @@ class LeadsPageContent extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final AsyncValue<List<Lead>> leadsState = ref.watch(
-      leadsControllerProvider(eventId),
+      leadsControllerProvider,
     );
 
     return leadsState.when(
