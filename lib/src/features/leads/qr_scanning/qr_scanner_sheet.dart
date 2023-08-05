@@ -2,16 +2,15 @@ import 'package:flutter/material.dart';
 
 import 'package:mobile_scanner/mobile_scanner.dart';
 
-// "Scan your exhibitor badge"
-// "Scan a visitor badge"
+import 'scan_type.dart';
 
 class QrScannerSheet extends StatelessWidget {
   const QrScannerSheet({
     super.key,
-    required this.title,
+    required this.scanType,
   });
 
-  final String title;
+  final ScanType scanType;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +19,7 @@ class QrScannerSheet extends StatelessWidget {
         automaticallyImplyLeading: false,
         centerTitle: true,
         title: Text(
-          title,
+          scanType.title,
           style: const TextStyle(
             fontSize: 20.0,
             fontWeight: FontWeight.w600,
