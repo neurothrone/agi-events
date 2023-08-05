@@ -20,13 +20,6 @@ class LeadsPageContent extends ConsumerWidget {
   final String eventId;
   final String imageAsset;
 
-  void _showAddLeadSheet(BuildContext context) {
-    showCustomBottomSheet(
-      context: context,
-      child: const AddLeadSheet(),
-    );
-  }
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final AsyncValue<List<Lead>> leadsState = ref.watch(
@@ -45,11 +38,7 @@ class LeadsPageContent extends ConsumerWidget {
                     child: SvgPicture.asset(imageAsset),
                   ),
                   const SizedBox(height: 20.0),
-                  // TODO: extract out
-                  TextRowButton(
-                    text: "Your leads",
-                    onTap: () => _showAddLeadSheet(context),
-                  ),
+                  const AddLeadRowTextButton(),
                   const Divider(color: Colors.white12),
                   if (leads.isEmpty) const EmptyLeadsPlaceholder(),
                 ],
@@ -74,6 +63,25 @@ class LeadsPageContent extends ConsumerWidget {
           child: Text("❌ -> Error fetching leads. Error: $error"),
         );
       },
+    );
+  }
+}
+
+class AddLeadRowTextButton extends StatelessWidget {
+  const AddLeadRowTextButton({super.key});
+
+  void _showAddLeadSheet(BuildContext context) {
+    showCustomBottomSheet(
+      context: context,
+      child: const AddLeadSheet(),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return TextRowButton(
+      text: "Your leads",
+      onTap: () => _showAddLeadSheet(context),
     );
   }
 }
