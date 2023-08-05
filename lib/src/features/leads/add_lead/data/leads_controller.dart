@@ -73,7 +73,31 @@ class LeadsController extends StateNotifier<AsyncValue<List<Lead>>> {
     }
   }
 
-  Future<void> updateLeadNotes(Lead lead) async {}
+  Future<void> updateLeadNotes(Lead updatedLead) async {
+    state.maybeWhen(
+      data: (currentLeads) {
+        bool found = false;
+
+        // Create a new list with updated lead
+        List<Lead> updatedLeads = currentLeads.map((lead) {
+          if (lead.hashedString == updatedLead.hashedString) {
+            found = true;
+            return lead.copyWith(notes: updatedLead.notes);
+          } else {
+            return lead;
+          }
+        }).toList();
+
+        // Update the state if a lead was found and updated
+        if (found) {
+          state = AsyncValue.data(updatedLeads);
+        }
+      },
+      orElse: () {
+        debugPrint("❌ -> Unexpected state while updating a Lead's notes.");
+      },
+    );
+  }
 
   Future<void> exportLeads() async {
     if (state.value == null) return;
