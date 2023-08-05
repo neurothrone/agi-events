@@ -1,16 +1,32 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/models/models.dart';
+import '../../csv/csv.dart';
 
 final leadsControllerProvider =
     StateNotifierProvider<LeadsController, AsyncValue<List<Lead>>>((ref) {
-  return LeadsController();
+  final CsvService csvService = ref.watch(csvServiceProvider);
+  final ShareService shareService = ref.watch(shareServiceProvider);
+  return LeadsController(
+    csvService: csvService,
+    shareService: shareService,
+  );
 });
 
 class LeadsController extends StateNotifier<AsyncValue<List<Lead>>> {
-  LeadsController() : super(const AsyncData([]));
+  LeadsController({
+    required CsvService csvService,
+    required ShareService shareService,
+  })  : _csvService = csvService,
+        _shareService = shareService,
+        super(const AsyncData([]));
+
+  final CsvService _csvService;
+  final ShareService _shareService;
 
   Future<void> addLead({
     required String firstName,
@@ -43,14 +59,12 @@ class LeadsController extends StateNotifier<AsyncValue<List<Lead>>> {
         hashedString: "$email$firstName$lastName$eventId",
       );
 
-      debugPrint("✅ -> New Lead: $newLead");
-
       // TODO: add to leads in event [database]
 
       currentLeads.insert(0, newLead);
       state = AsyncValue.data(currentLeads);
 
-      // debugPrint("✅ -> Successfully added a Lead.");
+      debugPrint("✅ -> New Lead: $newLead");
     } catch (exception, stacktrace) {
       debugPrint(
         "❌ -> Unexpected error while adding a Lead. Error: $exception",
@@ -61,5 +75,20 @@ class LeadsController extends StateNotifier<AsyncValue<List<Lead>>> {
 
   Future<void> updateLeadNotes(Lead lead) async {}
 
-  Future<void> exportLeads() async {}
+  Future<void> exportLeads() async {
+    if (state.value == null) return;
+
+    List<List<String>> dataRows = state.value!.toCsvDataRows();
+
+    // TODO: fileName: "$eventId-leads"?
+    File csvFile = await _csvService.exportToCSV(
+      rows: dataRows,
+      fileName: "leads",
+    );
+
+    await _shareService.shareFile(
+      file: csvFile,
+      shareSheetText: "Leads CSV",
+    );
+  }
 }
