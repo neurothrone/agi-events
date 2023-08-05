@@ -4,8 +4,13 @@ import '../../../core/constants/assets_constants.dart';
 import '../../leads/my_leads/views/leads_page.dart';
 import 'event_item.dart';
 
-class ComingEventsGrid extends StatelessWidget {
-  const ComingEventsGrid({super.key});
+class EventsGrid extends StatelessWidget {
+  const EventsGrid({
+    super.key,
+    required this.eventIds,
+  });
+
+  final List<String> eventIds;
 
   @override
   Widget build(BuildContext context) {
@@ -20,25 +25,25 @@ class ComingEventsGrid extends StatelessWidget {
             MediaQuery.orientationOf(context) == Orientation.portrait
                 ? 0.75
                 : 1.8,
-        // TODO: Replace Grid items with real data
-        children: List.generate(4, (index) {
+        children: eventIds.map((eventId) {
           return EventItem(
             onTap: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const LeadsPage(
+                  builder: (context) => LeadsPage(
+                    eventId: eventId,
                     imageAsset: AssetsConstants.signPrintScandinaviaLogo,
                   ),
                 ),
               );
-              debugPrint("ℹ️ -> EventItem tapped.");
+              debugPrint("ℹ️ -> Event [$eventId] tapped.");
             },
             title: "Sign & Print Scandinavia 2023",
             subtitle: "19-21 Sep",
             imageAsset: AssetsConstants.signPrintScandinaviaLogo,
           );
-        }),
+        }).toList(),
       ),
     );
   }
