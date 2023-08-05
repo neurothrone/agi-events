@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/constants/app_constants.dart';
 import '../widgets/add_lead_form.dart';
 
 class AddLeadSheet extends StatelessWidget {
@@ -9,7 +8,6 @@ class AddLeadSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppConstants.sheetBackgroundColor,
       body: SafeArea(
         minimum: const EdgeInsets.all(20.0),
         child: Column(
