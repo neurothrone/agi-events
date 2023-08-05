@@ -8,8 +8,6 @@ class AppConstants {
   static const double borderRadius = 10.0;
 
   // Colors
-  static const Color sheetBackgroundColor = Color(0xFF0C0C0D);
-
   static const Color dodgerBlue = Color(0xFF1E90FF);
   static const Color darkSlateBlue = Color(0xFF483D8B);
 
