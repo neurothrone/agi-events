@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../core/models/models.dart';
+import '../../../../core/utils/utils.dart';
 import '../../add_lead/data/leads_controller.dart';
 import '../../add_lead/views/add_lead_sheet.dart';
 import 'lead_row.dart';
@@ -20,15 +21,9 @@ class LeadsPageContent extends ConsumerWidget {
   final String imageAsset;
 
   void _showAddLeadSheet(BuildContext context) {
-    showModalBottomSheet(
+    showCustomBottomSheet(
       context: context,
-      isScrollControlled: true,
-      builder: (BuildContext context) {
-        return const FractionallySizedBox(
-          heightFactor: 0.9,
-          child: AddLeadSheet(),
-        );
-      },
+      child: const AddLeadSheet(),
     );
   }
 
@@ -50,6 +45,7 @@ class LeadsPageContent extends ConsumerWidget {
                     child: SvgPicture.asset(imageAsset),
                   ),
                   const SizedBox(height: 20.0),
+                  // TODO: extract out
                   TextRowButton(
                     text: "Your leads",
                     onTap: () => _showAddLeadSheet(context),

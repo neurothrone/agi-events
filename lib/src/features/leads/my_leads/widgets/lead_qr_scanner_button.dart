@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/utils/utils.dart';
 import '../../../../core/widgets/primary_button.dart';
-import '../../qr_scanning/qr_scanner.dart';
+import '../../qr_scanning/qr_scanner_sheet.dart';
 
 class LeadQrScannerButton extends ConsumerWidget {
   const LeadQrScannerButton({super.key});
@@ -12,16 +13,26 @@ class LeadQrScannerButton extends ConsumerWidget {
     BuildContext context,
     WidgetRef ref,
   ) async {
-    final String? qrCode = await showModalBottomSheet(
+    final String? qrCode = await showCustomBottomSheet(
       context: context,
-      isScrollControlled: true,
-      builder: (BuildContext context) {
-        return const FractionallySizedBox(
-          heightFactor: 0.9,
-          child: QrScanner(),
-        );
-      },
+      child: const QrScannerSheet(
+        title: "Scan a visitor badge",
+      ),
     );
+    // final String? qrCode = await showModalBottomSheet(
+    //   context: context,
+    //   backgroundColor: AppConstants.sheetBackgroundColor,
+    //   showDragHandle: true,
+    //   isScrollControlled: true,
+    //   builder: (BuildContext context) {
+    //     return const FractionallySizedBox(
+    //       heightFactor: 0.9,
+    //       child: QrScannerSheet(
+    //         title: "Scan a visitor badge",
+    //       ),
+    //     );
+    //   },
+    // );
 
     // TODO: validate if QR Code is compatible
     // if not null and valid
