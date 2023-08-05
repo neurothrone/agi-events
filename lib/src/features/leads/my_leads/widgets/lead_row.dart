@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/extensions/datetime_extensions.dart';
+import '../../../../core/models/lead.dart';
 import '../views/lead_detail_page.dart';
 
 class LeadRow extends StatelessWidget {
   const LeadRow({
     super.key,
+    required this.lead,
   });
+
+  final Lead lead;
 
   @override
   Widget build(BuildContext context) {
@@ -16,25 +21,27 @@ class LeadRow extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const LeadDetailPage(),
+                builder: (context) => LeadDetailPage(
+                  lead: lead,
+                ),
               ),
             );
           },
-          child: const Column(
+          child: Column(
             children: [
-              SizedBox(height: 10.0),
+              const SizedBox(height: 10.0),
               Row(
                 children: [
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "John Doe",
-                        style: TextStyle(fontSize: 17.0),
+                        lead.fullName,
+                        style: const TextStyle(fontSize: 17.0),
                       ),
                       Text(
-                        "AGI Events",
-                        style: TextStyle(
+                        lead.company,
+                        style: const TextStyle(
                           color: Colors.grey,
                           fontSize: 15.0,
                           fontWeight: FontWeight.w600,
@@ -42,17 +49,17 @@ class LeadRow extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Spacer(),
+                  const Spacer(),
                   Text(
-                    "10:18, 18 Aug",
-                    style: TextStyle(
+                    lead.scannedAt.formatted,
+                    style: const TextStyle(
                       color: Colors.white54,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
                 ],
               ),
-              SizedBox(height: 10.0),
+              const SizedBox(height: 10.0),
             ],
           ),
         ),
