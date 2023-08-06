@@ -3,7 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/fake/data/providers.dart';
+import '../../../../core/fake/repositories/fake_database_repository.dart';
 import '../../../../core/fake/repositories/fake_realtime_repository.dart';
+import '../../../../core/interfaces/repositories/database_repository.dart';
 import '../../../../core/interfaces/repositories/realtime_repository.dart';
 import '../../../../core/models/models.dart';
 import '../../../../core/utils/enums/enums.dart';
@@ -16,6 +18,10 @@ final eventsControllerProvider =
   //   firebaseRealtimeRepositoryProvider,
   // );
 
+  // !: Fake Local Database
+  final DatabaseRepository databaseRepository = ref.watch(
+    fakeDatabaseRepositoryProvider,
+  );
   // !: Fake Realtime database
   final jsonData = ref.watch(fakeDataFutureProvider);
   final RealtimeRepository realtimeRepository = ref.watch(
@@ -24,6 +30,7 @@ final eventsControllerProvider =
 
   final qrScanController = ref.watch(qrScanControllerProvider);
   return EventsController(
+    databaseRepository: databaseRepository,
     realtimeRepository: realtimeRepository,
     qrScanController: qrScanController,
   );
@@ -31,14 +38,17 @@ final eventsControllerProvider =
 
 class EventsController extends StateNotifier<AsyncValue<List<Event>>> {
   EventsController({
+    required DatabaseRepository databaseRepository,
     required RealtimeRepository realtimeRepository,
     required QrScanController qrScanController,
-  })  : _realtimeRepository = realtimeRepository,
+  })  : _databaseRepository = databaseRepository,
+        _realtimeRepository = realtimeRepository,
         _qrScanController = qrScanController,
         super(const AsyncData([])) {
     _init();
   }
 
+  final DatabaseRepository _databaseRepository;
   final RealtimeRepository _realtimeRepository;
   final QrScanController _qrScanController;
 
@@ -46,43 +56,34 @@ class EventsController extends StateNotifier<AsyncValue<List<Event>>> {
     await fetchEvents();
   }
 
-  Future<void> eventExists(String eventId) async {
-    final bool eventExists = await _realtimeRepository.eventExists(
+  Future<bool> eventExists(String eventId) async {
+    return await _realtimeRepository.eventExists(
       eventId,
     );
-    debugPrint("ℹ️ -> Event [$eventId] exists: $eventExists");
   }
 
   Future<void> fetchEvents() async {
     try {
       state = const AsyncValue.loading();
 
+      // Fetch all event data from Realtime database
       Map<String, dynamic> eventsMap =
           await _realtimeRepository.fetchEventsData();
 
-      List<Map<String, dynamic>> eventsDetailMap = eventsMap
-          .map(
-            (key, value) => MapEntry(key.toString(), value),
-          )
-          .values
-          .whereType<Map<dynamic, dynamic>>()
-          .map(
-            (value) => (value["event"] as Map).map(
-              (key, value) => MapEntry(key.toString(), value),
-            ),
-          )
-          .toList();
+      // Extract out only the details of each event map
+      List<Map<String, dynamic>> eventsDetailMap = _processEventsDataFromMap(
+        eventsMap,
+      );
+      // Convert to model
+      List<Event> fetchedEvents =
+          eventsDetailMap.map((eventMap) => Event.fromMap(eventMap)).toList();
 
-      List<Event> events = eventsDetailMap
-          .map(
-            (eventMap) => Event.fromMap(eventMap),
-          )
-          .toList();
-
-      debugPrint("ℹ️ -> events: $events");
+      // Merge saved and fetched lists and only keep unique Events where
+      // the 'saved' property is equal to true
+      final List<Event> savedEvents = await _fetchSavedEvents();
+      final List<Event> events = _mergeAndKeepSaved(fetchedEvents, savedEvents);
 
       state = AsyncValue.data(events);
-      // debugPrint("ℹ️ -> Events: $events");
     } catch (exception, stacktrace) {
       debugPrint(
         "❌ -> Unexpected error while fetching events. Error: $exception",
@@ -91,100 +92,58 @@ class EventsController extends StateNotifier<AsyncValue<List<Event>>> {
     }
   }
 
-  // Future<void> fetchEvents() async {
-  //   try {
-  //     state = const AsyncValue.loading();
-  //
-  //     List<String> events = await _realtimeRepository.fetchEventIds();
-  //
-  //     state = AsyncValue.data(events);
-  //     debugPrint("ℹ️ -> Events: $events");
-  //   } catch (exception, stacktrace) {
-  //     debugPrint(
-  //       "❌ -> Unexpected error while fetching events. Error: $exception",
-  //     );
-  //     state = AsyncValue.error(exception.toString(), stacktrace);
-  //   }
-  // }
-
-  void _parseMap(Map<String, dynamic> map, String category) {
-    try {
-      List<Map<String, dynamic>> dataList = (map[category] as Map)
-          .map(
+  List<Map<String, dynamic>> _processEventsDataFromMap(
+    Map<String, dynamic> map,
+  ) {
+    return map
+        .map(
+          (key, value) => MapEntry(key.toString(), value),
+        )
+        .values
+        .whereType<Map<dynamic, dynamic>>()
+        .map(
+          (value) => (value["event"] as Map).map(
             (key, value) => MapEntry(key.toString(), value),
-          )
-          .values
-          .whereType<Map<dynamic, dynamic>>()
-          .map(
-            (value) => (value["data"] as Map).map(
-              (key, value) => MapEntry(key.toString(), value),
-            ),
-          )
-          .toList();
-
-      debugPrint("ℹ️ -> Length: ${dataList.length}");
-    } catch (exception) {
-      debugPrint("❌ -> Failed to parse map. Exception: $exception");
-    }
+          ),
+        )
+        .toList();
   }
 
-  // Future<void> fetchExhibitorById({
-  //   required String exhibitorId,
-  //   required String eventId,
-  // }) async {
-  //   Map<String, dynamic>? map = await _realtimeRepository.fetchEventDataById(
-  //     eventId,
-  //   );
-  //
-  //   if (map != null) {
-  //     // debugPrint("✅ -> Event [$eventId]: $map");
-  //     final List<Map<String, dynamic>>? allExhibitorsData = _parseEventMap(
-  //       map: map,
-  //       userCategory: UserCategory.exhibitor,
-  //       userId: exhibitorId,
-  //     );
-  //
-  //     if (allExhibitorsData != null) {
-  //       debugPrint("✅ -> All ExhibitorsData: $allExhibitorsData");
-  //     }
-  //   } else {
-  //     debugPrint("❌ -> No event data.");
-  //   }
-  // }
-
-  // List<Map<String, dynamic>>? _parseEventMap({
-  //   required Map<String, dynamic> map,
-  //   required UserCategory userCategory,
-  //   required String userId,
-  // }) {
-  //   try {
-  //     final Map<String, dynamic> allUsersData = (map[userCategory.name] as Map)
-  //         .map((key, value) => MapEntry(key.toString(), value));
-  //     debugPrint("ℹ️ -> userId: $userId");
-  //     debugPrint("ℹ️ -> all usersData Length: ${allUsersData.length}");
-  //     // debugPrint("ℹ️ -> all usersData: $allUsersData");
-  //
-  //     if (allUsersData.containsKey(userId)) {
-  //       debugPrint("✅ -> FOUND userId [$userId]");
-  //       Map<String, dynamic> userData =
-  //           allUsersData[userId]["data"] as Map<String, dynamic>;
-  //       debugPrint("✅ -> userData $userData");
-  //
-  //       final exhibitor = RawExhibitorData.fromMap(userData);
-  //       debugPrint("✅ -> exhibitor $exhibitor");
-  //     }
-  //
-  //     return null;
-  //   } catch (exception) {
-  //     debugPrint("❌ -> Failed to parse map. Exception: $exception");
-  //     return null;
-  //   }
-  // }
-
-  Map<String, dynamic>? getAllUsersDataFromEventMap(
-    Map<String, dynamic> eventMap,
-    UserCategory userCategory,
+  List<Event> _mergeAndKeepSaved(
+    List<Event> fetchedEvents,
+    List<Event> savedEvents,
   ) {
+    // Concatenate both lists
+    List<Event> concatenatedList = [...fetchedEvents, ...savedEvents];
+
+    // Create a map to store each event by its id
+    Map<String, Event> eventMap = {};
+
+    for (final event in concatenatedList) {
+      if (eventMap.containsKey(event.eventId)) {
+        // If the map already contains an event with this id, keep the 'saved' one
+        if (event.saved) {
+          eventMap[event.eventId] = event;
+        }
+      } else {
+        // If the map does not contain an event with this id, add it
+        eventMap[event.eventId] = event;
+      }
+    }
+
+    // Return the values of the map as a new list
+    return eventMap.values.toList();
+  }
+
+  Future<List<Event>> _fetchSavedEvents() async {
+    final List<Event> savedEvents = await _databaseRepository.fetchEvents();
+    return savedEvents;
+  }
+
+  Map<String, dynamic>? _processAllUsersDataFromEventMap({
+    required Map<String, dynamic> eventMap,
+    required UserCategory userCategory,
+  }) {
     try {
       final Map<String, dynamic> allUsersData =
           (eventMap[userCategory.name] as Map)
@@ -195,7 +154,7 @@ class EventsController extends StateNotifier<AsyncValue<List<Event>>> {
     }
   }
 
-  Map<String, dynamic>? getUserDataByIdFromUsersMap(
+  Map<String, dynamic>? _processUserDataByIdFromUsersMap(
     Map<String, dynamic> usersMap,
     String userId,
   ) {
@@ -210,7 +169,7 @@ class EventsController extends StateNotifier<AsyncValue<List<Event>>> {
     }
   }
 
-  Future<Map<String, dynamic>?> getEventDataById(
+  Future<Map<String, dynamic>?> _fetchEventDataById(
     String eventId,
   ) async {
     Map<String, dynamic>? eventMap =
@@ -220,19 +179,19 @@ class EventsController extends StateNotifier<AsyncValue<List<Event>>> {
     return eventMap;
   }
 
-  Future<RawExhibitorData?> getExhibitorData({
+  Future<RawExhibitorData?> _processMapIntoExhibitorData({
     required Map<String, dynamic> eventMap,
     required String exhibitorId,
     required String eventId,
   }) async {
-    final Map<String, dynamic>? allUsersMap = getAllUsersDataFromEventMap(
-      eventMap,
-      UserCategory.exhibitor,
+    final Map<String, dynamic>? allUsersMap = _processAllUsersDataFromEventMap(
+      eventMap: eventMap,
+      userCategory: UserCategory.exhibitor,
     );
 
     if (allUsersMap == null) return null;
 
-    Map<String, dynamic>? userMap = getUserDataByIdFromUsersMap(
+    Map<String, dynamic>? userMap = _processUserDataByIdFromUsersMap(
       allUsersMap,
       exhibitorId,
     );
@@ -247,7 +206,9 @@ class EventsController extends StateNotifier<AsyncValue<List<Event>>> {
     }
   }
 
-  Map<String, dynamic>? getEventDetailsMap(Map<String, dynamic> eventMap) {
+  Map<String, dynamic>? _processEventDetailsMap(
+    Map<String, dynamic> eventMap,
+  ) {
     try {
       final eventDetailsMap = eventMap["event"] as Map<String, dynamic>;
       return eventDetailsMap;
@@ -269,11 +230,11 @@ class EventsController extends StateNotifier<AsyncValue<List<Event>>> {
     // TODO: show invalid qr code error or camera not available in qr view
     if (qrCode == null) return;
 
-    final Map<String, dynamic>? eventMap = await getEventDataById(eventId);
+    final Map<String, dynamic>? eventMap = await _fetchEventDataById(eventId);
 
     if (eventMap == null) return;
 
-    final RawExhibitorData? exhibitor = await getExhibitorData(
+    final RawExhibitorData? exhibitor = await _processMapIntoExhibitorData(
       eventMap: eventMap,
       exhibitorId: qrCode,
       eventId: eventId,
@@ -285,22 +246,39 @@ class EventsController extends StateNotifier<AsyncValue<List<Event>>> {
     }
 
     // !: If we got this far the exhibitor was registered in Firebase
-    debugPrint("✅ -> Exhibitor: $exhibitor");
-
-    final Map<String, dynamic>? eventDetailsMap = getEventDetailsMap(eventMap);
+    final Map<String, dynamic>? eventDetailsMap =
+        _processEventDetailsMap(eventMap);
 
     if (eventDetailsMap == null) return;
 
-    debugPrint("✅ -> Event details: $eventDetailsMap");
+    final Event event = Event.fromMap(eventDetailsMap).copyWith(saved: true);
+    _replaceOldEventWithUpdatedEvent(event);
 
-    // TODO: if we get this far, create event with event id
-    // TODO: get image from firebase storage
-    // TODO: get title and subtitle from firebase database
-    // TODO: add event to "Your Events" and remove existing event from "Coming Events"
+    final bool hasSavedEvent = await _saveEventToDatabase(event);
+    if (hasSavedEvent) {
+      _replaceOldEventWithUpdatedEvent(event);
+    }
+  }
 
-    // TODO: Check if eventId is not in "Your Events"
-    // TODO: If not => Show QR Scanner with ScanType.exhibitor
-    // TODO get QR code
-    // TODO: if valid, add event to "Your Events" and local database
+  Future<bool> _saveEventToDatabase(Event event) async {
+    try {
+      await _databaseRepository.saveEvent(event);
+      return true;
+    } catch (e) {
+      debugPrint("❌ -> Failed to save Event to local database. Error: $e");
+      return false;
+    }
+  }
+
+  void _replaceOldEventWithUpdatedEvent(Event updatedEvent) {
+    try {
+      final currentEvents = (state.value ?? [])
+          .map((oldEvent) => oldEvent == updatedEvent ? updatedEvent : oldEvent)
+          .toList();
+
+      state = AsyncValue.data(currentEvents);
+    } catch (e) {
+      debugPrint("❌ -> Failed to update saved event in UI. Error: $e");
+    }
   }
 }
