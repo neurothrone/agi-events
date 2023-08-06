@@ -66,30 +66,43 @@ class EventsPageContent extends ConsumerWidget {
           const EventsPageSliverTitle(),
         ];
 
+        List<Event> yourEvents = [];
+        List<Event> comingEvents = [];
+
+        for (final event in events) {
+          if (event.saved) {
+            yourEvents.add(event);
+          } else {
+            comingEvents.add(event);
+          }
+        }
+
         // !: Your Events
-        // TODO: show only local saved events after verifying with exhibitor scan
-        if (events.isNotEmpty) {
+        if (yourEvents.isNotEmpty) {
           slivers.addAll([
             const EventsSliverGridTitle(title: "Your Events"),
             EventsSliverGrid(
-              eventsLength: events.length,
-              builder: (context, index) => EventGridTile(
-                onTap: () => _navigateToLeadsForEvent(events[index], context),
-                event: events[index],
-              ),
+              eventsLength: yourEvents.length,
+              builder: (context, index) {
+                final event = yourEvents[index];
+
+                return EventGridTile(
+                  onTap: () => _navigateToLeadsForEvent(event, context),
+                  event: event,
+                );
+              },
             ),
           ]);
         }
 
         // !: Coming Events
-        // TODO: Fetch events from Firebase realtime database
-        if (events.isNotEmpty) {
+        if (comingEvents.isNotEmpty) {
           slivers.addAll([
             const EventsSliverGridTitle(title: "Coming Events"),
             EventsSliverGrid(
-              eventsLength: events.length,
+              eventsLength: comingEvents.length,
               builder: (context, index) {
-                final Event event = events[index];
+                final Event event = comingEvents[index];
 
                 return EventGridTile(
                   onTap: () => _openQrScanner(event.eventId, context, ref),
