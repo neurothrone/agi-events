@@ -3,20 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../core/constants/app_constants.dart';
+import '../../../core/models/event.dart';
 
 class EventGridTile extends StatelessWidget {
   const EventGridTile({
     super.key,
     this.onTap,
-    required this.imageAsset,
-    required this.title,
-    required this.subtitle,
+    required this.event,
   });
 
   final VoidCallback? onTap;
-  final String imageAsset;
-  final String title;
-  final String subtitle;
+  final Event event;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +33,7 @@ class EventGridTile extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: SvgPicture.asset(
-                    imageAsset,
+                    "assets/images/${event.image}.svg",
                     semanticsLabel: "Event logo",
                   ),
                 ),
@@ -49,14 +46,14 @@ class EventGridTile extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  title,
+                  event.title,
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
-                  subtitle,
+                  event.subtitle,
                   style: const TextStyle(
                     fontSize: 14,
                     color: Colors.grey,
