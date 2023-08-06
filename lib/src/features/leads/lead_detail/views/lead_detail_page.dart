@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/constants/constants.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../../../../core/models/models.dart';
+import '../../add_lead/data/leads_controller.dart';
 import '../widgets/contact_information.dart';
+import '../widgets/lead_detail_page_app_bar.dart';
 import '../widgets/notes_text_area.dart';
-import '../widgets/save_notes_button.dart';
+import '../widgets/unsaved_changes_dialog.dart';
 
 class LeadDetailPage extends StatefulWidget {
   const LeadDetailPage({
@@ -33,36 +36,60 @@ class _LeadDetailPageState extends State<LeadDetailPage> {
     super.dispose();
   }
 
+  Future<void> _onCancel(WidgetRef ref) async {
+    FocusScopeNode currentFocus = FocusScope.of(context);
+
+    final navigator = Navigator.of(context);
+
+    // Temporarily disable the text field's focus when the dialog appears
+    if (!currentFocus.hasPrimaryFocus) {
+      currentFocus.unfocus();
+    }
+
+    final String leadNotes = widget.lead.notes ?? "";
+    if (leadNotes != _notesController.text) {
+      bool? hasUnsavedChanges = await showUnsavedChangesDialog(context);
+      if (hasUnsavedChanges != null && hasUnsavedChanges) {
+        _saveChanges(ref);
+      }
+    }
+
+    navigator.pop();
+  }
+
+  Future<bool?> showUnsavedChangesDialog(BuildContext context) {
+    return showDialog<bool>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return const UnsavedChangesDialog();
+      },
+    );
+  }
+
+  Future<void> _onSave(WidgetRef ref) async {
+    _saveChanges(ref);
+    Navigator.of(context).pop();
+  }
+
+  Future<void> _saveChanges(WidgetRef ref) async {
+    ref.read(leadsControllerProvider.notifier).updateLeadNotes(
+          widget.lead.copyWith(notes: _notesController.text),
+        );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        titleSpacing: 0.0, // Remove default title spacing
-        title: Stack(
-          alignment: Alignment.center,
-          children: [
-            const Text("Lead"),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                TextButton(
-                  onPressed: () {},
-                  child: const Text(
-                    "Cancel",
-                    style: TextStyle(
-                      fontSize: 18.0,
-                      color: AppConstants.destructive,
-                    ),
-                  ),
-                ),
-                SaveNotesButton(
-                  lead: widget.lead,
-                  notesController: _notesController,
-                ),
-              ],
-            ),
-          ],
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(kToolbarHeight),
+        child: Consumer(
+          builder: (_, ref, __) {
+            return LeadDetailPageAppBar(
+              onCancel: () => _onCancel(ref),
+              onSave: () => _onSave(ref),
+            );
+          },
         ),
       ),
       body: SafeArea(
