@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 class EventsSliverGrid extends StatelessWidget {
   const EventsSliverGrid({
     Key? key,
-    required this.eventIds,
+    required this.eventsLength,
     required this.builder,
   }) : super(key: key);
 
-  final List<String> eventIds;
+  final int eventsLength;
   final Widget Function(BuildContext context, int index) builder;
 
   @override
@@ -21,7 +21,7 @@ class EventsSliverGrid extends StatelessWidget {
           mainAxisSpacing: 20.0,
         ),
         delegate: SliverChildBuilderDelegate(
-          childCount: eventIds.length,
+          childCount: eventsLength,
           builder,
         ),
       ),
