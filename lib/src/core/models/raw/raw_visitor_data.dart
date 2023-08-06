@@ -1,6 +1,6 @@
-import 'raw_lead_data.dart';
+import 'raw_user_data.dart';
 
-class RawVisitorData extends RawLeadData {
+class RawVisitorData extends RawUserData {
   const RawVisitorData({
     required String company,
     required String email,

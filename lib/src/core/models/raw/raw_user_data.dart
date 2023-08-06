@@ -1,5 +1,5 @@
-abstract class RawLeadData {
-  const RawLeadData({
+abstract class RawUserData {
+  const RawUserData({
     required this.company,
     required this.email,
     required this.firstName,
