@@ -4,6 +4,7 @@ class Event {
     required this.title,
     required this.subtitle,
     required this.image,
+    this.saved = false,
   });
 
   factory Event.fromMap(Map<String, dynamic> map) {
@@ -12,6 +13,7 @@ class Event {
       title: map["title"] as String,
       subtitle: map["subtitle"] as String,
       image: map["image"] as String,
+      saved: false,
     );
   }
 
@@ -19,6 +21,7 @@ class Event {
   final String title;
   final String subtitle;
   final String image;
+  final bool saved;
 
   @override
   String toString() {
@@ -27,6 +30,7 @@ class Event {
         " title: $title,"
         " subtitle: $subtitle,"
         " image: $image,"
+        " saved: $saved,"
         "}";
   }
 
@@ -35,12 +39,24 @@ class Event {
     String? title,
     String? subtitle,
     String? image,
+    bool? saved,
   }) {
     return Event(
       eventId: eventId ?? this.eventId,
       title: title ?? this.title,
       subtitle: subtitle ?? this.subtitle,
       image: image ?? this.image,
+      saved: saved ?? this.saved,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Event &&
+          runtimeType == other.runtimeType &&
+          eventId == other.eventId;
+
+  @override
+  int get hashCode => eventId.hashCode;
 }
