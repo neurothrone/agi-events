@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../core/constants/assets_constants.dart';
+import '../../../core/models/event.dart';
 import '../../leads/my_leads/data/events_controller.dart';
+import '../../leads/my_leads/views/leads_page.dart';
 import '../widgets/event_grid_tile.dart';
 import '../widgets/events_page_background.dart';
 import '../widgets/events_page_sliver_title.dart';
@@ -31,47 +32,70 @@ class EventsPageContent extends ConsumerWidget {
     super.key,
   });
 
+  void _openQrScanner(
+    String eventId,
+    BuildContext context,
+    WidgetRef ref,
+  ) {
+    ref.read(eventsControllerProvider.notifier).openQrScanner(
+          eventId: eventId,
+          context: context,
+        );
+  }
+
+  void _navigateToLeadsForEvent(
+    Event event,
+    BuildContext context,
+  ) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => LeadsPage(event: event),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final AsyncValue<List<String>> eventsState = ref.watch(
+    final AsyncValue<List<Event>> eventsState = ref.watch(
       eventsControllerProvider,
     );
     return eventsState.when(
-      data: (List<String> eventsIds) {
+      data: (List<Event> events) {
         List<Widget> slivers = [
           const EventsPageSliverTitle(),
         ];
 
-        if (eventsIds.isNotEmpty) {
+        // !: Your Events
+        // TODO: show only local saved events after verifying with exhibitor scan
+        if (events.isNotEmpty) {
           slivers.addAll([
             const EventsSliverGridTitle(title: "Your Events"),
             EventsSliverGrid(
-              eventIds: eventsIds,
+              eventsLength: events.length,
               builder: (context, index) => EventGridTile(
-                onTap: () {
-                  debugPrint("ℹ️ -> Event item tapped");
-                },
-                imageAsset: AssetsConstants.signPrintScandinaviaLogo,
-                title: "Title",
-                subtitle: "Subtitle",
+                onTap: () => _navigateToLeadsForEvent(events[index], context),
+                event: events[index],
               ),
             ),
           ]);
         }
 
-        if (eventsIds.isNotEmpty) {
+        // !: Coming Events
+        // TODO: Fetch events from Firebase realtime database
+        if (events.isNotEmpty) {
           slivers.addAll([
             const EventsSliverGridTitle(title: "Coming Events"),
             EventsSliverGrid(
-              eventIds: eventsIds,
-              builder: (context, index) => EventGridTile(
-                onTap: () {
-                  debugPrint("ℹ️ -> Event item tapped");
-                },
-                imageAsset: AssetsConstants.signPrintScandinaviaLogo,
-                title: "Title",
-                subtitle: "Subtitle",
-              ),
+              eventsLength: events.length,
+              builder: (context, index) {
+                final Event event = events[index];
+
+                return EventGridTile(
+                  onTap: () => _openQrScanner(event.eventId, context, ref),
+                  event: event,
+                );
+              },
             )
           ]);
         }
