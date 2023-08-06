@@ -1,5 +1,11 @@
 {
   "sopno398628": {
+    "event": {
+      "eventId": "sopno398628",
+      "title": "Sign & Print Norway 2023",
+      "subtitle": "11-13 Nov Oslo",
+      "image": "SIPP-no-logo"
+    },
     "exhibitor": {
       "00103eb2bc20ca78bf7234c65041373c92c40560": {
         "data": {
@@ -460,6 +466,12 @@
     }
   },
   "sopse295842": {
+    "event": {
+      "eventId": "sopse295842",
+      "title": "Sign & Print Scandinavia 2023",
+      "subtitle": "19-21 Sep Kistamässan, Sthlm",
+      "image": "SOPSE-Logo-White"
+    },
     "exhibitor": {
       "0038045b6a04c9fe5172b1e950be054bb438e4af": {
         "data": {
