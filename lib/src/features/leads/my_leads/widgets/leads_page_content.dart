@@ -34,7 +34,11 @@ class LeadsPageContent extends ConsumerWidget {
                 children: [
                   SizedBox(
                     height: 100.0,
-                    child: SvgPicture.asset(imageAsset),
+                    child: SvgPicture.asset(
+                      imageAsset,
+                      // TODO: temporary until SVG:s fixed
+                      color: Colors.white,
+                    ),
                   ),
                   const SizedBox(height: 20.0),
                   const AddLeadTextRowButton(),
