@@ -20,7 +20,7 @@ class FirebaseRealtimeRepository implements RealtimeRepository {
 
   @override
   Future<bool> eventExists(String eventId) async {
-    List<String> eventIds = await fetchEvents();
+    List<String> eventIds = await fetchEventIds();
     return eventIds.contains(eventId);
   }
 
@@ -46,7 +46,7 @@ class FirebaseRealtimeRepository implements RealtimeRepository {
   }
 
   @override
-  Future<List<String>> fetchEvents() async {
+  Future<List<String>> fetchEventIds() async {
     final DatabaseReference reference = _database.ref();
 
     try {
@@ -64,5 +64,11 @@ class FirebaseRealtimeRepository implements RealtimeRepository {
       );
       return [];
     }
+  }
+
+  @override
+  Future<Map<String, dynamic>> fetchEventsData() {
+    // TODO: implement fetchEventsData
+    throw UnimplementedError();
   }
 }

@@ -24,12 +24,17 @@ class FakeRealtimeRepository implements RealtimeRepository {
 
   @override
   Future<bool> eventExists(String eventId) async {
-    final List<String> events = await fetchEvents();
+    final List<String> events = await fetchEventIds();
     return events.contains(eventId);
   }
 
   @override
-  Future<List<String>> fetchEvents() async {
+  Future<Map<String, dynamic>> fetchEventsData() async {
+    return Future.value(_data);
+  }
+
+  @override
+  Future<List<String>> fetchEventIds() async {
     return Future.value(_data.keys.map((key) => key.toString()).toList());
   }
 
