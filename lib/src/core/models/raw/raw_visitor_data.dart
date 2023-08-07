@@ -23,18 +23,47 @@ class RawVisitorData extends RawUserData {
         );
 
   factory RawVisitorData.fromMap(Map<String, dynamic> map) {
+    final company = map.containsKey("company") ? map["company"] as String : "";
+    final email = map.containsKey("email") ? map["email"] as String : "";
+    final firstName =
+        map.containsKey("firstName") ? map["firstName"] as String : "";
+    final lastName =
+        map.containsKey("lastName") ? map["lastName"] as String : "";
+
+    final String phone;
+    final dynamic phoneFromMap = map["phone"];
+    if (phoneFromMap is String) {
+      phone = phoneFromMap;
+    } else if (phoneFromMap is int) {
+      phone = phoneFromMap.toString();
+    } else {
+      phone = "";
+    }
+
+    final exhibitionId =
+        map.containsKey("exhibitionId") ? map["exhibitionId"] as String : "";
+    final hashedString = "$firstName$lastName$exhibitionId";
+
+    final countryCode =
+        map.containsKey("countryCode") ? map["countryCode"] as String : "";
+    final position =
+        map.containsKey("position") ? map["position"] as String : "";
+    final address = map.containsKey("address") ? map["address"] as String : "";
+    final zipCode = map.containsKey("zipCode") ? map["zipCode"] as String : "";
+    final city = map.containsKey("city") ? map["city"] as String : "";
+
     return RawVisitorData(
-      company: map["company"] as String,
-      email: map["email"] as String,
-      firstName: map["firstName"] as String,
-      lastName: map["lastName"] as String,
-      phone: map["phone"] as String,
-      hashedString: map["hashedString"] as String,
-      countryCode: map["countryCode"] as String,
-      position: map["position"] as String,
-      address: map["address"] as String,
-      zipCode: map["zipCode"] as String,
-      city: map["city"] as String,
+      company: company,
+      email: email,
+      firstName: firstName,
+      lastName: lastName,
+      phone: phone,
+      hashedString: hashedString,
+      countryCode: countryCode,
+      position: position,
+      address: address,
+      zipCode: zipCode,
+      city: city,
     );
   }
 
@@ -43,4 +72,20 @@ class RawVisitorData extends RawUserData {
   final String address;
   final String zipCode;
   final String city;
+
+  @override
+  String toString() {
+    return "RawVisitorData{"
+        " company: $company,"
+        " email: $email,"
+        " firstName: $firstName,"
+        " lastName: $lastName,"
+        " phone: $phone,"
+        " countryCode: $countryCode,"
+        " position: $position,"
+        " address: $address,"
+        " zipCode: $zipCode,"
+        " city: $city,"
+        "}";
+  }
 }
