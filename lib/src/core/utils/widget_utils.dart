@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 import '../constants/constants.dart';
 
-Future<T?> showCustomBottomSheet<T>({
+Future<void> showCustomBottomSheet({
   required BuildContext context,
   required Widget child,
 }) async {
-  return await showModalBottomSheet(
+  await showModalBottomSheet(
     context: context,
     backgroundColor: AppConstants.primaryBlueLighter,
     elevation: 2.0,
