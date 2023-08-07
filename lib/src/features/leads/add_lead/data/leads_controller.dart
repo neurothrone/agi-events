@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -259,7 +260,9 @@ class LeadsController extends StateNotifier<AsyncValue<List<Lead>>> {
   }
 
   // TODO: Pass eventId? for the file name
-  Future<void> exportLeads() async {
+  Future<void> exportLeads({
+    Rect? sharePositionOrigin,
+  }) async {
     if (state.value == null) return;
 
     List<List<String>> dataRows = state.value!.toCsvDataRows();
@@ -273,6 +276,7 @@ class LeadsController extends StateNotifier<AsyncValue<List<Lead>>> {
     await _shareService.shareFile(
       file: csvFile,
       shareSheetText: "Leads CSV",
+      sharePositionOrigin: sharePositionOrigin,
     );
   }
 }
