@@ -120,39 +120,6 @@ class LeadsController extends StateNotifier<AsyncValue<List<Lead>>> {
     );
 
     await _addLead(newLead);
-
-    // final List<Lead> currentLeads = List.from(state.value ?? []);
-    //
-    // try {
-    //   state = const AsyncValue.loading();
-    //
-    //   const eventId = "eventId";
-    //
-    //   final newLead = Lead(
-    //     firstName: firstName,
-    //     lastName: lastName,
-    //     company: company,
-    //     email: email,
-    //     phone: phone,
-    //     address: address,
-    //     zipCode: zipCode,
-    //     city: city,
-    //     scannedAt: DateTime.now(),
-    //     hashedString: "$email$firstName$lastName$eventId",
-    //   );
-    //
-    //   // TODO: add to leads in event [database]
-    //
-    //   currentLeads.insert(0, newLead);
-    //   state = AsyncValue.data(currentLeads);
-    //
-    //   debugPrint("✅ -> New Lead: $newLead");
-    // } catch (exception, stacktrace) {
-    //   debugPrint(
-    //     "❌ -> Unexpected error while adding a Lead. Error: $exception",
-    //   );
-    //   state = AsyncValue.error(exception.toString(), stacktrace);
-    // }
   }
 
   // TODO: can be reused
@@ -229,6 +196,8 @@ class LeadsController extends StateNotifier<AsyncValue<List<Lead>>> {
     required String qrCode,
     required String eventId,
   }) async {
+    // TODO: check that lead by that qr code is not already in leads
+
     final Map<String, dynamic>? eventMap = await _fetchEventDataById(eventId);
 
     if (eventMap == null) return;
