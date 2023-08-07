@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/models/event.dart';
 import '../../../core/utils/enums/enums.dart';
+import '../../../core/widgets/widgets.dart';
 import '../../leads/my_leads/data/events_controller.dart';
 import '../../leads/my_leads/views/leads_page.dart';
 import '../../leads/qr_scan/data/qr_scan_controller.dart';
@@ -124,9 +125,7 @@ class EventsPageContent extends ConsumerWidget {
           child: CustomScrollView(slivers: slivers),
         );
       },
-      loading: () => const Center(
-        child: CircularProgressIndicator(),
-      ),
+      loading: () => const CenteredProgressIndicator(),
       error: (error, __) {
         return Center(
           child: Text("❌ -> Failed to fetch Events. Error: $error"),
