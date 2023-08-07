@@ -1,8 +1,12 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/models/models.dart';
+import '../../../../core/utils/enums/enums.dart';
+import '../../add_lead/data/leads_controller.dart';
+import '../../qr_scan/data/qr_scan_controller.dart';
 import '../widgets/lead_qr_scanner_button.dart';
 import '../widgets/leads_csv_export_button.dart';
 import '../widgets/leads_page_content.dart';
@@ -14,6 +18,24 @@ class LeadsPage extends StatelessWidget {
   });
 
   final Event event;
+
+  Future<void> _openQrScanner(
+    BuildContext context,
+    WidgetRef ref,
+  ) async {
+    final String? qrCode =
+        await ref.read(qrScanControllerProvider).showQrScanner(
+              scanType: ScanType.visitor,
+              context: context,
+            );
+
+    if (qrCode == null) return;
+
+    ref.read(leadsControllerProvider.notifier).addLeadThroughQR(
+          qrCode: qrCode,
+          eventId: event.eventId,
+        );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,9 +49,15 @@ class LeadsPage extends StatelessWidget {
         minimum: Platform.isIOS
             ? const EdgeInsets.only(bottom: 20.0)
             : EdgeInsets.zero,
-        child: const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.0),
-          child: LeadQrScannerButton(),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: Consumer(
+            builder: (context, ref, _) {
+              return LeadQrScannerButton(
+                onPressed: () => _openQrScanner(context, ref),
+              );
+            },
+          ),
         ),
       ),
       body: SafeArea(
