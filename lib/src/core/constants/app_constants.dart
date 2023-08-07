@@ -29,6 +29,12 @@ class AppConstants {
         0.3,
       ) ??
       primaryBlue;
+  static Color lighterBlack = Color.lerp(
+        Colors.black,
+        Colors.white,
+        0.1,
+      ) ??
+      Colors.black;
 
   // Gradients
   static const LinearGradient backgroundGradient = LinearGradient(
