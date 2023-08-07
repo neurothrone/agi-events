@@ -21,7 +21,8 @@ class EventGridTile extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Expanded(
+          AspectRatio(
+            aspectRatio: 1.0,
             child: Material(
               borderRadius: BorderRadius.circular(10.0),
               color: AppConstants.primaryBlueLighter,
@@ -41,21 +42,30 @@ class EventGridTile extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.only(
+              top: 8.0,
+              left: 8.0,
+              right: 8.0,
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   event.title,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
-                    fontSize: 16,
+                    fontSize: 14.0,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
+                const SizedBox(height: 4.0),
                 Text(
                   event.subtitle,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
-                    fontSize: 14,
+                    fontSize: 13.0,
                     color: Colors.grey,
                   ),
                 ),

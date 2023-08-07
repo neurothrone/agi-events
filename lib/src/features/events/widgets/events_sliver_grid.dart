@@ -12,18 +12,17 @@ class EventsSliverGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SliverPadding(
-      padding: const EdgeInsets.only(bottom: 20.0),
-      sliver: SliverGrid(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          crossAxisSpacing: 20.0,
-          mainAxisSpacing: 20.0,
-        ),
-        delegate: SliverChildBuilderDelegate(
-          childCount: eventsLength,
-          builder,
-        ),
+    return SliverGrid(
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount:
+            MediaQuery.orientationOf(context) == Orientation.portrait ? 2 : 3,
+        crossAxisSpacing: 20.0,
+        mainAxisSpacing: 20.0,
+        childAspectRatio: 0.65,
+      ),
+      delegate: SliverChildBuilderDelegate(
+        childCount: eventsLength,
+        builder,
       ),
     );
   }
