@@ -23,17 +23,14 @@ class LeadsPage extends StatelessWidget {
     BuildContext context,
     WidgetRef ref,
   ) async {
-    final String? qrCode =
-        await ref.read(qrScanControllerProvider).showQrScanner(
-              scanType: ScanType.visitor,
-              context: context,
-            );
-
-    if (qrCode == null) return;
-
-    ref
-        .read(leadsControllerProvider.notifier)
-        .addLeadByQR(qrCode: qrCode, eventId: event.eventId);
+    await ref.read(qrScanControllerProvider).showQrScanner(
+        scanType: ScanType.visitor,
+        context: context,
+        onQrCodeScanned: (String qrCode) async {
+          await ref
+              .read(leadsControllerProvider.notifier)
+              .addLeadByQR(qrCode: qrCode, eventId: event.eventId);
+        });
   }
 
   @override

@@ -39,17 +39,14 @@ class EventsPageContent extends ConsumerWidget {
     BuildContext context,
     WidgetRef ref,
   ) async {
-    final String? qrCode =
-        await ref.read(qrScanControllerProvider).showQrScanner(
-              scanType: ScanType.exhibitor,
-              context: context,
-            );
-
-    if (qrCode == null) return;
-
-    await ref
-        .read(eventsControllerProvider.notifier)
-        .addEventByExhibitorId(exhibitorId: qrCode, eventId: eventId);
+    await ref.read(qrScanControllerProvider).showQrScanner(
+        scanType: ScanType.exhibitor,
+        context: context,
+        onQrCodeScanned: (String qrCode) async {
+          await ref
+              .read(eventsControllerProvider.notifier)
+              .addEventByExhibitorId(exhibitorId: qrCode, eventId: eventId);
+        });
   }
 
   void _navigateToLeadsPageForEvent(
