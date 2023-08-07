@@ -19,6 +19,7 @@ dependencies:
   mobile_scanner: ^3.3.0
   # Export & Share CSV
   csv: ^5.0.2
+  device_info_plus: ^9.0.3
   path_provider: ^2.0.15
   share_plus: ^7.1.0
   # State Management
