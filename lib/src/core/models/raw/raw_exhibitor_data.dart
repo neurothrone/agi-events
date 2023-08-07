@@ -25,6 +25,7 @@ class RawExhibitorData extends RawUserData {
         map.containsKey("firstName") ? map["firstName"] as String : "";
     final lastName =
         map.containsKey("lastName") ? map["lastName"] as String : "";
+
     final String phone;
     final dynamic phoneFromMap = map["phone"];
     if (phoneFromMap is String) {
@@ -34,9 +35,11 @@ class RawExhibitorData extends RawUserData {
     } else {
       phone = "";
     }
+
     final exhibitionId =
         map.containsKey("exhibitionId") ? map["exhibitionId"] as String : "";
     final hashedString = "$firstName$lastName$exhibitionId";
+
     final registeredAtDate = map.containsKey("registeredAtDate")
         ? map["registeredAtDate"] as String
         : "";
