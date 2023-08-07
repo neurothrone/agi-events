@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 
 import '../../../../core/utils/enums/enums.dart';
+import '../../../../core/widgets/widgets.dart';
 
 const int kQrCodeRequiredLength = 40;
 
@@ -103,7 +104,7 @@ class _QrScannerSheetState extends State<QrScannerSheet> {
         ),
       ),
       body: _scanner == null || _isLoading
-          ? const Center(child: CircularProgressIndicator())
+          ? const CenteredProgressIndicator()
           : _scanner,
     );
   }
