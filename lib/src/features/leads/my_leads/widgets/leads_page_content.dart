@@ -6,8 +6,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../../../core/models/models.dart';
 import '../../add_lead/data/leads_controller.dart';
 import 'empty_leads_placeholder.dart';
-import 'lead_row.dart';
 import 'add_lead_text_row_button.dart';
+import 'leads_sliver_list.dart';
 
 class LeadsPageContent extends ConsumerWidget {
   const LeadsPageContent({
@@ -47,14 +47,7 @@ class LeadsPageContent extends ConsumerWidget {
                 ],
               ),
             ),
-            if (leads.isNotEmpty)
-              SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (BuildContext context, int index) =>
-                      LeadRow(lead: leads[index]),
-                  childCount: leads.length,
-                ),
-              ),
+            if (leads.isNotEmpty) LeadsSliverList(leads: leads),
           ],
         );
       },
