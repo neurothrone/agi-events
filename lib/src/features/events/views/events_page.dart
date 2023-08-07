@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/models/event.dart';
+import '../../../core/utils/enums/enums.dart';
 import '../../leads/my_leads/data/events_controller.dart';
 import '../../leads/my_leads/views/leads_page.dart';
+import '../../leads/qr_scan/data/qr_scan_controller.dart';
 import '../widgets/event_grid_tile.dart';
 import '../widgets/events_page_background.dart';
 import '../widgets/events_page_sliver_title.dart';
@@ -32,18 +34,25 @@ class EventsPageContent extends ConsumerWidget {
     super.key,
   });
 
-  void _openQrScanner(
+  Future<void> _openQrScanner(
     String eventId,
     BuildContext context,
     WidgetRef ref,
-  ) {
-    ref.read(eventsControllerProvider.notifier).openQrScanner(
-          eventId: eventId,
-          context: context,
-        );
+  ) async {
+    final String? qrCode =
+        await ref.read(qrScanControllerProvider).showQrScanner(
+              scanType: ScanType.exhibitor,
+              context: context,
+            );
+
+    if (qrCode == null) return;
+
+    await ref
+        .read(eventsControllerProvider.notifier)
+        .addEventByExhibitorId(exhibitorId: qrCode, eventId: eventId);
   }
 
-  void _navigateToLeadsForEvent(
+  void _navigateToLeadsPageForEvent(
     Event event,
     BuildContext context,
   ) {
@@ -87,7 +96,7 @@ class EventsPageContent extends ConsumerWidget {
                 final event = yourEvents[index];
 
                 return EventGridTile(
-                  onTap: () => _navigateToLeadsForEvent(event, context),
+                  onTap: () => _navigateToLeadsPageForEvent(event, context),
                   event: event,
                 );
               },

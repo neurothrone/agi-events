@@ -9,7 +9,6 @@ import '../../../../core/interfaces/repositories/database_repository.dart';
 import '../../../../core/interfaces/repositories/realtime_repository.dart';
 import '../../../../core/models/models.dart';
 import '../../../../core/utils/enums/enums.dart';
-import '../../qr_scan/data/qr_scan_controller.dart';
 
 final eventsControllerProvider =
     StateNotifierProvider<EventsController, AsyncValue<List<Event>>>((ref) {
@@ -28,11 +27,9 @@ final eventsControllerProvider =
     fakeRealtimeRepositoryProvider(jsonData),
   );
 
-  final qrScanController = ref.watch(qrScanControllerProvider);
   return EventsController(
     databaseRepository: databaseRepository,
     realtimeRepository: realtimeRepository,
-    qrScanController: qrScanController,
   );
 });
 
@@ -40,17 +37,14 @@ class EventsController extends StateNotifier<AsyncValue<List<Event>>> {
   EventsController({
     required DatabaseRepository databaseRepository,
     required RealtimeRepository realtimeRepository,
-    required QrScanController qrScanController,
   })  : _databaseRepository = databaseRepository,
         _realtimeRepository = realtimeRepository,
-        _qrScanController = qrScanController,
         super(const AsyncData([])) {
     _init();
   }
 
   final DatabaseRepository _databaseRepository;
   final RealtimeRepository _realtimeRepository;
-  final QrScanController _qrScanController;
 
   Future<void> _init() async {
     await fetchEvents();
@@ -222,25 +216,17 @@ class EventsController extends StateNotifier<AsyncValue<List<Event>>> {
     }
   }
 
-  Future<void> openQrScanner({
+  Future<void> addEventByExhibitorId({
+    required String exhibitorId,
     required String eventId,
-    required BuildContext context,
   }) async {
-    final String? qrCode = await _qrScanController.showQrScanner(
-      scanType: ScanType.exhibitor,
-      context: context,
-    );
-
-    // TODO: show invalid qr code error or camera not available in qr view
-    if (qrCode == null) return;
-
     final Map<String, dynamic>? eventMap = await _fetchEventDataById(eventId);
 
     if (eventMap == null) return;
 
     final RawExhibitorData? exhibitor = await _processMapIntoExhibitorData(
       eventMap: eventMap,
-      exhibitorId: qrCode,
+      exhibitorId: exhibitorId,
     );
 
     if (exhibitor == null) {
