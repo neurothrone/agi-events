@@ -140,6 +140,7 @@ class EventsController extends StateNotifier<AsyncValue<List<Event>>> {
     return savedEvents;
   }
 
+  // TODO: can be reused
   Map<String, dynamic>? _processAllUsersDataFromEventMap({
     required Map<String, dynamic> eventMap,
     required UserCategory userCategory,
@@ -154,6 +155,7 @@ class EventsController extends StateNotifier<AsyncValue<List<Event>>> {
     }
   }
 
+  // TODO: can be reused
   Map<String, dynamic>? _processUserDataByIdFromUsersMap(
     Map<String, dynamic> usersMap,
     String userId,
@@ -169,6 +171,7 @@ class EventsController extends StateNotifier<AsyncValue<List<Event>>> {
     }
   }
 
+  // TODO: reusable functions like this can be moved to the repository
   Future<Map<String, dynamic>?> _fetchEventDataById(
     String eventId,
   ) async {
@@ -179,10 +182,11 @@ class EventsController extends StateNotifier<AsyncValue<List<Event>>> {
     return eventMap;
   }
 
+  // TODO: can be made generic with RawUserData and reused here
+  // and for the leadsController
   Future<RawExhibitorData?> _processMapIntoExhibitorData({
     required Map<String, dynamic> eventMap,
     required String exhibitorId,
-    required String eventId,
   }) async {
     final Map<String, dynamic>? allUsersMap = _processAllUsersDataFromEventMap(
       eventMap: eventMap,
@@ -237,7 +241,6 @@ class EventsController extends StateNotifier<AsyncValue<List<Event>>> {
     final RawExhibitorData? exhibitor = await _processMapIntoExhibitorData(
       eventMap: eventMap,
       exhibitorId: qrCode,
-      eventId: eventId,
     );
 
     if (exhibitor == null) {
