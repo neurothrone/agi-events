@@ -16,14 +16,17 @@ class QrScanController {
     required BuildContext context,
     Function(String)? onQrCodeScanned,
   }) async {
-    final String? qrCode = await showCustomBottomSheet(
+    await showCustomBottomSheet(
       context: context,
-      child: QrScannerSheet(scanType: scanType),
+      child: QrScannerSheet(
+        scanType: scanType,
+        onQrCodeScanned: (String qrCode) {
+          if (onQrCodeScanned != null) {
+            debugPrint("ℹ️ -> QR Code scanned: $qrCode");
+            onQrCodeScanned(qrCode);
+          }
+        },
+      ),
     );
-
-    if (qrCode != null && onQrCodeScanned != null) {
-      debugPrint("ℹ️ -> QR Code scanned: $qrCode");
-      onQrCodeScanned(qrCode);
-    }
   }
 }

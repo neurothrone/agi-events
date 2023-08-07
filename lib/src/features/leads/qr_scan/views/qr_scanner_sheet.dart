@@ -4,13 +4,69 @@ import 'package:mobile_scanner/mobile_scanner.dart';
 
 import '../../../../core/utils/enums/enums.dart';
 
-class QrScannerSheet extends StatelessWidget {
+class QrScannerSheet extends StatefulWidget {
   const QrScannerSheet({
     super.key,
     required this.scanType,
+    required this.onQrCodeScanned,
   });
 
   final ScanType scanType;
+  final Function(String) onQrCodeScanned;
+
+  @override
+  State<QrScannerSheet> createState() => _QrScannerSheetState();
+}
+
+class _QrScannerSheetState extends State<QrScannerSheet> {
+  MobileScanner? _scanner;
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _loadScanner();
+    });
+  }
+
+  void _loadScanner() {
+    _scanner = MobileScanner(
+      controller: MobileScannerController(
+        facing: CameraFacing.back,
+        detectionSpeed: DetectionSpeed.normal,
+        detectionTimeoutMs: 1000,
+      ),
+      onDetect: (BarcodeCapture capture) async {
+        final List<Barcode> barcodes = capture.barcodes;
+        final String? qrCode = barcodes.firstOrNull?.rawValue;
+
+        if (qrCode != null) {
+          _disposeAfterScan(qrCode);
+        } else {
+          debugPrint("❌ -> Invalid QR Code");
+        }
+      },
+    );
+
+    setState(() {
+      _isLoading = false;
+    });
+  }
+
+  Future<void> _disposeAfterScan(String qrCode) async {
+    setState(() {
+      _scanner = null;
+    });
+
+    final navigator = Navigator.of(context);
+
+    await Future.delayed(const Duration(milliseconds: 500));
+
+    widget.onQrCodeScanned(qrCode);
+    navigator.pop();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,20 +75,16 @@ class QrScannerSheet extends StatelessWidget {
         automaticallyImplyLeading: false,
         centerTitle: true,
         title: Text(
-          scanType.title,
+          widget.scanType.title,
           style: const TextStyle(
             fontSize: 20.0,
             fontWeight: FontWeight.w600,
           ),
         ),
       ),
-      body: MobileScanner(
-        onDetect: (capture) {
-          final List<Barcode> barcodes = capture.barcodes;
-          final String? qrData = barcodes.firstOrNull?.rawValue;
-          Navigator.pop(context, qrData);
-        },
-      ),
+      body: _scanner == null || _isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : _scanner,
     );
   }
 }
