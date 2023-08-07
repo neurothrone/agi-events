@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../core/models/models.dart';
+import '../../../../core/widgets/widgets.dart';
 import '../../add_lead/data/leads_controller.dart';
 import 'empty_leads_placeholder.dart';
 import 'add_lead_text_row_button.dart';
@@ -12,12 +13,10 @@ import 'leads_sliver_list.dart';
 class LeadsPageContent extends ConsumerWidget {
   const LeadsPageContent({
     super.key,
-    required this.eventId,
-    required this.imageAsset,
+    required this.event,
   });
 
-  final String eventId;
-  final String imageAsset;
+  final Event event;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -34,11 +33,7 @@ class LeadsPageContent extends ConsumerWidget {
                 children: [
                   SizedBox(
                     height: 100.0,
-                    child: SvgPicture.asset(
-                      imageAsset,
-                      // TODO: temporary until SVG:s fixed
-                      color: Colors.white,
-                    ),
+                    child: SvgPicture.asset("assets/images/${event.image}.svg"),
                   ),
                   const SizedBox(height: 20.0),
                   const AddLeadTextRowButton(),
@@ -51,9 +46,7 @@ class LeadsPageContent extends ConsumerWidget {
           ],
         );
       },
-      loading: () => const Center(
-        child: CircularProgressIndicator(),
-      ),
+      loading: () => const CenteredProgressIndicator(),
       error: (error, __) {
         return Center(
           child: Text("❌ -> Error fetching leads. Error: $error"),

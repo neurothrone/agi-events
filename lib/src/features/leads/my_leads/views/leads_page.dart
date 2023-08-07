@@ -59,8 +59,7 @@ class LeadsPage extends StatelessWidget {
       body: SafeArea(
         minimum: const EdgeInsets.symmetric(horizontal: 20.0),
         child: LeadsPageContent(
-          eventId: event.eventId,
-          imageAsset: "assets/images/${event.image}.svg",
+          event: event,
         ),
       ),
     );
