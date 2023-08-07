@@ -11,16 +11,19 @@ final qrScanControllerProvider = Provider<QrScanController>((ref) {
 });
 
 class QrScanController {
-  Future<String?> showQrScanner({
+  Future<void> showQrScanner({
     required ScanType scanType,
     required BuildContext context,
+    Function(String)? onQrCodeScanned,
   }) async {
     final String? qrCode = await showCustomBottomSheet(
       context: context,
       child: QrScannerSheet(scanType: scanType),
     );
 
-    debugPrint("ℹ️ -> QR Code: $qrCode");
-    return qrCode;
+    if (qrCode != null && onQrCodeScanned != null) {
+      debugPrint("ℹ️ -> QR Code scanned: $qrCode");
+      onQrCodeScanned(qrCode);
+    }
   }
 }
