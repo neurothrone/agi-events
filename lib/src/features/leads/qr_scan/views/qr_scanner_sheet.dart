@@ -4,6 +4,8 @@ import 'package:mobile_scanner/mobile_scanner.dart';
 
 import '../../../../core/utils/enums/enums.dart';
 
+const int kQrCodeRequiredLength = 40;
+
 class QrScannerSheet extends StatefulWidget {
   const QrScannerSheet({
     super.key,
@@ -42,26 +44,44 @@ class _QrScannerSheetState extends State<QrScannerSheet> {
         final List<Barcode> barcodes = capture.barcodes;
         final String? qrCode = barcodes.firstOrNull?.rawValue;
 
-        if (qrCode != null) {
-          _disposeAfterScan(qrCode);
-        } else {
-          debugPrint("❌ -> Invalid QR Code");
+        if (qrCode == null || qrCode.length != kQrCodeRequiredLength) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              backgroundColor: Colors.black,
+              content: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.info_outline,
+                    color: Colors.red,
+                    size: 20.0,
+                  ),
+                  SizedBox(width: 6.0),
+                  Text(
+                    "That is not a valid QR Code",
+                    style: TextStyle(
+                      color: Colors.red,
+                      fontSize: 16.0,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+          return;
         }
+
+        _disposeAfterScan(qrCode);
       },
     );
 
-    setState(() {
-      _isLoading = false;
-    });
+    setState(() => _isLoading = false);
   }
 
   Future<void> _disposeAfterScan(String qrCode) async {
-    setState(() {
-      _scanner = null;
-    });
+    setState(() => _scanner = null);
 
     final navigator = Navigator.of(context);
-
     await Future.delayed(const Duration(milliseconds: 500));
 
     widget.onQrCodeScanned(qrCode);
