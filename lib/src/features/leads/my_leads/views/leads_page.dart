@@ -31,10 +31,9 @@ class LeadsPage extends StatelessWidget {
 
     if (qrCode == null) return;
 
-    ref.read(leadsControllerProvider.notifier).addLeadThroughQR(
-          qrCode: qrCode,
-          eventId: event.eventId,
-        );
+    ref
+        .read(leadsControllerProvider.notifier)
+        .addLeadByQR(qrCode: qrCode, eventId: event.eventId);
   }
 
   @override

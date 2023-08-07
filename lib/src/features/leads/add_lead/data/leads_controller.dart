@@ -225,7 +225,7 @@ class LeadsController extends StateNotifier<AsyncValue<List<Lead>>> {
     }
   }
 
-  Future<void> addLeadThroughQR({
+  Future<void> addLeadByQR({
     required String qrCode,
     required String eventId,
   }) async {
