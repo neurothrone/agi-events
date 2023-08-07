@@ -17,8 +17,7 @@ class CsvService {
   }) async {
     String csvString = _converter.convert(rows);
 
-    // final directory = await getApplicationDocumentsDirectory();
-    final directory = await getTemporaryDirectory();
+    final directory = await getApplicationDocumentsDirectory();
     final pathOfTheFileToWrite = "${directory.path}/$fileName.csv";
     File file = await File(pathOfTheFileToWrite).create(recursive: true);
     await file.writeAsString(csvString);
