@@ -51,18 +51,6 @@ class EventsPageContent extends ConsumerWidget {
         );
   }
 
-  void _navigateToLeadsPageForEvent(
-    Event event,
-    BuildContext context,
-  ) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => LeadsPage(event: event),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final AsyncValue<List<Event>> eventsState = ref.watch(
@@ -97,7 +85,10 @@ class EventsPageContent extends ConsumerWidget {
                 final event = yourEvents[index];
 
                 return EventGridTile(
-                  onTap: () => _navigateToLeadsPageForEvent(event, context),
+                  onTap: () => Navigator.push(
+                    context,
+                    LeadsPage.route(event: event),
+                  ),
                   event: event,
                 );
               },

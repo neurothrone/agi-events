@@ -17,16 +17,10 @@ class LeadRow extends StatelessWidget {
     return Column(
       children: [
         InkWell(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => LeadDetailPage(
-                  lead: lead,
-                ),
-              ),
-            );
-          },
+          onTap: () => Navigator.push(
+            context,
+            LeadDetailPage.route(lead: lead),
+          ),
           child: Column(
             children: [
               const SizedBox(height: 10.0),
