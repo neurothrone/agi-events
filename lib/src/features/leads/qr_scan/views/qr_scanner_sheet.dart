@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 
 import '../../../../core/utils/enums/enums.dart';
-import '../../../../core/utils/enums/snackbar_type.dart';
-import '../../../../core/utils/snackbar_utils.dart';
+import '../../../../core/utils/utils.dart';
 import '../../../../core/widgets/widgets.dart';
 
 const int kQrCodeRequiredLength = 40;
@@ -50,7 +49,6 @@ class _QrScannerSheetState extends State<QrScannerSheet> {
         if (qrCode == null || qrCode.length != kQrCodeRequiredLength) {
           showSnackbar(
             message: "That is not a valid QR Code",
-            snackbarType: SnackbarType.warning,
             context: context,
           );
           return;
