@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/constants/app_constants.dart';
 import '../../../../core/fake/data/providers.dart';
 import '../../../../core/fake/repositories/fake_database_repository.dart';
 import '../../../../core/fake/repositories/fake_realtime_repository.dart';
@@ -11,6 +12,7 @@ import '../../../../core/interfaces/repositories/database_repository.dart';
 import '../../../../core/interfaces/repositories/realtime_repository.dart';
 import '../../../../core/models/models.dart';
 import '../../../../core/utils/enums/enums.dart';
+import '../../../../core/utils/utils.dart';
 import '../../../csv/csv.dart';
 
 final leadsControllerProvider =
@@ -54,12 +56,18 @@ class LeadsController extends StateNotifier<AsyncValue<List<Lead>>> {
   final CsvService _csvService;
   final ShareService _shareService;
 
-  Future<void> _addLead(Lead lead) async {
+  Future<void> _addLead({
+    required Lead lead,
+    required BuildContext context,
+  }) async {
     final List<Lead> currentLeads = List.from(state.value ?? []);
 
     if (currentLeads.contains(lead)) {
-      // TODO: Show a Snackbar
-      debugPrint("ℹ️ -> You have already added that Lead.");
+      showSnackbar(
+        message: "You have already added that Lead",
+        backgroundColor: AppConstants.lighterBlack,
+        context: context,
+      );
       return;
     }
 
@@ -73,6 +81,7 @@ class LeadsController extends StateNotifier<AsyncValue<List<Lead>>> {
   // TODO: pass eventId and assign it to a new property on Lead
   Future<void> addLeadManually({
     required Event event,
+    required BuildContext context,
     required String firstName,
     required String lastName,
     required String company,
@@ -99,12 +108,13 @@ class LeadsController extends StateNotifier<AsyncValue<List<Lead>>> {
       hashedString: hashedString,
     );
 
-    await _addLead(newLead);
+    await _addLead(lead: newLead, context: context);
   }
 
   Future<void> addLeadByQR({
     required String qrCode,
     required Event event,
+    required BuildContext context,
   }) async {
     // TODO: check that lead by that qr code is not already in leads
 
@@ -145,7 +155,7 @@ class LeadsController extends StateNotifier<AsyncValue<List<Lead>>> {
       hashedString: hashedString,
     );
 
-    await _addLead(newLead);
+    await _addLead(lead: newLead, context: context);
   }
 
   Future<bool> _saveLeadToDatabase(Lead lead) async {

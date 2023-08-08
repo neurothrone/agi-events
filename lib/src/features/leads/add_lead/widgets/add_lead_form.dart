@@ -80,6 +80,7 @@ class _AddLeadFormState extends State<AddLeadForm> {
   void _addLead(WidgetRef ref) {
     ref.read(leadsControllerProvider.notifier).addLeadManually(
           event: widget.event,
+          context: context,
           firstName: _firstNameController.text,
           lastName: _lastNameController.text,
           company: _companyController.text,
