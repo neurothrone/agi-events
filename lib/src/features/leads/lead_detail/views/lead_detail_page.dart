@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/constants/constants.dart';
 import '../../../../core/models/models.dart';
 import '../../my_leads/data/leads_controller.dart';
 import '../../my_leads/widgets/lead_delete_button.dart';
@@ -9,7 +10,7 @@ import '../widgets/contact_information.dart';
 import '../widgets/lead_detail_header_text.dart';
 import '../widgets/lead_detail_page_app_bar.dart';
 import '../widgets/notes_text_area.dart';
-import '../widgets/unsaved_changes_dialog.dart';
+import '../widgets/custom_alert_dialog.dart';
 
 class LeadDetailPage extends StatefulWidget {
   const LeadDetailPage({
@@ -45,6 +46,12 @@ class _LeadDetailPageState extends State<LeadDetailPage> {
     super.dispose();
   }
 
+  Future<void> _saveChanges(WidgetRef ref) async {
+    ref.read(leadsControllerProvider.notifier).updateLeadNotes(
+          widget.lead.copyWith(notes: _notesController.text),
+        );
+  }
+
   Future<void> _onCancel(WidgetRef ref) async {
     FocusScopeNode currentFocus = FocusScope.of(context);
 
@@ -57,23 +64,29 @@ class _LeadDetailPageState extends State<LeadDetailPage> {
 
     final String leadNotes = widget.lead.notes ?? "";
     if (leadNotes != _notesController.text) {
-      bool? hasUnsavedChanges = await showUnsavedChangesDialog(context);
-      if (hasUnsavedChanges != null && hasUnsavedChanges) {
-        _saveChanges(ref);
-      }
+      await showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return CustomAlertDialog(
+            title: "You have unsaved changes",
+            content: "Do you want to save them?",
+            cancelText: "Discard",
+            confirmText: "Save",
+            cancelColor: AppConstants.destructive,
+            confirmColor: AppConstants.secondaryBlue,
+            onCancel: () {
+              // TODO: Do nothing
+            },
+            onConfirm: () {
+              _saveChanges(ref);
+            },
+          );
+        },
+      );
     }
 
     navigator.pop();
-  }
-
-  Future<bool?> showUnsavedChangesDialog(BuildContext context) {
-    return showDialog<bool>(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return const UnsavedChangesDialog();
-      },
-    );
   }
 
   Future<void> _onSave(WidgetRef ref) async {
@@ -81,10 +94,26 @@ class _LeadDetailPageState extends State<LeadDetailPage> {
     Navigator.of(context).pop();
   }
 
-  Future<void> _saveChanges(WidgetRef ref) async {
-    ref.read(leadsControllerProvider.notifier).updateLeadNotes(
-          widget.lead.copyWith(notes: _notesController.text),
+  void _onDelete(WidgetRef ref) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return CustomAlertDialog(
+          title: "Delete Lead",
+          content: "This will delete your Lead from the database. "
+              "Are you sure?",
+          cancelText: "Cancel",
+          confirmText: "Delete",
+          cancelColor: AppConstants.secondaryBlue,
+          confirmColor: AppConstants.destructive,
+          onCancel: () {},
+          onConfirm: () {
+            // TODO: Delete Lead from database and pop navigator
+          },
         );
+      },
+    );
   }
 
   @override
@@ -131,8 +160,12 @@ class _LeadDetailPageState extends State<LeadDetailPage> {
                         ),
                         const SizedBox(height: 40.0),
                         const Spacer(),
-                        LeadDeleteButton(
-                          onPressed: () {},
+                        Consumer(
+                          builder: (_, ref, __) {
+                            return LeadDeleteButton(
+                              onPressed: () => _onDelete(ref),
+                            );
+                          },
                         ),
                       ],
                     ),
