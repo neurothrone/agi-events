@@ -105,7 +105,21 @@ class _LeadDetailPageState extends State<LeadDetailPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              const Text(
+                "Contact Information",
+                style: TextStyle(
+                  fontSize: 24.0,
+                ),
+              ),
+              const SizedBox(height: 10.0),
               ContactInformation(lead: widget.lead),
+              const SizedBox(height: 40.0),
+              const Text(
+                "Additional Information",
+                style: TextStyle(
+                  fontSize: 24.0,
+                ),
+              ),
               const SizedBox(height: 10.0),
               NotesTextArea(
                 lead: widget.lead,
