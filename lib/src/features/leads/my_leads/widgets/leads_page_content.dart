@@ -5,7 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../core/models/models.dart';
 import '../../../../core/widgets/widgets.dart';
-import '../../add_lead/data/leads_controller.dart';
+import '../data/leads_controller.dart';
 import 'empty_leads_placeholder.dart';
 import 'event_leads_overview.dart';
 import 'leads_sliver_list.dart';
