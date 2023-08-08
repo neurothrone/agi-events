@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -259,24 +258,28 @@ class LeadsController extends StateNotifier<AsyncValue<List<Lead>>> {
     );
   }
 
-  // TODO: Pass eventId? for the file name
   Future<void> exportLeads({
+    required Event event,
     Rect? sharePositionOrigin,
   }) async {
-    if (state.value == null) return;
+    state.maybeWhen(
+      data: (currentLeads) async {
+        List<List<String>> dataRows = state.value!.toCsvDataRows();
 
-    List<List<String>> dataRows = state.value!.toCsvDataRows();
+        File csvFile = await _csvService.exportToCSV(
+          rows: dataRows,
+          fileName: "AGI Events ${event.title} Exported Leads",
+        );
 
-    // TODO: fileName: "$eventId-leads"?
-    File csvFile = await _csvService.exportToCSV(
-      rows: dataRows,
-      fileName: "leads",
-    );
-
-    await _shareService.shareFile(
-      file: csvFile,
-      shareSheetText: "Leads CSV",
-      sharePositionOrigin: sharePositionOrigin,
+        await _shareService.shareFile(
+          file: csvFile,
+          shareSheetText: "Leads CSV",
+          sharePositionOrigin: sharePositionOrigin,
+        );
+      },
+      orElse: () {
+        debugPrint("❌ -> Unexpected state while exporting leads.");
+      },
     );
   }
 }
