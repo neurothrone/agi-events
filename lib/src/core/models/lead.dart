@@ -81,4 +81,14 @@ class Lead {
       hashedString: hashedString ?? this.hashedString,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Lead &&
+          runtimeType == other.runtimeType &&
+          hashedString == other.hashedString;
+
+  @override
+  int get hashCode => hashedString.hashCode;
 }
