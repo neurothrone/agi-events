@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/constants/app_constants.dart';
 import '../../../../core/models/models.dart';
+import 'lead_detail_text_icon_row.dart';
 
 class ContactInformation extends StatelessWidget {
   const ContactInformation({
@@ -12,31 +14,34 @@ class ContactInformation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          "Contact Information",
-          style: TextStyle(
-            fontSize: 24.0,
+    return DefaultTextStyle(
+      style: const TextStyle(fontSize: 16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          LeadDetailTextIconRow(
+            text: lead.fullName,
+            icon: Icons.person_rounded,
           ),
-        ),
-        const SizedBox(height: 10.0),
-        Text(lead.fullName),
-        const SizedBox(height: 10.0),
-        Text(lead.company),
-        const SizedBox(height: 10.0),
-        Text(lead.email),
-        const SizedBox(height: 10.0),
-        if (lead.phone != null) Text("tel: ${lead.phone}"),
-        const SizedBox(height: 40.0),
-        const Text(
-          "Additional Information",
-          style: TextStyle(
-            fontSize: 24.0,
+          const SizedBox(height: 10.0),
+          LeadDetailTextIconRow(
+            text: lead.company,
+            icon: Icons.business_rounded,
           ),
-        ),
-      ],
+          const SizedBox(height: 10.0),
+          LeadDetailTextIconRow(
+            text: lead.email,
+            icon: Icons.email_rounded,
+          ),
+          if (lead.phone != null) ...[
+            const SizedBox(height: 10.0),
+            LeadDetailTextIconRow(
+              text: lead.phone!,
+              icon: Icons.phone_rounded,
+            ),
+          ],
+        ],
+      ),
     );
   }
 }
