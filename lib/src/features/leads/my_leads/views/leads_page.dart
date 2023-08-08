@@ -8,6 +8,7 @@ import '../../../../core/models/models.dart';
 import '../../../../core/utils/enums/enums.dart';
 import '../../../../core/utils/utils.dart';
 import '../../add_lead/data/leads_controller.dart';
+import '../../add_lead/views/add_lead_sheet.dart';
 import '../../qr_scan/data/qr_scan_controller.dart';
 import '../widgets/qr_scanner_button.dart';
 import '../widgets/leads_page_content.dart';
@@ -20,6 +21,13 @@ class LeadsPage extends StatelessWidget {
   });
 
   final Event event;
+
+  void _showAddLeadSheet(BuildContext context) {
+    showCustomBottomSheet(
+      context: context,
+      child: const AddLeadSheet(),
+    );
+  }
 
   Future<void> _openQrScanner(
     BuildContext context,
@@ -88,6 +96,7 @@ class LeadsPage extends StatelessWidget {
       body: SafeArea(
         minimum: const EdgeInsets.symmetric(horizontal: 20.0),
         child: LeadsPageContent(
+          onAddPressed: () => _showAddLeadSheet(context),
           event: event,
         ),
       ),

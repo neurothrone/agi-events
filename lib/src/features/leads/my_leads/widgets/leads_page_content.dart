@@ -7,15 +7,17 @@ import '../../../../core/models/models.dart';
 import '../../../../core/widgets/widgets.dart';
 import '../../add_lead/data/leads_controller.dart';
 import 'empty_leads_placeholder.dart';
-import 'add_lead_text_row_button.dart';
+import 'event_leads_overview.dart';
 import 'leads_sliver_list.dart';
 
 class LeadsPageContent extends ConsumerWidget {
   const LeadsPageContent({
     super.key,
+    this.onAddPressed,
     required this.event,
   });
 
+  final VoidCallback? onAddPressed;
   final Event event;
 
   @override
@@ -36,7 +38,10 @@ class LeadsPageContent extends ConsumerWidget {
                     child: SvgPicture.asset("assets/images/${event.image}.svg"),
                   ),
                   const SizedBox(height: 20.0),
-                  const AddLeadTextRowButton(),
+                  EventLeadsOverview(
+                    text: "Your leads",
+                    onTap: onAddPressed,
+                  ),
                   const Divider(color: Colors.white12),
                   if (leads.isEmpty) const EmptyLeadsPlaceholder(),
                 ],
