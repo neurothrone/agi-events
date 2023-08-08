@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/constants/app_constants.dart';
-import '../../../../core/widgets/primary_button.dart';
-import '../../../../core/widgets/custom_text_form_field.dart';
-import '../data/leads_controller.dart';
+import '../../../../core/constants/constants.dart';
+import '../../../../core/models/models.dart';
+import '../../../../core/widgets/widgets.dart';
+import '../../my_leads/data/leads_controller.dart';
 
 class AddLeadForm extends StatefulWidget {
   const AddLeadForm({
     super.key,
+    required this.event,
   });
+
+  final Event event;
 
   @override
   State<AddLeadForm> createState() => _AddLeadFormState();
@@ -75,6 +79,7 @@ class _AddLeadFormState extends State<AddLeadForm> {
 
   void _addLead(WidgetRef ref) {
     ref.read(leadsControllerProvider.notifier).addLeadManually(
+          event: widget.event,
           firstName: _firstNameController.text,
           lastName: _lastNameController.text,
           company: _companyController.text,

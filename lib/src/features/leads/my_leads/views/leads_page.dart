@@ -7,9 +7,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/models/models.dart';
 import '../../../../core/utils/enums/enums.dart';
 import '../../../../core/utils/utils.dart';
-import '../../add_lead/data/leads_controller.dart';
 import '../../add_lead/views/add_lead_sheet.dart';
 import '../../qr_scan/data/qr_scan_controller.dart';
+import '../data/leads_controller.dart';
 import '../widgets/qr_scanner_button.dart';
 import '../widgets/leads_page_content.dart';
 import '../widgets/share_button.dart';
@@ -25,7 +25,7 @@ class LeadsPage extends StatelessWidget {
   void _showAddLeadSheet(BuildContext context) {
     showCustomBottomSheet(
       context: context,
-      child: const AddLeadSheet(),
+      child: AddLeadSheet(event: event),
     );
   }
 
@@ -39,7 +39,7 @@ class LeadsPage extends StatelessWidget {
           onQrCodeScanned: (String qrCode) async {
             await ref
                 .read(leadsControllerProvider.notifier)
-                .addLeadByQR(qrCode: qrCode, eventId: event.eventId);
+                .addLeadByQR(qrCode: qrCode, event: event);
           },
         );
   }
