@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/models/event.dart';
 import '../../../core/utils/enums/enums.dart';
+import '../../../core/utils/utils.dart';
 import '../../../core/widgets/widgets.dart';
 import '../../leads/my_leads/views/leads_page.dart';
 import '../../leads/qr_scan/data/qr_scan_controller.dart';
@@ -47,7 +48,15 @@ class EventsPageContent extends ConsumerWidget {
           onQrCodeScanned: (String qrCode) async {
             await ref
                 .read(eventsControllerProvider.notifier)
-                .addEventByExhibitorId(exhibitorId: qrCode, eventId: eventId);
+                .addEventByExhibitorId(
+                    exhibitorId: qrCode,
+                    eventId: eventId,
+                    onError: (String message) {
+                      showSnackbar(
+                        message: message,
+                        context: context,
+                      );
+                    });
           },
         );
   }

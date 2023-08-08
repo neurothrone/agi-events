@@ -251,6 +251,7 @@ class EventsController extends StateNotifier<AsyncValue<List<Event>>> {
   Future<void> addEventByExhibitorId({
     required String exhibitorId,
     required String eventId,
+    Function(String)? onError,
   }) async {
     final Map<String, dynamic>? eventMap = await _fetchEventDataById(eventId);
 
@@ -262,7 +263,9 @@ class EventsController extends StateNotifier<AsyncValue<List<Event>>> {
     );
 
     if (exhibitor == null) {
-      debugPrint("❌ -> Exhibitor was null.");
+      if (onError != null) {
+        onError("You have not registered for this Event");
+      }
       return;
     }
 
