@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/constants/constants.dart';
 import '../widgets/add_lead_form.dart';
+import '../widgets/add_lead_title_text.dart';
 
 class AddLeadSheet extends StatelessWidget {
   const AddLeadSheet({super.key});
@@ -27,24 +28,6 @@ class AddLeadSheet extends StatelessWidget {
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class AddLeadTitleText extends StatelessWidget {
-  const AddLeadTitleText({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return const Text(
-      "New lead",
-      style: TextStyle(
-        color: Colors.grey,
-        fontSize: 16.0,
-        fontWeight: FontWeight.w500,
       ),
     );
   }
