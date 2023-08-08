@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/models/models.dart';
 import '../../my_leads/data/leads_controller.dart';
+import '../../my_leads/widgets/lead_delete_button.dart';
 import '../widgets/contact_information.dart';
 import '../widgets/lead_detail_header_text.dart';
 import '../widgets/lead_detail_page_app_bar.dart';
@@ -101,27 +102,45 @@ class _LeadDetailPageState extends State<LeadDetailPage> {
         ),
       ),
       body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const LeadDetailHeaderText(
-                title: "Contact Information",
+        child: LayoutBuilder(
+          builder: (context, BoxConstraints viewportConstraints) {
+            return SingleChildScrollView(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  minHeight: viewportConstraints.maxHeight,
+                ),
+                child: IntrinsicHeight(
+                  child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const LeadDetailHeaderText(
+                          title: "Contact Information",
+                        ),
+                        const SizedBox(height: 10.0),
+                        ContactInformation(lead: widget.lead),
+                        const SizedBox(height: 40.0),
+                        const LeadDetailHeaderText(
+                          title: "Additional Information",
+                        ),
+                        const SizedBox(height: 10.0),
+                        NotesTextArea(
+                          lead: widget.lead,
+                          notesController: _notesController,
+                        ),
+                        const SizedBox(height: 40.0),
+                        const Spacer(),
+                        LeadDeleteButton(
+                          onPressed: () {},
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               ),
-              const SizedBox(height: 10.0),
-              ContactInformation(lead: widget.lead),
-              const SizedBox(height: 40.0),
-              const LeadDetailHeaderText(
-                title: "Additional Information",
-              ),
-              const SizedBox(height: 10.0),
-              NotesTextArea(
-                lead: widget.lead,
-                notesController: _notesController,
-              ),
-            ],
-          ),
+            );
+          },
         ),
       ),
     );
