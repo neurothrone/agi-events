@@ -57,13 +57,95 @@ class LeadsController extends StateNotifier<AsyncValue<List<Lead>>> {
   Future<void> _addLead(Lead lead) async {
     final List<Lead> currentLeads = List.from(state.value ?? []);
 
-    if (currentLeads.contains(lead)) return;
+    if (currentLeads.contains(lead)) {
+      // TODO: Show a Snackbar
+      debugPrint("ℹ️ -> You have already added that Lead.");
+      return;
+    }
 
     final bool hasSavedLead = await _saveLeadToDatabase(lead);
 
     if (hasSavedLead) {
       await _updateLeadsWithNewLead(lead);
     }
+  }
+
+  // TODO: pass eventId and assign it to a new property on Lead
+  Future<void> addLeadManually({
+    required Event event,
+    required String firstName,
+    required String lastName,
+    required String company,
+    required String email,
+    String? phone,
+    String? position,
+    String? address,
+    String? zipCode,
+    String? city,
+  }) async {
+    final hashedString =
+        "$email$firstName$lastName${event.eventId}".toLowerCase();
+
+    final newLead = Lead(
+      firstName: firstName,
+      lastName: lastName,
+      company: company,
+      email: email,
+      phone: phone,
+      address: address,
+      zipCode: zipCode,
+      city: city,
+      scannedAt: DateTime.now(),
+      hashedString: hashedString,
+    );
+
+    await _addLead(newLead);
+  }
+
+  Future<void> addLeadByQR({
+    required String qrCode,
+    required Event event,
+  }) async {
+    // TODO: check that lead by that qr code is not already in leads
+
+    final Map<String, dynamic>? eventMap = await _fetchEventDataById(
+      event.eventId,
+    );
+
+    if (eventMap == null) return;
+
+    // TODO get UserData
+    final RawVisitorData? visitor = await _processMapIntoExhibitorData(
+      eventMap: eventMap,
+      visitorId: qrCode,
+    );
+
+    if (visitor == null) {
+      debugPrint("❌ -> Visitor was null.");
+      return;
+    }
+
+    final hashedString = "${visitor.email}${visitor.firstName}"
+            "${visitor.lastName}${event.eventId}"
+        .toLowerCase();
+
+    // Convert Visitor to Lead
+    final Lead newLead = Lead(
+      firstName: visitor.firstName,
+      lastName: visitor.lastName,
+      company: visitor.company,
+      email: visitor.email,
+      phone: visitor.phone,
+      position: visitor.position,
+      countryCode: visitor.countryCode,
+      address: visitor.address,
+      zipCode: visitor.zipCode,
+      city: visitor.city,
+      scannedAt: DateTime.now(),
+      hashedString: hashedString,
+    );
+
+    await _addLead(newLead);
   }
 
   Future<bool> _saveLeadToDatabase(Lead lead) async {
@@ -90,36 +172,6 @@ class LeadsController extends StateNotifier<AsyncValue<List<Lead>>> {
       );
       state = AsyncValue.error(e.toString(), stacktrace);
     }
-  }
-
-  // TODO: pass eventId and assign it to a new property on Lead
-  Future<void> addLeadManually({
-    required String firstName,
-    required String lastName,
-    required String company,
-    required String email,
-    String? phone,
-    String? position,
-    String? address,
-    String? zipCode,
-    String? city,
-  }) async {
-    const eventId = "eventId";
-
-    final newLead = Lead(
-      firstName: firstName,
-      lastName: lastName,
-      company: company,
-      email: email,
-      phone: phone,
-      address: address,
-      zipCode: zipCode,
-      city: city,
-      scannedAt: DateTime.now(),
-      hashedString: "$email$firstName$lastName$eventId",
-    );
-
-    await _addLead(newLead);
   }
 
   // TODO: can be reused
@@ -192,46 +244,7 @@ class LeadsController extends StateNotifier<AsyncValue<List<Lead>>> {
     }
   }
 
-  Future<void> addLeadByQR({
-    required String qrCode,
-    required String eventId,
-  }) async {
-    // TODO: check that lead by that qr code is not already in leads
-
-    final Map<String, dynamic>? eventMap = await _fetchEventDataById(eventId);
-
-    if (eventMap == null) return;
-
-    final RawVisitorData? visitor = await _processMapIntoExhibitorData(
-      eventMap: eventMap,
-      visitorId: qrCode,
-    );
-
-    if (visitor == null) {
-      debugPrint("❌ -> Visitor was null.");
-      return;
-    }
-
-    // Convert Visitor to Lead
-    final Lead newLead = Lead(
-      firstName: visitor.firstName,
-      lastName: visitor.lastName,
-      company: visitor.company,
-      email: visitor.email,
-      phone: visitor.phone,
-      position: visitor.position,
-      countryCode: visitor.countryCode,
-      address: visitor.address,
-      zipCode: visitor.zipCode,
-      city: visitor.city,
-      scannedAt: DateTime.now(),
-      hashedString: "${visitor.email}${visitor.firstName}"
-          "${visitor.lastName}$eventId",
-    );
-
-    await _addLead(newLead);
-  }
-
+  // TODO: Move to UpdateLeadController
   // TODO: create two new methods. One to update in database and second in UI
   Future<void> updateLeadNotes(Lead updatedLead) async {
     state.maybeWhen(
