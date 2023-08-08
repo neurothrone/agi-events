@@ -9,6 +9,7 @@ import '../../../core/interfaces/repositories/database_repository.dart';
 import '../../../core/interfaces/repositories/realtime_repository.dart';
 import '../../../core/models/models.dart';
 import '../../../core/utils/enums/enums.dart';
+import 'providers.dart';
 
 final eventsControllerProvider =
     StateNotifierProvider<EventsController, AsyncValue<List<Event>>>((ref) {
@@ -22,86 +23,117 @@ final eventsControllerProvider =
     fakeDatabaseRepositoryProvider,
   );
   // !: Fake Realtime database
-  final jsonData = ref.watch(fakeDataFutureProvider);
+  final AsyncValue<Map<String, dynamic>> fakeRealtimeData = ref.watch(
+    fakeRealtimeDataFutureProvider,
+  );
   final RealtimeRepository realtimeRepository = ref.watch(
-    fakeRealtimeRepositoryProvider(jsonData),
+    fakeRealtimeRepositoryProvider(fakeRealtimeData),
   );
 
+  final eventsData = ref.watch(eventsDataProvider);
+
   return EventsController(
+    events: eventsData,
     databaseRepository: databaseRepository,
     realtimeRepository: realtimeRepository,
   );
 });
 
+// TODO: move eventsData to separate controller -> EventsDataController
+
+class EventsDataController extends StateNotifier<AsyncValue<List<Event>>> {
+  EventsDataController() : super(const AsyncData([]));
+}
+
 class EventsController extends StateNotifier<AsyncValue<List<Event>>> {
   EventsController({
+    required List<Event> events,
     required DatabaseRepository databaseRepository,
     required RealtimeRepository realtimeRepository,
   })  : _databaseRepository = databaseRepository,
         _realtimeRepository = realtimeRepository,
         super(const AsyncData([])) {
-    _init();
+    _init(events);
   }
 
   final DatabaseRepository _databaseRepository;
   final RealtimeRepository _realtimeRepository;
 
-  Future<void> _init() async {
-    await fetchEvents();
+  Future<void> _init(List<Event> events) async {
+    await processEvents(events);
+    // await fetchEvents();
   }
 
   Future<bool> eventExists(String eventId) async {
-    return await _realtimeRepository.eventExists(
-      eventId,
-    );
+    return await _realtimeRepository.eventExists(eventId);
   }
 
-  Future<void> fetchEvents() async {
+  Future<void> processEvents(List<Event> events) async {
+    final List<Event> savedEvents = await _fetchSavedEvents();
+
     try {
       state = const AsyncValue.loading();
 
-      // Fetch all event data from Realtime database
-      Map<String, dynamic> eventsMap =
-          await _realtimeRepository.fetchEventsData();
-
-      // Extract out only the details of each event map
-      List<Map<String, dynamic>> eventsDetailMap = _processEventsDataFromMap(
-        eventsMap,
+      final List<Event> currentEvents = _mergeAndKeepSaved(
+        events,
+        savedEvents,
       );
-      // Convert to model
-      List<Event> fetchedEvents =
-          eventsDetailMap.map((eventMap) => Event.fromMap(eventMap)).toList();
 
-      // Merge saved and fetched lists and only keep unique Events where
-      // the 'saved' property is equal to true
-      final List<Event> savedEvents = await _fetchSavedEvents();
-      final List<Event> events = _mergeAndKeepSaved(fetchedEvents, savedEvents);
-
-      state = AsyncValue.data(events);
-    } catch (exception, stacktrace) {
+      state = AsyncValue.data(currentEvents);
+    } catch (e, st) {
       debugPrint(
-        "❌ -> Unexpected error while fetching events. Error: $exception",
+        "❌ -> Unexpected error while processing events.",
       );
-      state = AsyncValue.error(exception.toString(), stacktrace);
+      state = AsyncValue.error(e.toString(), st);
     }
   }
 
-  List<Map<String, dynamic>> _processEventsDataFromMap(
-    Map<String, dynamic> map,
-  ) {
-    return map
-        .map(
-          (key, value) => MapEntry(key.toString(), value),
-        )
-        .values
-        .whereType<Map<dynamic, dynamic>>()
-        .map(
-          (value) => (value["event"] as Map).map(
-            (key, value) => MapEntry(key.toString(), value),
-          ),
-        )
-        .toList();
-  }
+  // Future<void> fetchEvents() async {
+  //   try {
+  //     state = const AsyncValue.loading();
+  //
+  //     // Fetch all event data from Realtime database
+  //     Map<String, dynamic> eventsMap =
+  //         await _realtimeRepository.fetchEventsData();
+  //
+  //     // Extract out only the details of each event map
+  //     List<Map<String, dynamic>> eventsDetailMap = _processEventsDataFromMap(
+  //       eventsMap,
+  //     );
+  //     // Convert to model
+  //     List<Event> fetchedEvents =
+  //         eventsDetailMap.map((eventMap) => Event.fromMap(eventMap)).toList();
+  //
+  //     // Merge saved and fetched lists and only keep unique Events where
+  //     // the 'saved' property is equal to true
+  //     final List<Event> savedEvents = await _fetchSavedEvents();
+  //     final List<Event> events = _mergeAndKeepSaved(fetchedEvents, savedEvents);
+  //
+  //     state = AsyncValue.data(events);
+  //   } catch (exception, stacktrace) {
+  //     debugPrint(
+  //       "❌ -> Unexpected error while fetching events. Error: $exception",
+  //     );
+  //     state = AsyncValue.error(exception.toString(), stacktrace);
+  //   }
+  // }
+
+  // List<Map<String, dynamic>> _processEventsDataFromMap(
+  //   Map<String, dynamic> map,
+  // ) {
+  //   return map
+  //       .map(
+  //         (key, value) => MapEntry(key.toString(), value),
+  //       )
+  //       .values
+  //       .whereType<Map<dynamic, dynamic>>()
+  //       .map(
+  //         (value) => (value["event"] as Map).map(
+  //           (key, value) => MapEntry(key.toString(), value),
+  //         ),
+  //       )
+  //       .toList();
+  // }
 
   List<Event> _mergeAndKeepSaved(
     List<Event> fetchedEvents,
