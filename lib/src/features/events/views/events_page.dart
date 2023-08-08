@@ -86,9 +86,11 @@ class EventsPageContent extends ConsumerWidget {
         }
 
         // !: Your Events
+        slivers.add(
+          const EventsSliverGridTitle(title: "Your Events"),
+        );
         if (yourEvents.isNotEmpty) {
           slivers.addAll([
-            const EventsSliverGridTitle(title: "Your Events"),
             EventsSliverGrid(
               eventsLength: yourEvents.length,
               builder: (context, index) {
@@ -101,6 +103,24 @@ class EventsPageContent extends ConsumerWidget {
               },
             ),
           ]);
+        } else {
+          slivers.add(
+            const SliverToBoxAdapter(
+              child: Padding(
+                padding: EdgeInsets.only(top: 20.0, bottom: 40.0),
+                child: Text(
+                  "You do not have events yet. Tap on an Event in the "
+                  "Coming Events section and Scan the QR code of your "
+                  "exhibitor badge.",
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+          );
         }
 
         // !: Coming Events
