@@ -232,6 +232,7 @@ class LeadsController extends StateNotifier<AsyncValue<List<Lead>>> {
     await _addLead(newLead);
   }
 
+  // TODO: create two new methods. One to update in database and second in UI
   Future<void> updateLeadNotes(Lead updatedLead) async {
     state.maybeWhen(
       data: (currentLeads) {
