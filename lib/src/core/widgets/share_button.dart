@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class LeadsCsvExportButton extends StatelessWidget {
-  const LeadsCsvExportButton({
+class ShareButton extends StatelessWidget {
+  const ShareButton({
     super.key,
     this.onPressed,
   });
