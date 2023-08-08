@@ -1,10 +1,12 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../constants/assets_constants.dart';
-import '../../utils/file_utils.dart';
+import '../../constants/constants.dart';
+import '../../utils/utils.dart';
 
-final fakeDataFutureProvider =
+final fakeRealtimeDataFutureProvider =
     FutureProvider<Map<String, dynamic>>((ref) async {
-  final localJsonData = await loadJsonFromAssets(AssetsConstants.localJsonData);
-  return localJsonData;
+  final Map<String, dynamic> realtimeData = await loadJsonFromAssets(
+    AssetsConstants.fakeRealtimeJson,
+  );
+  return realtimeData;
 });
