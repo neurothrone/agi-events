@@ -17,7 +17,7 @@ Future<Map<String, dynamic>> loadJsonFromAssets(String assetPath) async {
 
 void loadTestDataFromAssets() {
   final prettyPrint = JsonEncoder.withIndent(" " * 2);
-  loadJsonFromAssets(AssetsConstants.localJsonData)
+  loadJsonFromAssets(AssetsConstants.fakeRealtimeJson)
       // .then((Map<String, dynamic> data) => debugPrint(data.toString()))
       .then(
         (Map<String, dynamic> data) => debugPrint(prettyPrint.convert(data)),
