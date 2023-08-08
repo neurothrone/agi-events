@@ -113,14 +113,12 @@ class _AddLeadFormState extends State<AddLeadForm> {
             controller: _firstNameController,
             labelText: "First Name",
             hintText: "Enter first name",
-            keyboardType: TextInputType.name,
           ),
           const SizedBox(height: 20.0),
           CustomTextFormField(
             controller: _lastNameController,
             labelText: "Last Name",
             hintText: "Enter last name",
-            keyboardType: TextInputType.name,
           ),
           const SizedBox(height: 20.0),
           CustomTextFormField(
@@ -134,6 +132,7 @@ class _AddLeadFormState extends State<AddLeadForm> {
             labelText: "E-mail",
             hintText: "Enter e-mail",
             keyboardType: TextInputType.emailAddress,
+            textCapitalization: TextCapitalization.none,
           ),
           const SizedBox(height: 20.0),
           CustomTextFormField(
