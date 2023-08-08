@@ -29,6 +29,9 @@ class AppConstants {
         0.3,
       ) ??
       primaryBlue;
+
+  static Color primaryBlueDarker = darken(primaryBlue, 0.15);
+
   static Color lighterBlack = Color.lerp(
         Colors.black,
         Colors.white,
@@ -51,4 +54,11 @@ class AppConstants {
       secondaryBlue,
     ],
   );
+
+  static Color darken(Color color, [double amount = .1]) {
+    final hsl = HSLColor.fromColor(color);
+    final hslDark = hsl.withLightness((hsl.lightness - amount).clamp(0.0, 1.0));
+
+    return hslDark.toColor();
+  }
 }
