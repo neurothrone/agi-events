@@ -7,11 +7,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/models/models.dart';
 import '../../../../core/utils/enums/enums.dart';
 import '../../../../core/utils/utils.dart';
-import '../../../../core/widgets/widgets.dart';
 import '../../add_lead/data/leads_controller.dart';
 import '../../qr_scan/data/qr_scan_controller.dart';
-import '../widgets/lead_qr_scanner_button.dart';
+import '../widgets/qr_scanner_button.dart';
 import '../widgets/leads_page_content.dart';
+import '../widgets/share_button.dart';
 
 class LeadsPage extends StatelessWidget {
   const LeadsPage({
@@ -54,8 +54,6 @@ class LeadsPage extends StatelessWidget {
     ref.read(leadsControllerProvider.notifier).exportLeads(event: event);
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,8 +77,9 @@ class LeadsPage extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: Consumer(builder: (context, ref, _) {
-            return LeadQrScannerButton(
+            return QrScannerButton(
               onPressed: () => _openQrScanner(context, ref),
+              label: "Scan new lead",
             );
           }),
         ),
