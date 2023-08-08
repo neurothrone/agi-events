@@ -22,9 +22,11 @@ final leadsControllerProvider =
     fakeDatabaseRepositoryProvider,
   );
   // !: Fake Realtime database
-  final jsonData = ref.watch(fakeDataFutureProvider);
+  final AsyncValue<Map<String, dynamic>> fakeRealtimeData = ref.watch(
+    fakeRealtimeDataFutureProvider,
+  );
   final RealtimeRepository realtimeRepository = ref.watch(
-    fakeRealtimeRepositoryProvider(jsonData),
+    fakeRealtimeRepositoryProvider(fakeRealtimeData),
   );
 
   final CsvService csvService = ref.watch(csvServiceProvider);
