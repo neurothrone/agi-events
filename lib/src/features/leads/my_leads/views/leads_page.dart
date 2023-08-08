@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/models/models.dart';
 import '../../../../core/utils/enums/enums.dart';
 import '../../../../core/utils/utils.dart';
+import '../../../../core/widgets/widgets.dart';
 import '../../add_lead/views/add_lead_sheet.dart';
 import '../../qr_scan/data/qr_scan_controller.dart';
 import '../data/leads_controller.dart';
@@ -66,19 +67,36 @@ class LeadsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        actions: [
-          Consumer(builder: (context, ref, _) {
-            final List<Lead>? leads = ref.watch(leadsControllerProvider).value;
+      appBar: Platform.isIOS
+          ? PreferredSize(
+              preferredSize: const Size.fromHeight(kToolbarHeight),
+              child: CustomCupertinoAppBar(
+                trailing: Consumer(builder: (context, ref, _) {
+                  final List<Lead>? leads =
+                      ref.watch(leadsControllerProvider).value;
 
-            return ShareButton(
-              onPressed: leads != null && leads.isNotEmpty
-                  ? () => _shareLeads(context, ref)
-                  : null,
-            );
-          }),
-        ],
-      ),
+                  return ShareButton(
+                    onPressed: leads != null && leads.isNotEmpty
+                        ? () => _shareLeads(context, ref)
+                        : null,
+                  );
+                }),
+              ),
+            )
+          : AppBar(
+              actions: [
+                Consumer(builder: (context, ref, _) {
+                  final List<Lead>? leads =
+                      ref.watch(leadsControllerProvider).value;
+
+                  return ShareButton(
+                    onPressed: leads != null && leads.isNotEmpty
+                        ? () => _shareLeads(context, ref)
+                        : null,
+                  );
+                }),
+              ],
+            ),
       bottomNavigationBar: SafeArea(
         minimum: Platform.isIOS
             ? const EdgeInsets.only(bottom: 20.0)
