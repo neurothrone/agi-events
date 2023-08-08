@@ -23,6 +23,13 @@ class LeadsPage extends StatelessWidget {
 
   final Event event;
 
+  static MaterialPageRoute<void> route({required Event event}) =>
+      MaterialPageRoute(
+        builder: (context) => LeadsPage(
+          event: event,
+        ),
+      );
+
   void _showAddLeadSheet(BuildContext context) {
     showCustomBottomSheet(
       context: context,
