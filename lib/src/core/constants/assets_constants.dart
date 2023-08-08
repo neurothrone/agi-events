@@ -1,11 +1,10 @@
 class AssetsConstants {
-  static const String _basePath = "assets/images";
+  const AssetsConstants._();
 
-  static const String signPrintPromotionNorway = "$_basePath/SIPP-no-logo.svg";
-  static const String signPrintPackDenmarkLogo =
-      "$_basePath/SOPDK-Logo-white.svg";
-  static const String signPrintScandinaviaLogo =
-      "$_basePath/SOPSE-Logo-White.svg";
+  static const String fakeRealtimeJson = "assets/data/fake-database-data.json";
+  static const String eventsJson = "assets/data/events.json";
 
-  static const String localJsonData = "assets/data/testdata.json";
+  static const String _imagesBasePath = "assets/images";
+
+  static String imagePath(String imageName) => "$_imagesBasePath$imageName";
 }
