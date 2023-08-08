@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/models/models.dart';
 import '../../my_leads/data/leads_controller.dart';
 import '../widgets/contact_information.dart';
+import '../widgets/lead_detail_header_text.dart';
 import '../widgets/lead_detail_page_app_bar.dart';
 import '../widgets/notes_text_area.dart';
 import '../widgets/unsaved_changes_dialog.dart';
@@ -105,20 +106,14 @@ class _LeadDetailPageState extends State<LeadDetailPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                "Contact Information",
-                style: TextStyle(
-                  fontSize: 24.0,
-                ),
+              const LeadDetailHeaderText(
+                title: "Contact Information",
               ),
               const SizedBox(height: 10.0),
               ContactInformation(lead: widget.lead),
               const SizedBox(height: 40.0),
-              const Text(
-                "Additional Information",
-                style: TextStyle(
-                  fontSize: 24.0,
-                ),
+              const LeadDetailHeaderText(
+                title: "Additional Information",
               ),
               const SizedBox(height: 10.0),
               NotesTextArea(
