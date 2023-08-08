@@ -14,6 +14,7 @@ class CustomTextFormField extends StatelessWidget {
     this.isRequired = true,
     this.primaryColor,
     this.filled = false,
+    this.textCapitalization = TextCapitalization.sentences,
   });
 
   final TextEditingController? controller;
@@ -25,6 +26,7 @@ class CustomTextFormField extends StatelessWidget {
   final bool? readOnly;
   final Color? primaryColor;
   final bool? filled;
+  final TextCapitalization textCapitalization;
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +36,7 @@ class CustomTextFormField extends StatelessWidget {
       style: const TextStyle(
         color: Colors.white,
       ),
+      textCapitalization: textCapitalization,
       maxLines: maxLines ?? 1,
       keyboardType: keyboardType ?? TextInputType.text,
       cursorColor: primaryColor ?? AppConstants.primaryBlueLightest,
