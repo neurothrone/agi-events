@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import '../../../../core/constants/constants.dart';
+import '../../../../core/widgets/widgets.dart';
 
 class LeadDetailPageAppBar extends StatelessWidget {
   const LeadDetailPageAppBar({
@@ -14,26 +17,33 @@ class LeadDetailPageAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AppBar(
-      automaticallyImplyLeading: false,
-      titleSpacing: 0.0, // Remove default title spacing
-      title: Stack(
-        alignment: Alignment.center,
-        children: [
-          const Text("Lead"),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              TextButton(
-                onPressed: onCancel,
-                child: const Text(
-                  "Cancel",
-                  style: TextStyle(
-                    fontSize: 18.0,
-                    color: AppConstants.destructive,
-                  ),
+    return Platform.isIOS
+        ? CustomCupertinoAppBar(
+            onBackButtonPressed: onCancel,
+            title: "Lead",
+            trailing: TextButton(
+              onPressed: onSave,
+              child: Text(
+                "Save",
+                style: TextStyle(
+                  fontSize: 18.0,
+                  color: AppConstants.primaryBlueLightest,
                 ),
               ),
+            ),
+          )
+        : AppBar(
+            leading: BackButton(onPressed: onCancel),
+            centerTitle: true,
+            title: const Text(
+              "Lead",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 22.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            actions: [
               TextButton(
                 onPressed: onSave,
                 child: Text(
@@ -45,9 +55,6 @@ class LeadDetailPageAppBar extends StatelessWidget {
                 ),
               ),
             ],
-          ),
-        ],
-      ),
-    );
+          );
   }
 }
