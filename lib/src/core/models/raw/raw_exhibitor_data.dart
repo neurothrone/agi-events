@@ -38,7 +38,7 @@ class RawExhibitorData extends RawUserData {
 
     final exhibitionId =
         map.containsKey("exhibitionId") ? map["exhibitionId"] as String : "";
-    final hashedString = "$email$firstName$lastName$exhibitionId";
+    final hashedString = "$email$firstName$lastName$exhibitionId".toLowerCase();
 
     final registeredAtDate = map.containsKey("registeredAtDate")
         ? map["registeredAtDate"] as String
