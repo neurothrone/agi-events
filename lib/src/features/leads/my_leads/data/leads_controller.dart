@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/constants/app_constants.dart';
 import '../../../../core/fake/data/providers.dart';
 import '../../../../core/fake/repositories/fake_database_repository.dart';
 import '../../../../core/fake/repositories/fake_realtime_repository.dart';
@@ -12,7 +11,6 @@ import '../../../../core/interfaces/repositories/database_repository.dart';
 import '../../../../core/interfaces/repositories/realtime_repository.dart';
 import '../../../../core/models/models.dart';
 import '../../../../core/utils/enums/enums.dart';
-import '../../../../core/utils/utils.dart';
 import '../../../csv/csv.dart';
 
 final leadsControllerProvider =
@@ -58,26 +56,24 @@ class LeadsController extends StateNotifier<AsyncValue<List<Lead>>> {
   final CsvService _csvService;
   final ShareService _shareService;
 
-  Future<void> _addLead({
+  Future<String?> _addLead({
     required Lead lead,
-    required BuildContext context,
   }) async {
     final List<Lead> currentLeads = List.from(state.value ?? []);
 
     if (currentLeads.contains(lead)) {
-      showSnackbar(
-        message: "You have already added that Lead",
-        backgroundColor: AppConstants.lighterBlack,
-        context: context,
-      );
-      return;
+      return "You have already added that Lead";
     }
 
     final bool hasSavedLead = await _saveLeadToDatabase(lead);
 
     if (hasSavedLead) {
       await _updateLeadsWithNewLead(lead);
+    } else {
+      return "Failed to save Lead to database";
     }
+
+    return null;
   }
 
   // TODO: pass eventId and assign it to a new property on Lead
@@ -93,6 +89,7 @@ class LeadsController extends StateNotifier<AsyncValue<List<Lead>>> {
     String? address,
     String? zipCode,
     String? city,
+    Function(String)? onError,
   }) async {
     final hashedString =
         "$email$firstName$lastName${event.eventId}".toLowerCase();
@@ -110,13 +107,17 @@ class LeadsController extends StateNotifier<AsyncValue<List<Lead>>> {
       hashedString: hashedString,
     );
 
-    await _addLead(lead: newLead, context: context);
+    final String? errorMessage = await _addLead(lead: newLead);
+
+    if (errorMessage != null && onError != null) {
+      onError(errorMessage);
+    }
   }
 
   Future<void> addLeadByQR({
     required String qrCode,
     required Event event,
-    required BuildContext context,
+    Function(String)? onError,
   }) async {
     // TODO: check that lead by that qr code is not already in leads
 
@@ -157,7 +158,11 @@ class LeadsController extends StateNotifier<AsyncValue<List<Lead>>> {
       hashedString: hashedString,
     );
 
-    await _addLead(lead: newLead, context: context);
+    final String? errorMessage = await _addLead(lead: newLead);
+
+    if (errorMessage != null && onError != null) {
+      onError(errorMessage);
+    }
   }
 
   Future<bool> _saveLeadToDatabase(Lead lead) async {
