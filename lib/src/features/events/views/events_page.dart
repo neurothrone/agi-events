@@ -5,14 +5,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/models/event.dart';
 import '../../../core/utils/enums/enums.dart';
 import '../../../core/widgets/widgets.dart';
-import '../data/events_controller.dart';
 import '../../leads/my_leads/views/leads_page.dart';
 import '../../leads/qr_scan/data/qr_scan_controller.dart';
+import '../data/events_controller.dart';
 import '../widgets/event_grid_tile.dart';
 import '../widgets/events_page_background.dart';
 import '../widgets/events_page_sliver_title.dart';
 import '../widgets/events_sliver_grid.dart';
 import '../widgets/events_sliver_grid_title.dart';
+import '../widgets/your_events_placeholder.dart';
 
 class EventsPage extends StatelessWidget {
   const EventsPage({super.key});
@@ -96,21 +97,7 @@ class EventsPageContent extends ConsumerWidget {
           ]);
         } else {
           slivers.add(
-            const SliverToBoxAdapter(
-              child: Padding(
-                padding: EdgeInsets.only(top: 20.0, bottom: 40.0),
-                child: Text(
-                  "You do not have events yet. Tap on an Event in the "
-                  "Coming Events section and Scan the QR code of your "
-                  "exhibitor badge.",
-                  style: TextStyle(
-                    color: Colors.grey,
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
+            const YourEventsPlaceholder(),
           );
         }
 
