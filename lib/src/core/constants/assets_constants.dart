@@ -8,5 +8,6 @@ class AssetsConstants {
       "$_dataBasePath/fake-database-data.json";
   static const String eventsJson = "$_dataBasePath/events.json";
 
-  static String imagePath(String imageName) => "$_imagesBasePath/$imageName";
+  static String imagePath(String imageName) =>
+      "$_imagesBasePath/$imageName.svg";
 }
