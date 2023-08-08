@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/models/event.dart';
 import '../../../core/utils/enums/enums.dart';
 import '../../../core/widgets/widgets.dart';
-import '../../leads/my_leads/data/events_controller.dart';
+import '../data/events_controller.dart';
 import '../../leads/my_leads/views/leads_page.dart';
 import '../../leads/qr_scan/data/qr_scan_controller.dart';
 import '../widgets/event_grid_tile.dart';

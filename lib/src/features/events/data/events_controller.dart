@@ -2,13 +2,13 @@ import 'package:flutter/cupertino.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/fake/data/providers.dart';
-import '../../../../core/fake/repositories/fake_database_repository.dart';
-import '../../../../core/fake/repositories/fake_realtime_repository.dart';
-import '../../../../core/interfaces/repositories/database_repository.dart';
-import '../../../../core/interfaces/repositories/realtime_repository.dart';
-import '../../../../core/models/models.dart';
-import '../../../../core/utils/enums/enums.dart';
+import '../../../core/fake/data/providers.dart';
+import '../../../core/fake/repositories/fake_database_repository.dart';
+import '../../../core/fake/repositories/fake_realtime_repository.dart';
+import '../../../core/interfaces/repositories/database_repository.dart';
+import '../../../core/interfaces/repositories/realtime_repository.dart';
+import '../../../core/models/models.dart';
+import '../../../core/utils/enums/enums.dart';
 
 final eventsControllerProvider =
     StateNotifierProvider<EventsController, AsyncValue<List<Event>>>((ref) {

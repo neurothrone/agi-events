@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/models/models.dart';
-import '../../add_lead/data/leads_controller.dart';
+import '../../my_leads/data/leads_controller.dart';
 import '../widgets/contact_information.dart';
 import '../widgets/lead_detail_page_app_bar.dart';
 import '../widgets/notes_text_area.dart';
