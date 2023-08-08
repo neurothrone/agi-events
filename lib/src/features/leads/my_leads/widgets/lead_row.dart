@@ -31,14 +31,14 @@ class LeadRow extends StatelessWidget {
                     children: [
                       Text(
                         lead.fullName,
-                        style: const TextStyle(fontSize: 17.0),
+                        style: const TextStyle(fontSize: 18.0),
                       ),
+                      const SizedBox(height: 2.0),
                       Text(
                         lead.company,
                         style: const TextStyle(
                           color: Colors.grey,
-                          fontSize: 15.0,
-                          fontWeight: FontWeight.w600,
+                          fontSize: 17.0,
                         ),
                       ),
                     ],
@@ -47,8 +47,8 @@ class LeadRow extends StatelessWidget {
                   Text(
                     lead.scannedAt.formatted,
                     style: const TextStyle(
-                      color: Colors.white54,
-                      fontWeight: FontWeight.w500,
+                      color: Colors.grey,
+                      fontSize: 16.0,
                     ),
                   ),
                 ],
