@@ -1,14 +1,16 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/models/models.dart';
 import '../../../../core/utils/enums/enums.dart';
+import '../../../../core/utils/utils.dart';
+import '../../../../core/widgets/widgets.dart';
 import '../../add_lead/data/leads_controller.dart';
 import '../../qr_scan/data/qr_scan_controller.dart';
 import '../widgets/lead_qr_scanner_button.dart';
-import '../widgets/leads_csv_export_button.dart';
 import '../widgets/leads_page_content.dart';
 
 class LeadsPage extends StatelessWidget {
@@ -33,12 +35,41 @@ class LeadsPage extends StatelessWidget {
         });
   }
 
+  Future<void> _shareLeads(BuildContext context, WidgetRef ref) async {
+    if (Platform.isIOS) {
+      final RenderBox? box = context.findRenderObject() as RenderBox?;
+      final bool isIpad = await isThisDeviceIpad();
+
+      // Only iPad devices
+      if (isIpad) {
+        ref.read(leadsControllerProvider.notifier).exportLeads(
+              event: event,
+              sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size,
+            );
+        return;
+      }
+    }
+
+    // Android and iOS devices
+    ref.read(leadsControllerProvider.notifier).exportLeads(event: event);
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        actions: const [
-          LeadsCsvExportButton(),
+        actions: [
+          Consumer(builder: (context, ref, _) {
+            final List<Lead>? leads = ref.watch(leadsControllerProvider).value;
+
+            return ShareButton(
+              onPressed: leads != null && leads.isNotEmpty
+                  ? () => _shareLeads(context, ref)
+                  : null,
+            );
+          }),
         ],
       ),
       bottomNavigationBar: SafeArea(
@@ -47,13 +78,11 @@ class LeadsPage extends StatelessWidget {
             : EdgeInsets.zero,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: Consumer(
-            builder: (context, ref, _) {
-              return LeadQrScannerButton(
-                onPressed: () => _openQrScanner(context, ref),
-              );
-            },
-          ),
+          child: Consumer(builder: (context, ref, _) {
+            return LeadQrScannerButton(
+              onPressed: () => _openQrScanner(context, ref),
+            );
+          }),
         ),
       ),
       body: SafeArea(
