@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../../../core/constants/constants.dart';
 import '../../../../core/models/models.dart';
 import '../../../../core/widgets/widgets.dart';
 import '../data/leads_controller.dart';
@@ -35,7 +36,9 @@ class LeadsPageContent extends ConsumerWidget {
                 children: [
                   SizedBox(
                     height: 100.0,
-                    child: SvgPicture.asset("assets/images/${event.image}.svg"),
+                    child: SvgPicture.asset(
+                      AssetsConstants.imagePath(event.image),
+                    ),
                   ),
                   const SizedBox(height: 20.0),
                   EventLeadsOverview(

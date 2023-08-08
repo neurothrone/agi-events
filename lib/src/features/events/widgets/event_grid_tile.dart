@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../core/constants/app_constants.dart';
+import '../../../core/constants/constants.dart';
 import '../../../core/models/event.dart';
 
 class EventGridTile extends StatelessWidget {
@@ -34,7 +35,7 @@ class EventGridTile extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: SvgPicture.asset(
-                    "assets/images/${event.image}.svg",
+                    AssetsConstants.imagePath(event.image),
                     semanticsLabel: "Event logo",
                   ),
                 ),
@@ -55,7 +56,7 @@ class EventGridTile extends StatelessWidget {
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
-                    fontSize: 14.0,
+                    fontSize: 16.0,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -65,8 +66,9 @@ class EventGridTile extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
-                    fontSize: 13.0,
                     color: Colors.grey,
+                    fontSize: 15.0,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
               ],
