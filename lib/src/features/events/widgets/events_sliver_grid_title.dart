@@ -16,8 +16,8 @@ class EventsSliverGridTitle extends StatelessWidget {
         child: Text(
           title,
           style: const TextStyle(
-            fontSize: 18.0,
-            fontWeight: FontWeight.w500,
+            fontSize: 24.0,
+            fontWeight: FontWeight.bold,
           ),
         ),
       ),

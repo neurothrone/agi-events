@@ -15,7 +15,7 @@ class EventsPageSliverTitle extends StatelessWidget {
         child: Text(
           "Welcome to\n${AppConstants.appTitle}",
           style: TextStyle(
-            fontSize: 28.0,
+            fontSize: 32.0,
             fontWeight: FontWeight.bold,
           ),
         ),
