@@ -23,14 +23,14 @@ void showSnackbar({
           Icon(
             icon,
             color: Colors.white,
-            size: 22.0,
+            size: 20.0,
           ),
           const SizedBox(width: 8.0),
           Text(
             message,
             style: const TextStyle(
               color: Colors.white,
-              fontSize: 18.0,
+              fontSize: 16.0,
               fontWeight: FontWeight.w600,
             ),
           ),
