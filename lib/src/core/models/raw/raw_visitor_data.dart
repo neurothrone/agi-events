@@ -42,7 +42,7 @@ class RawVisitorData extends RawUserData {
 
     final exhibitionId =
         map.containsKey("exhibitionId") ? map["exhibitionId"] as String : "";
-    final hashedString = "$firstName$lastName$exhibitionId";
+    final hashedString = "$email$firstName$lastName$exhibitionId";
 
     final countryCode =
         map.containsKey("countryCode") ? map["countryCode"] as String : "";
