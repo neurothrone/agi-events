@@ -38,7 +38,7 @@ class EventsPageContent extends ConsumerWidget {
   });
 
   Future<void> _openQrScanner(
-    String eventId,
+    Event event,
     BuildContext context,
     WidgetRef ref,
   ) async {
@@ -50,7 +50,7 @@ class EventsPageContent extends ConsumerWidget {
                 .read(eventsControllerProvider.notifier)
                 .addEventByExhibitorId(
                     exhibitorId: qrCode,
-                    eventId: eventId,
+                    event: event,
                     onError: (String message) {
                       showSnackbar(
                         message: message,
@@ -66,6 +66,7 @@ class EventsPageContent extends ConsumerWidget {
     final AsyncValue<List<Event>> eventsState = ref.watch(
       eventsControllerProvider,
     );
+
     return eventsState.when(
       data: (List<Event> events) {
         List<Widget> slivers = [
@@ -120,7 +121,7 @@ class EventsPageContent extends ConsumerWidget {
                 final Event event = comingEvents[index];
 
                 return EventGridTile(
-                  onTap: () => _openQrScanner(event.eventId, context, ref),
+                  onTap: () => _openQrScanner(event, context, ref),
                   event: event,
                 );
               },
