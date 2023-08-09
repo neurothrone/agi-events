@@ -4,6 +4,8 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../interfaces/repositories/realtime_repository.dart';
+import '../../models/event.dart';
+import '../../models/raw/raw_exhibitor_data.dart';
 import '../data/providers.dart';
 
 final firebaseRealtimeRepositoryProvider =
@@ -36,10 +38,10 @@ class FirebaseRealtimeRepository implements RealtimeRepository {
         return data.map((key, value) => MapEntry(key.toString(), value));
       }
       return null;
-    } catch (exception, stacktrace) {
+    } catch (e) {
       debugPrint(
         "❌ -> Failed to fetchEventDataById() with reference: "
-        "${reference.toString()}. Error: $exception",
+        "${reference.toString()}. Error: $e",
       );
       return null;
     }
@@ -57,10 +59,10 @@ class FirebaseRealtimeRepository implements RealtimeRepository {
         return data.keys.map((key) => key.toString()).toList();
       }
       return [];
-    } catch (exception, stacktrace) {
+    } catch (e) {
       debugPrint(
         "❌ -> Failed to fetchEvents() with top-level reference. "
-        "Error: $exception",
+        "Error: $e",
       );
       return [];
     }
@@ -70,5 +72,38 @@ class FirebaseRealtimeRepository implements RealtimeRepository {
   Future<Map<String, dynamic>> fetchEventsData() {
     // TODO: implement fetchEventsData
     throw UnimplementedError();
+  }
+
+  @override
+  Future<RawExhibitorData?> fetchExhibitorById({
+    required String exhibitorId,
+    required Event event,
+  }) async {
+    final DatabaseReference reference =
+        _database.ref(event.eventId).child("exhibitor").child(exhibitorId);
+
+    try {
+      DataSnapshot snapshot = await reference.get();
+
+      if (snapshot.value is Map) {
+        Map<dynamic, dynamic> data = snapshot.value as Map;
+
+        final Map<String, dynamic> dataMap = (data["data"] as Map).map(
+          (key, value) => MapEntry(key.toString(), value),
+        );
+        final userMap = dataMap.map(
+          (key, value) => MapEntry(key.toString(), value),
+        );
+
+        return RawExhibitorData.fromMap(userMap);
+      }
+      return null;
+    } catch (e) {
+      debugPrint(
+        "❌ -> Failed to fetchEventDataById() with reference: "
+        "${reference.toString()}. Error: $e",
+      );
+      return null;
+    }
   }
 }
