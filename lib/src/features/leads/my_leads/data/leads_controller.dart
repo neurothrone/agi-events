@@ -107,13 +107,7 @@ class LeadsController extends StateNotifier<AsyncValue<List<Lead>>> {
     required Event event,
     Function(String)? onError,
   }) async {
-    // TODO: check that lead by that qr code is not already in leads
-    // TODO: optimization
-    // We can do this by modifying Lead to also have a qrCode property
-    // This way we can quick check our leads without a request to firebase
-
     final Lead? newLead = await _fetchLead(qrCode: qrCode, event: event);
-
     final String? errorMessage;
 
     if (newLead == null) {
