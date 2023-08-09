@@ -61,9 +61,9 @@ class EventsController extends StateNotifier<AsyncValue<List<Event>>> {
 
   Future<void> _init(List<Event> events) async {
     await processEvents(events);
-    // await fetchEvents();
   }
 
+  // TODO: remove if unused
   Future<bool> eventExists(String eventId) async {
     return await _realtimeRepository.eventExists(eventId);
   }
@@ -87,53 +87,6 @@ class EventsController extends StateNotifier<AsyncValue<List<Event>>> {
       state = AsyncValue.error(e.toString(), st);
     }
   }
-
-  // Future<void> fetchEvents() async {
-  //   try {
-  //     state = const AsyncValue.loading();
-  //
-  //     // Fetch all event data from Realtime database
-  //     Map<String, dynamic> eventsMap =
-  //         await _realtimeRepository.fetchEventsData();
-  //
-  //     // Extract out only the details of each event map
-  //     List<Map<String, dynamic>> eventsDetailMap = _processEventsDataFromMap(
-  //       eventsMap,
-  //     );
-  //     // Convert to model
-  //     List<Event> fetchedEvents =
-  //         eventsDetailMap.map((eventMap) => Event.fromMap(eventMap)).toList();
-  //
-  //     // Merge saved and fetched lists and only keep unique Events where
-  //     // the 'saved' property is equal to true
-  //     final List<Event> savedEvents = await _fetchSavedEvents();
-  //     final List<Event> events = _mergeAndKeepSaved(fetchedEvents, savedEvents);
-  //
-  //     state = AsyncValue.data(events);
-  //   } catch (exception, stacktrace) {
-  //     debugPrint(
-  //       "❌ -> Unexpected error while fetching events. Error: $exception",
-  //     );
-  //     state = AsyncValue.error(exception.toString(), stacktrace);
-  //   }
-  // }
-
-  // List<Map<String, dynamic>> _processEventsDataFromMap(
-  //   Map<String, dynamic> map,
-  // ) {
-  //   return map
-  //       .map(
-  //         (key, value) => MapEntry(key.toString(), value),
-  //       )
-  //       .values
-  //       .whereType<Map<dynamic, dynamic>>()
-  //       .map(
-  //         (value) => (value["event"] as Map).map(
-  //           (key, value) => MapEntry(key.toString(), value),
-  //         ),
-  //       )
-  //       .toList();
-  // }
 
   List<Event> _mergeAndKeepSaved(
     List<Event> fetchedEvents,
@@ -208,29 +161,29 @@ class EventsController extends StateNotifier<AsyncValue<List<Event>>> {
     return eventMap;
   }
 
-  // TODO: can be made generic with RawUserData and reused here
-  // and for the leadsController
-  Future<RawExhibitorData?> _processMapIntoExhibitorData({
+  T? _processMapIntoUserData<T extends RawUserData>({
     required Map<String, dynamic> eventMap,
-    required String exhibitorId,
-  }) async {
+    required String userId,
+    required UserCategory userCategory,
+    required T Function(Map<String, dynamic>) factory,
+  }) {
     final Map<String, dynamic>? allUsersMap = _processAllUsersDataFromEventMap(
       eventMap: eventMap,
-      userCategory: UserCategory.exhibitor,
+      userCategory: userCategory,
     );
 
     if (allUsersMap == null) return null;
 
     Map<String, dynamic>? userMap = _processUserDataByIdFromUsersMap(
       allUsersMap,
-      exhibitorId,
+      userId,
     );
 
     if (userMap == null) return null;
 
     try {
-      final exhibitor = RawExhibitorData.fromMap(userMap);
-      return exhibitor;
+      final user = factory(userMap);
+      return user;
     } catch (exception) {
       return null;
     }
@@ -257,9 +210,11 @@ class EventsController extends StateNotifier<AsyncValue<List<Event>>> {
 
     if (eventMap == null) return;
 
-    final RawExhibitorData? exhibitor = await _processMapIntoExhibitorData(
+    final RawExhibitorData? exhibitor = _processMapIntoUserData(
       eventMap: eventMap,
-      exhibitorId: exhibitorId,
+      userId: exhibitorId,
+      userCategory: UserCategory.exhibitor,
+      factory: RawExhibitorData.fromMap,
     );
 
     if (exhibitor == null) {
