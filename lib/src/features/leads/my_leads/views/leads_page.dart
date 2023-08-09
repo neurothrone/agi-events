@@ -59,7 +59,10 @@ class LeadsPage extends StatelessWidget {
         );
   }
 
-  Future<void> _shareLeads(BuildContext context, WidgetRef ref) async {
+  Future<void> _shareLeads(
+    BuildContext context,
+    WidgetRef ref,
+  ) async {
     if (Platform.isIOS) {
       final RenderBox? box = context.findRenderObject() as RenderBox?;
       final bool isIpad = await isThisDeviceIpad();
