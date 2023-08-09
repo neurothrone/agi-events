@@ -21,69 +21,6 @@ class FirebaseRealtimeRepository implements RealtimeRepository {
   final FirebaseDatabase _database;
 
   @override
-  Future<T?> fetchUserById<T extends RawUserData>({
-    required String userId,
-    required Event event,
-  }) async {
-    final DatabaseReference visitorReference = _database
-        .ref(event.eventId)
-        .child(UserCategory.visitor.name)
-        .child(userId);
-
-    final DatabaseReference exhibitorReference = _database
-        .ref(event.eventId)
-        .child(UserCategory.exhibitor.name)
-        .child(userId);
-
-    try {
-      DataSnapshot visitorSnapshot = await visitorReference.get();
-
-      if (visitorSnapshot.value is! Map) return null;
-
-      if (visitorSnapshot.value != null) {
-        Map<dynamic, dynamic> data = visitorSnapshot.value as Map;
-
-        final Map<String, dynamic> dataMap = (data["data"] as Map).map(
-          (key, value) => MapEntry(key.toString(), value),
-        );
-        final userMap = dataMap.map(
-          (key, value) => MapEntry(key.toString(), value),
-        );
-
-        debugPrint("ℹ️ -> Visitor userMap: $userMap");
-        return RawVisitorData.fromMap(userMap) as T;
-      }
-
-      DataSnapshot exhibitorSnapshot = await exhibitorReference.get();
-
-      if (exhibitorSnapshot.value is! Map) return null;
-
-      if (exhibitorSnapshot.value != null) {
-        Map<dynamic, dynamic> data = exhibitorSnapshot.value as Map;
-
-        final Map<String, dynamic> dataMap = (data["data"] as Map).map(
-              (key, value) => MapEntry(key.toString(), value),
-        );
-        final userMap = dataMap.map(
-              (key, value) => MapEntry(key.toString(), value),
-        );
-
-        debugPrint("ℹ️ -> Exhibitor userMap: $userMap");
-        return RawExhibitorData.fromMap(userMap) as T;
-      }
-
-      // If we reach this point, the userId was not found under either
-      // node or the type T is unsupported.
-      return null;
-    } catch (e) {
-      debugPrint(
-        "❌ -> Failed to fetchUserById() with userId: $userId. Error: $e",
-      );
-      return null;
-    }
-  }
-
-  @override
   Future<RawExhibitorData?> fetchExhibitorById({
     required String exhibitorId,
     required Event event,
