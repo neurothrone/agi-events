@@ -8,7 +8,6 @@ import '../../../core/fake/repositories/fake_realtime_repository.dart';
 import '../../../core/interfaces/repositories/database_repository.dart';
 import '../../../core/interfaces/repositories/realtime_repository.dart';
 import '../../../core/models/models.dart';
-import '../../../core/utils/enums/enums.dart';
 import 'providers.dart';
 
 final eventsControllerProvider =
@@ -59,6 +58,8 @@ class EventsController extends StateNotifier<AsyncValue<List<Event>>> {
   final DatabaseRepository _databaseRepository;
   final RealtimeRepository _realtimeRepository;
 
+  // Manage events on startup
+
   Future<void> _init(List<Event> events) async {
     await processEvents(events);
   }
@@ -88,6 +89,11 @@ class EventsController extends StateNotifier<AsyncValue<List<Event>>> {
     }
   }
 
+  Future<List<Event>> _fetchSavedEvents() async {
+    final List<Event> savedEvents = await _databaseRepository.fetchEvents();
+    return savedEvents;
+  }
+
   List<Event> _mergeAndKeepSaved(
     List<Event> fetchedEvents,
     List<Event> savedEvents,
@@ -114,107 +120,17 @@ class EventsController extends StateNotifier<AsyncValue<List<Event>>> {
     return eventMap.values.toList();
   }
 
-  Future<List<Event>> _fetchSavedEvents() async {
-    final List<Event> savedEvents = await _databaseRepository.fetchEvents();
-    return savedEvents;
-  }
-
-  // TODO: can be reused
-  Map<String, dynamic>? _processAllUsersDataFromEventMap({
-    required Map<String, dynamic> eventMap,
-    required UserCategory userCategory,
-  }) {
-    try {
-      final Map<String, dynamic> allUsersData =
-          (eventMap[userCategory.name] as Map)
-              .map((key, value) => MapEntry(key.toString(), value));
-      return allUsersData;
-    } catch (exception) {
-      return null;
-    }
-  }
-
-  // TODO: can be reused
-  Map<String, dynamic>? _processUserDataByIdFromUsersMap(
-    Map<String, dynamic> usersMap,
-    String userId,
-  ) {
-    if (!usersMap.containsKey(userId)) return null;
-
-    try {
-      Map<String, dynamic> userData =
-          usersMap[userId]["data"] as Map<String, dynamic>;
-      return userData;
-    } catch (exception) {
-      return null;
-    }
-  }
-
-  // TODO: reusable functions like this can be moved to the repository
-  Future<Map<String, dynamic>?> _fetchEventDataById(
-    String eventId,
-  ) async {
-    Map<String, dynamic>? eventMap =
-        await _realtimeRepository.fetchEventDataById(
-      eventId,
-    );
-    return eventMap;
-  }
-
-  T? _processMapIntoUserData<T extends RawUserData>({
-    required Map<String, dynamic> eventMap,
-    required String userId,
-    required UserCategory userCategory,
-    required T Function(Map<String, dynamic>) factory,
-  }) {
-    final Map<String, dynamic>? allUsersMap = _processAllUsersDataFromEventMap(
-      eventMap: eventMap,
-      userCategory: userCategory,
-    );
-
-    if (allUsersMap == null) return null;
-
-    Map<String, dynamic>? userMap = _processUserDataByIdFromUsersMap(
-      allUsersMap,
-      userId,
-    );
-
-    if (userMap == null) return null;
-
-    try {
-      final user = factory(userMap);
-      return user;
-    } catch (exception) {
-      return null;
-    }
-  }
-
-  Map<String, dynamic>? _processEventDetailsMap(
-    Map<String, dynamic> eventMap,
-  ) {
-    try {
-      final eventDetailsMap = eventMap["event"] as Map<String, dynamic>;
-      return eventDetailsMap;
-    } catch (e) {
-      debugPrint("❌ -> Event Map did not have details. Error: $e.");
-      return null;
-    }
-  }
+  // Exhibitor management
 
   Future<void> addEventByExhibitorId({
     required String exhibitorId,
-    required String eventId,
+    required Event event,
     Function(String)? onError,
   }) async {
-    final Map<String, dynamic>? eventMap = await _fetchEventDataById(eventId);
-
-    if (eventMap == null) return;
-
-    final RawExhibitorData? exhibitor = _processMapIntoUserData(
-      eventMap: eventMap,
-      userId: exhibitorId,
-      userCategory: UserCategory.exhibitor,
-      factory: RawExhibitorData.fromMap,
+    final RawExhibitorData? exhibitor =
+        await _realtimeRepository.fetchExhibitorById(
+      exhibitorId: exhibitorId,
+      event: event,
     );
 
     if (exhibitor == null) {
@@ -225,17 +141,16 @@ class EventsController extends StateNotifier<AsyncValue<List<Event>>> {
     }
 
     // !: If we got this far the exhibitor was registered in Firebase
-    final Map<String, dynamic>? eventDetailsMap =
-        _processEventDetailsMap(eventMap);
+    await _addEventToYourEvents(event);
+  }
 
-    if (eventDetailsMap == null) return;
+  Future<void> _addEventToYourEvents(Event event) async {
+    final Event newEvent = event.copyWith(saved: true);
+    _replaceOldEventWithUpdatedEvent(newEvent);
 
-    final Event event = Event.fromMap(eventDetailsMap).copyWith(saved: true);
-    _replaceOldEventWithUpdatedEvent(event);
-
-    final bool hasSavedEvent = await _saveEventToDatabase(event);
+    final bool hasSavedEvent = await _saveEventToDatabase(newEvent);
     if (hasSavedEvent) {
-      _replaceOldEventWithUpdatedEvent(event);
+      _replaceOldEventWithUpdatedEvent(newEvent);
     }
   }
 
