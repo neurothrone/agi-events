@@ -101,7 +101,7 @@ class LeadsController extends StateNotifier<AsyncValue<List<Lead>>> {
     }
   }
 
-  Future<void> addLeadByQR({
+  Future<Lead?> addLeadByQR({
     required String qrCode,
     required Event event,
     Function(String)? onError,
@@ -110,16 +110,14 @@ class LeadsController extends StateNotifier<AsyncValue<List<Lead>>> {
     final String? errorMessage;
 
     if (newLead == null) {
-      debugPrint("❌ -> No Visitor or Exhibitor found.");
       errorMessage = "That user is not registered";
-      return;
     } else {
       errorMessage = await _addLead(lead: newLead);
     }
 
-    if (errorMessage != null && onError != null) {
-      onError(errorMessage);
-    }
+    if (errorMessage == null) return newLead;
+    if (onError != null) onError(errorMessage);
+    return null;
   }
 
   Future<String?> _addLead({
