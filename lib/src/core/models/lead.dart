@@ -1,3 +1,5 @@
+import 'models.dart';
+
 class Lead {
   const Lead({
     required this.firstName,
@@ -14,6 +16,49 @@ class Lead {
     required this.scannedAt,
     required this.hashedString,
   });
+
+  factory Lead.fromRawVisitorData({
+    required RawVisitorData visitor,
+    required Event event,
+  }) {
+    final hashedString = "${visitor.email}${visitor.firstName}"
+            "${visitor.lastName}${event.eventId}"
+        .toLowerCase();
+
+    return Lead(
+      firstName: visitor.firstName,
+      lastName: visitor.lastName,
+      company: visitor.company,
+      email: visitor.email,
+      phone: visitor.phone,
+      position: visitor.position,
+      countryCode: visitor.countryCode,
+      address: visitor.address,
+      zipCode: visitor.zipCode,
+      city: visitor.city,
+      scannedAt: DateTime.now(),
+      hashedString: hashedString,
+    );
+  }
+
+  factory Lead.fromRawExhibitorData({
+    required RawExhibitorData exhibitor,
+    required Event event,
+  }) {
+    final hashedString = "${exhibitor.email}${exhibitor.firstName}"
+            "${exhibitor.lastName}${event.eventId}"
+        .toLowerCase();
+
+    return Lead(
+      firstName: exhibitor.firstName,
+      lastName: exhibitor.lastName,
+      company: exhibitor.company,
+      email: exhibitor.email,
+      phone: exhibitor.phone,
+      scannedAt: DateTime.now(),
+      hashedString: hashedString,
+    );
+  }
 
   final String firstName;
   final String lastName;
