@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/fake/data/providers.dart';
 import '../../../../core/fake/repositories/fake_database_repository.dart';
 import '../../../../core/fake/repositories/fake_realtime_repository.dart';
+import '../../../../core/firebase/repositories/firebase_realtime_repository.dart';
 import '../../../../core/interfaces/repositories/database_repository.dart';
 import '../../../../core/interfaces/repositories/realtime_repository.dart';
 import '../../../../core/models/models.dart';
@@ -20,11 +21,16 @@ final leadsControllerProvider =
     fakeDatabaseRepositoryProvider,
   );
   // !: Fake Realtime database
-  final AsyncValue<Map<String, dynamic>> fakeRealtimeData = ref.watch(
-    fakeRealtimeDataFutureProvider,
-  );
+  // final AsyncValue<Map<String, dynamic>> fakeRealtimeData = ref.watch(
+  //   fakeRealtimeDataFutureProvider,
+  // );
+  // final RealtimeRepository realtimeRepository = ref.watch(
+  //   fakeRealtimeRepositoryProvider(fakeRealtimeData),
+  // );
+
+  // !: Firebase Realtime database
   final RealtimeRepository realtimeRepository = ref.watch(
-    fakeRealtimeRepositoryProvider(fakeRealtimeData),
+    firebaseRealtimeRepositoryProvider,
   );
 
   final CsvService csvService = ref.watch(csvServiceProvider);
@@ -114,51 +120,82 @@ class LeadsController extends StateNotifier<AsyncValue<List<Lead>>> {
     }
   }
 
+  Future<Lead?> _fetchLead({
+    required String qrCode,
+    required Event event,
+  }) async {
+    final RawVisitorData? visitor = await _realtimeRepository.fetchVisitorById(
+      visitorId: qrCode,
+      event: event,
+    );
+
+    if (visitor != null) {
+      final hashedString = "${visitor.email}${visitor.firstName}"
+              "${visitor.lastName}${event.eventId}"
+          .toLowerCase();
+
+      return Lead(
+        firstName: visitor.firstName,
+        lastName: visitor.lastName,
+        company: visitor.company,
+        email: visitor.email,
+        phone: visitor.phone,
+        position: visitor.position,
+        countryCode: visitor.countryCode,
+        address: visitor.address,
+        zipCode: visitor.zipCode,
+        city: visitor.city,
+        scannedAt: DateTime.now(),
+        hashedString: hashedString,
+      );
+    }
+
+    final RawExhibitorData? exhibitor =
+        await _realtimeRepository.fetchExhibitorById(
+      exhibitorId: qrCode,
+      event: event,
+    );
+
+    if (exhibitor != null) {
+      final hashedString = "${exhibitor.email}${exhibitor.firstName}"
+              "${exhibitor.lastName}${event.eventId}"
+          .toLowerCase();
+
+      return Lead(
+        firstName: exhibitor.firstName,
+        lastName: exhibitor.lastName,
+        company: exhibitor.company,
+        email: exhibitor.email,
+        phone: exhibitor.phone,
+        scannedAt: DateTime.now(),
+        hashedString: hashedString,
+      );
+    }
+
+    return null;
+  }
+
   Future<void> addLeadByQR({
     required String qrCode,
     required Event event,
     Function(String)? onError,
   }) async {
     // TODO: check that lead by that qr code is not already in leads
+    // TODO: optimization
+    // We can do this by modifying Lead to also have a qrCode property
+    // This way we can quick check our leads without a request to firebase
 
-    final Map<String, dynamic>? eventMap = await _fetchEventDataById(
-      event.eventId,
-    );
+    final Lead? newLead = await _fetchLead(qrCode: qrCode, event: event);
 
-    if (eventMap == null) return;
+    final String? errorMessage;
 
-    // TODO get UserData
-    final RawVisitorData? visitor = await _processMapIntoExhibitorData(
-      eventMap: eventMap,
-      visitorId: qrCode,
-    );
-
-    if (visitor == null) {
-      debugPrint("❌ -> Visitor was null.");
+    if (newLead == null) {
+      debugPrint("❌ -> No Visitor or Exhibitor found.");
+      errorMessage = "That user is not registered";
       return;
+    } else {
+      errorMessage = await _addLead(lead: newLead);
     }
-
-    final hashedString = "${visitor.email}${visitor.firstName}"
-            "${visitor.lastName}${event.eventId}"
-        .toLowerCase();
-
-    // Convert Visitor to Lead
-    final Lead newLead = Lead(
-      firstName: visitor.firstName,
-      lastName: visitor.lastName,
-      company: visitor.company,
-      email: visitor.email,
-      phone: visitor.phone,
-      position: visitor.position,
-      countryCode: visitor.countryCode,
-      address: visitor.address,
-      zipCode: visitor.zipCode,
-      city: visitor.city,
-      scannedAt: DateTime.now(),
-      hashedString: hashedString,
-    );
-
-    final String? errorMessage = await _addLead(lead: newLead);
 
     if (errorMessage != null && onError != null) {
       onError(errorMessage);
@@ -188,76 +225,6 @@ class LeadsController extends StateNotifier<AsyncValue<List<Lead>>> {
         "❌ -> Unexpected error while adding a Lead. Error: $e",
       );
       state = AsyncValue.error(e.toString(), stacktrace);
-    }
-  }
-
-  // TODO: can be reused
-  Map<String, dynamic>? _processAllUsersDataFromEventMap({
-    required Map<String, dynamic> eventMap,
-    required UserCategory userCategory,
-  }) {
-    try {
-      final Map<String, dynamic> allUsersData =
-          (eventMap[userCategory.name] as Map)
-              .map((key, value) => MapEntry(key.toString(), value));
-      return allUsersData;
-    } catch (exception) {
-      return null;
-    }
-  }
-
-  // TODO: reusable functions like this can be moved to the repository
-  Future<Map<String, dynamic>?> _fetchEventDataById(
-    String eventId,
-  ) async {
-    Map<String, dynamic>? eventMap =
-        await _realtimeRepository.fetchEventDataById(
-      eventId,
-    );
-    return eventMap;
-  }
-
-  // TODO: can be made generic with RawUserData and reused here
-  // and for the leadsController
-  Future<RawVisitorData?> _processMapIntoExhibitorData({
-    required Map<String, dynamic> eventMap,
-    required String visitorId,
-  }) async {
-    final Map<String, dynamic>? allUsersMap = _processAllUsersDataFromEventMap(
-      eventMap: eventMap,
-      userCategory: UserCategory.visitor,
-    );
-
-    if (allUsersMap == null) return null;
-
-    Map<String, dynamic>? userMap = _processUserDataByIdFromUsersMap(
-      allUsersMap,
-      visitorId,
-    );
-
-    if (userMap == null) return null;
-
-    try {
-      final visitor = RawVisitorData.fromMap(userMap);
-      return visitor;
-    } catch (exception) {
-      return null;
-    }
-  }
-
-  // TODO: can be reused
-  Map<String, dynamic>? _processUserDataByIdFromUsersMap(
-    Map<String, dynamic> usersMap,
-    String userId,
-  ) {
-    if (!usersMap.containsKey(userId)) return null;
-
-    try {
-      Map<String, dynamic> userData =
-          usersMap[userId]["data"] as Map<String, dynamic>;
-      return userData;
-    } catch (exception) {
-      return null;
     }
   }
 
