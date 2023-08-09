@@ -3,11 +3,11 @@ import '../../models/models.dart';
 abstract class DatabaseRepository {
   Future<void> saveEvent(Event event);
 
-  Future<void> saveLead(Lead lead);
+  Future<Event?> fetchEventById(String eventId);
 
   Future<List<Event>> fetchEvents();
 
-  Future<Event?> fetchEventById(String eventId);
+  Future<void> saveLead(Lead lead);
 
   Future<List<Lead>> fetchLeadsByEventId(String eventId);
 
