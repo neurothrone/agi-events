@@ -10,6 +10,8 @@ import '../../../core/interfaces/repositories/realtime_repository.dart';
 import '../../../core/models/models.dart';
 import 'providers.dart';
 
+// region Providers
+
 final eventsControllerProvider =
     StateNotifierProvider<EventsController, AsyncValue<List<Event>>>((ref) {
   // !: Firebase Realtime database
@@ -38,11 +40,7 @@ final eventsControllerProvider =
   );
 });
 
-// TODO: move eventsData to separate controller -> EventsDataController
-
-class EventsDataController extends StateNotifier<AsyncValue<List<Event>>> {
-  EventsDataController() : super(const AsyncData([]));
-}
+// endregion
 
 class EventsController extends StateNotifier<AsyncValue<List<Event>>> {
   EventsController({
@@ -58,15 +56,10 @@ class EventsController extends StateNotifier<AsyncValue<List<Event>>> {
   final DatabaseRepository _databaseRepository;
   final RealtimeRepository _realtimeRepository;
 
-  // Manage events on startup
+  // region Events Management on Startup
 
   Future<void> _init(List<Event> events) async {
     await processEvents(events);
-  }
-
-  // TODO: remove if unused
-  Future<bool> eventExists(String eventId) async {
-    return await _realtimeRepository.eventExists(eventId);
   }
 
   Future<void> processEvents(List<Event> events) async {
@@ -120,7 +113,9 @@ class EventsController extends StateNotifier<AsyncValue<List<Event>>> {
     return eventMap.values.toList();
   }
 
-  // Exhibitor management
+  // endregion
+
+  // region Exhibitor & Event Management on Scan
 
   Future<void> addEventByExhibitorId({
     required String exhibitorId,
@@ -175,4 +170,6 @@ class EventsController extends StateNotifier<AsyncValue<List<Event>>> {
       debugPrint("❌ -> Failed to update saved event in UI. Error: $e");
     }
   }
+
+  // endregion
 }
