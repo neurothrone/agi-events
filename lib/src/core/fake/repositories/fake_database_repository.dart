@@ -8,8 +8,15 @@ final fakeDatabaseRepositoryProvider = Provider<FakeDatabaseRepository>((ref) {
 });
 
 class FakeDatabaseRepository implements DatabaseRepository {
-  final List<Event> _events = [];
-  final List<Lead> _leads = [];
+  final Set<Event> _events = {};
+  final Set<Lead> _leads = {};
+
+  // region Event Management
+
+  @override
+  Future<void> saveEvent(Event event) async {
+    _events.add(event);
+  }
 
   @override
   Future<Event?> fetchEventById(String eventId) async {
@@ -22,21 +29,38 @@ class FakeDatabaseRepository implements DatabaseRepository {
   }
 
   @override
-  Future<List<Event>> fetchEvents() async => _events;
-
-  @override
-  Future<List<Lead>> fetchLeadsByEventId(String eventId) async {
-    // TODO: implement fetchLeadsByEventId
-    throw UnimplementedError();
+  Future<List<Event>> fetchEvents() async {
+    final List<Event> events = _events.toList();
+    events.sort((a, b) => b.startDate.compareTo(a.startDate));
+    return events;
   }
 
-  @override
-  Future<void> saveEvent(Event event) async {
-    _events.add(event);
-  }
+  // endregion
+
+  // region Lead Management
 
   @override
   Future<void> saveLead(Lead lead) async {
     _leads.add(lead);
   }
+
+  @override
+  Future<List<Lead>> fetchLeadsByEventId(String eventId) async {
+    List<Lead> leads = _leads.toList();
+    leads.sort((a, b) => b.scannedAt.compareTo(a.scannedAt));
+    return leads;
+  }
+
+  @override
+  Future<void> updateLead(Lead lead) async {
+    _leads.remove(lead);
+    _leads.add(lead);
+  }
+
+  @override
+  Future<void> deleteLead(Lead lead) async {
+    _leads.remove(lead);
+  }
+
+  // endregion
 }
