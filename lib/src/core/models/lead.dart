@@ -2,6 +2,7 @@ import 'models.dart';
 
 class Lead {
   const Lead({
+    required this.eventId,
     required this.firstName,
     required this.lastName,
     required this.company,
@@ -26,6 +27,7 @@ class Lead {
         .toLowerCase();
 
     return Lead(
+      eventId: event.eventId,
       firstName: visitor.firstName,
       lastName: visitor.lastName,
       company: visitor.company,
@@ -50,6 +52,7 @@ class Lead {
         .toLowerCase();
 
     return Lead(
+      eventId: event.eventId,
       firstName: exhibitor.firstName,
       lastName: exhibitor.lastName,
       company: exhibitor.company,
@@ -60,6 +63,7 @@ class Lead {
     );
   }
 
+  final String eventId;
   final String firstName;
   final String lastName;
   final String company;
@@ -79,6 +83,7 @@ class Lead {
   @override
   String toString() {
     return "Lead{\n"
+        " eventId: $eventId,\n"
         " firstName: $firstName,\n"
         " lastName: $lastName,\n"
         " company: $company,\n"
@@ -96,6 +101,7 @@ class Lead {
   }
 
   Lead copyWith({
+    String? eventId,
     String? firstName,
     String? lastName,
     String? company,
@@ -111,6 +117,7 @@ class Lead {
     String? hashedString,
   }) {
     return Lead(
+      eventId: eventId ?? this.eventId,
       firstName: firstName ?? this.firstName,
       lastName: lastName ?? this.lastName,
       company: company ?? this.company,
