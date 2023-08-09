@@ -9,6 +9,7 @@ import '../../../../core/utils/enums/enums.dart';
 import '../../../../core/utils/utils.dart';
 import '../../../../core/widgets/widgets.dart';
 import '../../add_lead/views/add_lead_sheet.dart';
+import '../../lead_detail/views/lead_detail_page.dart';
 import '../../qr_scan/data/qr_scan_controller.dart';
 import '../data/leads_controller.dart';
 import '../widgets/qr_scanner_button.dart';
@@ -41,20 +42,29 @@ class LeadsPage extends StatelessWidget {
     BuildContext context,
     WidgetRef ref,
   ) async {
+    final navigator = Navigator.of(context);
+
     await ref.read(qrScanControllerProvider).showQrScanner(
           scanType: ScanType.visitor,
           context: context,
           onQrCodeScanned: (String qrCode) async {
-            await ref.read(leadsControllerProvider.notifier).addLeadByQR(
-                  qrCode: qrCode,
-                  event: event,
-                  onError: (String errorMessage) {
-                    showSnackbar(
-                      message: errorMessage,
-                      context: context,
+            final Lead? newLead =
+                await ref.read(leadsControllerProvider.notifier).addLeadByQR(
+                      qrCode: qrCode,
+                      event: event,
+                      onError: (String errorMessage) {
+                        showSnackbar(
+                          message: errorMessage,
+                          context: context,
+                        );
+                      },
                     );
-                  },
-                );
+
+            if (newLead != null) {
+              navigator.push(
+                LeadDetailPage.route(lead: newLead),
+              );
+            }
           },
         );
   }
