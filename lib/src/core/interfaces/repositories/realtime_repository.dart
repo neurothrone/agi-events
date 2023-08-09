@@ -1,16 +1,17 @@
 import '../../models/models.dart';
 
 abstract class RealtimeRepository {
-  Future<bool> eventExists(String eventId);
-
-  Future<Map<String, dynamic>> fetchEventsData();
-
-  Future<List<String>> fetchEventIds();
-
-  Future<Map<String, dynamic>?> fetchEventDataById(String eventId);
+  Future<T?> fetchUserById<T extends RawUserData>({
+    required String userId,
+    required Event event,
+  });
 
   Future<RawExhibitorData?> fetchExhibitorById({
     required String exhibitorId,
+    required Event event,
+  });
+  Future<RawVisitorData?> fetchVisitorById({
+    required String visitorId,
     required Event event,
   });
 }
