@@ -10,4 +10,8 @@ abstract class DatabaseRepository {
   Future<Event?> fetchEventById(String eventId);
 
   Future<List<Lead>> fetchLeadsByEventId(String eventId);
+
+  Future<void> updateLead(Lead lead);
+
+  Future<void> deleteLead(Lead lead);
 }
