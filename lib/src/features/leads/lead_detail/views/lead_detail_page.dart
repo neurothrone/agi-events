@@ -47,12 +47,12 @@ class _LeadDetailPageState extends State<LeadDetailPage> {
   }
 
   Future<void> _saveChanges(WidgetRef ref) async {
-    ref.read(leadsControllerProvider.notifier).updateLeadNotes(
+    await ref.read(leadsControllerProvider.notifier).updateLeadNotes(
           widget.lead.copyWith(notes: _notesController.text),
         );
   }
 
-  Future<void> _onCancel(WidgetRef ref) async {
+  Future<void> _onCancelSaveChanges(WidgetRef ref) async {
     FocusScopeNode currentFocus = FocusScope.of(context);
 
     final navigator = Navigator.of(context);
@@ -89,13 +89,15 @@ class _LeadDetailPageState extends State<LeadDetailPage> {
     navigator.pop();
   }
 
-  Future<void> _onSave(WidgetRef ref) async {
+  Future<void> _onConfirmSaveChanges(WidgetRef ref) async {
     _saveChanges(ref);
     Navigator.of(context).pop();
   }
 
-  void _onDelete(WidgetRef ref) {
-    showDialog(
+  Future<void> _onDelete(WidgetRef ref) async {
+    final navigator = Navigator.of(context);
+
+    await showDialog(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
@@ -109,7 +111,9 @@ class _LeadDetailPageState extends State<LeadDetailPage> {
           confirmColor: AppConstants.destructive,
           onCancel: () {},
           onConfirm: () {
-            // TODO: Delete Lead from database and pop navigator
+            // Delete Lead and pop navigator
+            ref.read(leadsControllerProvider.notifier).deleteLead(widget.lead);
+            navigator.pop(context);
           },
         );
       },
@@ -124,8 +128,8 @@ class _LeadDetailPageState extends State<LeadDetailPage> {
         child: Consumer(
           builder: (_, ref, __) {
             return LeadDetailPageAppBar(
-              onCancel: () => _onCancel(ref),
-              onSave: () => _onSave(ref),
+              onCancel: () => _onCancelSaveChanges(ref),
+              onSave: () => _onConfirmSaveChanges(ref),
             );
           },
         ),
