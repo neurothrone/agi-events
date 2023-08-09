@@ -21,17 +21,17 @@ final leadsControllerProvider =
     fakeDatabaseRepositoryProvider,
   );
   // !: Fake Realtime database
-  // final AsyncValue<Map<String, dynamic>> fakeRealtimeData = ref.watch(
-  //   fakeRealtimeDataFutureProvider,
-  // );
-  // final RealtimeRepository realtimeRepository = ref.watch(
-  //   fakeRealtimeRepositoryProvider(fakeRealtimeData),
-  // );
+  final AsyncValue<Map<String, dynamic>> fakeRealtimeData = ref.watch(
+    fakeRealtimeDataFutureProvider,
+  );
+  final RealtimeRepository realtimeRepository = ref.watch(
+    fakeRealtimeRepositoryProvider(fakeRealtimeData),
+  );
 
   // !: Firebase Realtime database
-  final RealtimeRepository realtimeRepository = ref.watch(
-    firebaseRealtimeRepositoryProvider,
-  );
+  // final RealtimeRepository realtimeRepository = ref.watch(
+  //   firebaseRealtimeRepositoryProvider,
+  // );
 
   final CsvService csvService = ref.watch(csvServiceProvider);
   final ShareService shareService = ref.watch(shareServiceProvider);
@@ -62,25 +62,7 @@ class LeadsController extends StateNotifier<AsyncValue<List<Lead>>> {
   final CsvService _csvService;
   final ShareService _shareService;
 
-  Future<String?> _addLead({
-    required Lead lead,
-  }) async {
-    final List<Lead> currentLeads = List.from(state.value ?? []);
-
-    if (currentLeads.contains(lead)) {
-      return "You have already added that Lead";
-    }
-
-    final bool hasSavedLead = await _saveLeadToDatabase(lead);
-
-    if (hasSavedLead) {
-      await _updateLeadsWithNewLead(lead);
-    } else {
-      return "Failed to save Lead to database";
-    }
-
-    return null;
-  }
+  // region Add Lead Management
 
   // TODO: pass eventId and assign it to a new property on Lead
   Future<void> addLeadManually({
@@ -120,61 +102,6 @@ class LeadsController extends StateNotifier<AsyncValue<List<Lead>>> {
     }
   }
 
-  Future<Lead?> _fetchLead({
-    required String qrCode,
-    required Event event,
-  }) async {
-    final RawVisitorData? visitor = await _realtimeRepository.fetchVisitorById(
-      visitorId: qrCode,
-      event: event,
-    );
-
-    if (visitor != null) {
-      final hashedString = "${visitor.email}${visitor.firstName}"
-              "${visitor.lastName}${event.eventId}"
-          .toLowerCase();
-
-      return Lead(
-        firstName: visitor.firstName,
-        lastName: visitor.lastName,
-        company: visitor.company,
-        email: visitor.email,
-        phone: visitor.phone,
-        position: visitor.position,
-        countryCode: visitor.countryCode,
-        address: visitor.address,
-        zipCode: visitor.zipCode,
-        city: visitor.city,
-        scannedAt: DateTime.now(),
-        hashedString: hashedString,
-      );
-    }
-
-    final RawExhibitorData? exhibitor =
-        await _realtimeRepository.fetchExhibitorById(
-      exhibitorId: qrCode,
-      event: event,
-    );
-
-    if (exhibitor != null) {
-      final hashedString = "${exhibitor.email}${exhibitor.firstName}"
-              "${exhibitor.lastName}${event.eventId}"
-          .toLowerCase();
-
-      return Lead(
-        firstName: exhibitor.firstName,
-        lastName: exhibitor.lastName,
-        company: exhibitor.company,
-        email: exhibitor.email,
-        phone: exhibitor.phone,
-        scannedAt: DateTime.now(),
-        hashedString: hashedString,
-      );
-    }
-
-    return null;
-  }
-
   Future<void> addLeadByQR({
     required String qrCode,
     required Event event,
@@ -202,6 +129,51 @@ class LeadsController extends StateNotifier<AsyncValue<List<Lead>>> {
     }
   }
 
+  Future<String?> _addLead({
+    required Lead lead,
+  }) async {
+    final List<Lead> currentLeads = List.from(state.value ?? []);
+
+    if (currentLeads.contains(lead)) {
+      return "You have already added that Lead";
+    }
+
+    final bool hasSavedLead = await _saveLeadToDatabase(lead);
+
+    if (hasSavedLead) {
+      await _updateLeadsWithNewLead(lead);
+      return null;
+    }
+
+    return "Failed to save Lead to database";
+  }
+
+  Future<Lead?> _fetchLead({
+    required String qrCode,
+    required Event event,
+  }) async {
+    final RawVisitorData? visitor = await _realtimeRepository.fetchVisitorById(
+      visitorId: qrCode,
+      event: event,
+    );
+
+    if (visitor != null) {
+      return Lead.fromRawVisitorData(visitor: visitor, event: event);
+    }
+
+    final RawExhibitorData? exhibitor =
+        await _realtimeRepository.fetchExhibitorById(
+      exhibitorId: qrCode,
+      event: event,
+    );
+
+    if (exhibitor != null) {
+      return Lead.fromRawExhibitorData(exhibitor: exhibitor, event: event);
+    }
+
+    return null;
+  }
+
   Future<bool> _saveLeadToDatabase(Lead lead) async {
     try {
       await _databaseRepository.saveLead(lead);
@@ -211,6 +183,10 @@ class LeadsController extends StateNotifier<AsyncValue<List<Lead>>> {
       return false;
     }
   }
+
+  // endregion
+
+  // region Update Lead Management
 
   Future<void> _updateLeadsWithNewLead(Lead lead) async {
     final List<Lead> currentLeads = List.from(state.value ?? []);
@@ -256,6 +232,10 @@ class LeadsController extends StateNotifier<AsyncValue<List<Lead>>> {
     );
   }
 
+  // endregion
+
+  // region Export Leads
+
   Future<void> exportLeads({
     required Event event,
     Rect? sharePositionOrigin,
@@ -280,4 +260,6 @@ class LeadsController extends StateNotifier<AsyncValue<List<Lead>>> {
       },
     );
   }
+
+// endregion
 }
