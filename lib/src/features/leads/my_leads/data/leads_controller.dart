@@ -64,7 +64,6 @@ class LeadsController extends StateNotifier<AsyncValue<List<Lead>>> {
 
   // region Add Lead Management
 
-  // TODO: pass eventId and assign it to a new property on Lead
   Future<void> addLeadManually({
     required Event event,
     required BuildContext context,
@@ -135,7 +134,7 @@ class LeadsController extends StateNotifier<AsyncValue<List<Lead>>> {
     final bool hasSavedLead = await _saveLeadToDatabase(lead);
 
     if (hasSavedLead) {
-      await _updateLeadsWithNewLead(lead);
+      await _insertLeadIntoLeads(lead);
       return null;
     }
 
@@ -178,11 +177,7 @@ class LeadsController extends StateNotifier<AsyncValue<List<Lead>>> {
     }
   }
 
-  // endregion
-
-  // region Update Lead Management
-
-  Future<void> _updateLeadsWithNewLead(Lead lead) async {
+  Future<void> _insertLeadIntoLeads(Lead lead) async {
     final List<Lead> currentLeads = List.from(state.value ?? []);
 
     try {
@@ -198,9 +193,22 @@ class LeadsController extends StateNotifier<AsyncValue<List<Lead>>> {
     }
   }
 
+  // endregion
+
+  // region Update Lead Management
+
   // TODO: Move to UpdateLeadController
   // TODO: create two new methods. One to update in database and second in UI
   Future<void> updateLeadNotes(Lead updatedLead) async {
+    await _updateLeadInDatabase(updatedLead);
+    await _updateLeadInLeads(updatedLead);
+  }
+
+  Future<void> _updateLeadInDatabase(Lead updatedLead) async {
+    await _databaseRepository.updateLead(updatedLead);
+  }
+
+  Future<void> _updateLeadInLeads(Lead updatedLead) async {
     state.maybeWhen(
       data: (currentLeads) {
         bool found = false;
@@ -222,6 +230,27 @@ class LeadsController extends StateNotifier<AsyncValue<List<Lead>>> {
       },
       orElse: () {
         debugPrint("❌ -> Unexpected state while updating a Lead's notes.");
+      },
+    );
+  }
+
+  Future<void> deleteLead(Lead lead) async {
+    await _deleteLeadFromDatabase(lead);
+    await _deleteLeadFromLeads(lead);
+  }
+
+  Future<void> _deleteLeadFromDatabase(Lead lead) async {
+    await _databaseRepository.deleteLead(lead);
+  }
+
+  Future<void> _deleteLeadFromLeads(Lead lead) async {
+    state.maybeWhen(
+      data: (currentLeads) {
+        currentLeads.remove(lead);
+        state = AsyncValue.data(currentLeads);
+      },
+      orElse: () {
+        debugPrint("❌ -> Unexpected state while deleting a Lead.");
       },
     );
   }
