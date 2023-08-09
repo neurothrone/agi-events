@@ -82,6 +82,7 @@ class LeadsController extends StateNotifier<AsyncValue<List<Lead>>> {
         "$email$firstName$lastName${event.eventId}".toLowerCase();
 
     final newLead = Lead(
+      eventId: event.eventId,
       firstName: firstName,
       lastName: lastName,
       company: company,
