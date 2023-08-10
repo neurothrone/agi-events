@@ -12,7 +12,6 @@ import '../../../../core/firebase/repositories/firebase_realtime_repository.dart
 import '../../../../core/interfaces/repositories/database_repository.dart';
 import '../../../../core/interfaces/repositories/realtime_repository.dart';
 import '../../../../core/models/models.dart';
-import '../../../../core/utils/enums/enums.dart';
 import '../../../csv/csv.dart';
 
 final leadsControllerProvider =
@@ -66,6 +65,17 @@ class LeadsController extends StateNotifier<AsyncValue<List<Lead>>> {
 
   final CsvService _csvService;
   final ShareService _shareService;
+
+  Future<void> fetchLeadsByEventId(String eventId) async {
+    List<Lead> leads = await _databaseRepository.fetchLeadsByEventId(eventId);
+    
+    try {
+      state = AsyncData(leads);
+    } catch (e, st) {
+      debugPrint("❌ -> Failed to fetch Leads. Error: $e");
+      state = AsyncError(e, st);
+    }
+  }
 
   // region Add Lead Management
 
