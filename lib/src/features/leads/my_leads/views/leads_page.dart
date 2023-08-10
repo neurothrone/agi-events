@@ -140,10 +140,7 @@ class LeadsPage extends StatelessWidget {
       ),
       body: SafeArea(
         minimum: const EdgeInsets.symmetric(horizontal: 20.0),
-        child: LeadsPageContent(
-          onAddPressed: () => _showAddLeadSheet(context),
-          event: event,
-        ),
+        child: LeadsPageContentScrollView(event: event),
       ),
     );
   }
