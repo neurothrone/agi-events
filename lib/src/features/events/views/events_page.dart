@@ -63,82 +63,102 @@ class EventsPageContent extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final AsyncValue<List<Event>> eventsState = ref.watch(
-      eventsControllerProvider,
-    );
-
-    return eventsState.when(
-      data: (List<Event> events) {
-        List<Widget> slivers = [
-          const EventsPageSliverTitle(),
-        ];
-
-        List<Event> yourEvents = [];
-        List<Event> comingEvents = [];
-
-        for (final event in events) {
-          if (event.saved) {
-            yourEvents.add(event);
+    return FutureBuilder(
+      future: ref.watch(eventsFutureProvider.future),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.hasError) {
+            return Text("Error: ${snapshot.error}");
           } else {
-            comingEvents.add(event);
+            // When the future is complete, call processEvents
+            ref
+                .read(eventsControllerProvider.notifier)
+                .processEvents(snapshot.data as List<Event>);
+
+            // Show events as Grid
+            final AsyncValue<List<Event>> eventsState = ref.watch(
+              eventsControllerProvider,
+            );
+
+            return eventsState.when(
+              data: (List<Event> events) {
+                List<Widget> slivers = [
+                  const EventsPageSliverTitle(),
+                ];
+
+                List<Event> yourEvents = [];
+                List<Event> comingEvents = [];
+
+                for (final event in events) {
+                  if (event.saved) {
+                    yourEvents.add(event);
+                  } else {
+                    comingEvents.add(event);
+                  }
+                }
+
+                // !: Your Events
+                slivers.add(
+                  const EventsSliverGridTitle(title: "Your Events"),
+                );
+                if (yourEvents.isNotEmpty) {
+                  slivers.addAll([
+                    EventsSliverGrid(
+                      eventsLength: yourEvents.length,
+                      builder: (context, index) {
+                        final event = yourEvents[index];
+
+                        return EventGridTile(
+                          onTap: () => Navigator.push(
+                            context,
+                            LeadsPage.route(event: event),
+                          ),
+                          event: event,
+                        );
+                      },
+                    ),
+                  ]);
+                } else {
+                  slivers.add(
+                    const YourEventsPlaceholder(),
+                  );
+                }
+
+                // !: Coming Events
+                if (comingEvents.isNotEmpty) {
+                  slivers.addAll([
+                    const EventsSliverGridTitle(title: "Coming Events"),
+                    EventsSliverGrid(
+                      eventsLength: comingEvents.length,
+                      builder: (context, index) {
+                        final Event event = comingEvents[index];
+
+                        return EventGridTile(
+                          onTap: () => _openQrScanner(event, context, ref),
+                          event: event,
+                        );
+                      },
+                    )
+                  ]);
+                }
+
+                return SafeArea(
+                  minimum: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: CustomScrollView(slivers: slivers),
+                );
+              },
+              loading: () => const CenteredProgressIndicator(),
+              error: (error, __) {
+                return Center(
+                  child: Text("❌ -> Failed to fetch Events. Error: $error"),
+                );
+              },
+            );
           }
-        }
-
-        // !: Your Events
-        slivers.add(
-          const EventsSliverGridTitle(title: "Your Events"),
-        );
-        if (yourEvents.isNotEmpty) {
-          slivers.addAll([
-            EventsSliverGrid(
-              eventsLength: yourEvents.length,
-              builder: (context, index) {
-                final event = yourEvents[index];
-
-                return EventGridTile(
-                  onTap: () => Navigator.push(
-                    context,
-                    LeadsPage.route(event: event),
-                  ),
-                  event: event,
-                );
-              },
-            ),
-          ]);
         } else {
-          slivers.add(
-            const YourEventsPlaceholder(),
-          );
+          // While the future is still running
+          return const CenteredProgressIndicator();
         }
-
-        // !: Coming Events
-        if (comingEvents.isNotEmpty) {
-          slivers.addAll([
-            const EventsSliverGridTitle(title: "Coming Events"),
-            EventsSliverGrid(
-              eventsLength: comingEvents.length,
-              builder: (context, index) {
-                final Event event = comingEvents[index];
-
-                return EventGridTile(
-                  onTap: () => _openQrScanner(event, context, ref),
-                  event: event,
-                );
-              },
-            )
-          ]);
-        }
-
-        return SafeArea(
-          minimum: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: CustomScrollView(slivers: slivers),
-        );
-      },
-      loading: () => const CenteredProgressIndicator(),
-      error: (error, __) {
-        return Center(
-          child: Text("❌ -> Failed to fetch Events. Error: $error"),
-        );
       },
     );
   }
