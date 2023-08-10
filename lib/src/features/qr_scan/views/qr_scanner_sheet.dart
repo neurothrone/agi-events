@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'package:mobile_scanner/mobile_scanner.dart';
 
-import '../../../../core/utils/enums/enums.dart';
-import '../../../../core/utils/utils.dart';
-import '../../../../core/widgets/widgets.dart';
+import '../../../core/utils/enums/enums.dart';
+import '../../../core/utils/utils.dart';
+import '../../../core/widgets/widgets.dart';
 
 const int kQrCodeRequiredLength = 40;
 

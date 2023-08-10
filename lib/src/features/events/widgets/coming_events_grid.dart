@@ -6,7 +6,7 @@ import '../../../core/models/models.dart';
 import '../../../core/utils/enums/enums.dart';
 import '../../../core/utils/utils.dart';
 import '../../../core/widgets/centered_progress_indicator.dart';
-import '../../leads/qr_scan/data/qr_scan_controller.dart';
+import '../../qr_scan/data/qr_scan_controller.dart';
 import '../data/events_controller.dart';
 import 'events_grid.dart';
 

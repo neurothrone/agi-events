@@ -10,7 +10,7 @@ import '../../../../core/utils/utils.dart';
 import '../../../../core/widgets/widgets.dart';
 import '../../add_lead/views/add_lead_sheet.dart';
 import '../../lead_detail/views/lead_detail_page.dart';
-import '../../qr_scan/data/qr_scan_controller.dart';
+import '../../../qr_scan/data/qr_scan_controller.dart';
 import '../data/leads_controller.dart';
 import '../widgets/qr_scanner_button.dart';
 import '../widgets/leads_page_content.dart';
