@@ -50,3 +50,12 @@ List<Map<String, dynamic>> _processEventsDataFromJson(
       )
       .toList();
 }
+
+Future<List<Event>> fetchEventsFromJson() async {
+  final Map<String, dynamic> eventsJson = await loadJsonFromAssets(AssetsConstants.eventsJson);
+  List<Map<String, dynamic>> listOfEventMap = _processEventsDataFromJson(eventsJson);
+  List<Event> events = listOfEventMap
+      .map((Map<String, dynamic> eventMap) => Event.fromMap(eventMap))
+      .toList();
+  return events;
+}
