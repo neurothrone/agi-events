@@ -9,6 +9,7 @@ import '../../../core/widgets/widgets.dart';
 import '../../leads/my_leads/views/leads_page.dart';
 import '../../leads/qr_scan/data/qr_scan_controller.dart';
 import '../data/events_controller.dart';
+import '../data/providers.dart';
 import '../widgets/event_grid_tile.dart';
 import '../widgets/events_page_background.dart';
 import '../widgets/events_page_sliver_title.dart';
@@ -32,16 +33,27 @@ class EventsPage extends StatelessWidget {
   }
 }
 
-class EventsPageContent extends ConsumerWidget {
-  const EventsPageContent({
-    super.key,
-  });
+class EventsPageContent extends ConsumerStatefulWidget {
+  const EventsPageContent({super.key});
 
-  Future<void> _openQrScanner(
-    Event event,
-    BuildContext context,
-    WidgetRef ref,
-  ) async {
+  @override
+  ConsumerState createState() => _EventsPageContentState();
+}
+
+class _EventsPageContentState extends ConsumerState<EventsPageContent> {
+  late Future<List<Event>> _eventsFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _eventsFuture = fetchEventsFromJson().then((List<Event> events) {
+      // When the future completes, call processEvents
+      ref.read(eventsControllerProvider.notifier).processEvents(events);
+      return events;
+    });
+  }
+
+  Future<void> _openQrScanner(Event event) async {
     await ref.read(qrScanControllerProvider).showQrScanner(
           scanType: ScanType.exhibitor,
           context: context,
@@ -62,19 +74,14 @@ class EventsPageContent extends ConsumerWidget {
   }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     return FutureBuilder(
-      future: ref.watch(eventsFutureProvider.future),
+      future: _eventsFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasError) {
             return Text("Error: ${snapshot.error}");
           } else {
-            // When the future is complete, call processEvents
-            ref
-                .read(eventsControllerProvider.notifier)
-                .processEvents(snapshot.data as List<Event>);
-
             // Show events as Grid
             final AsyncValue<List<Event>> eventsState = ref.watch(
               eventsControllerProvider,
@@ -134,7 +141,7 @@ class EventsPageContent extends ConsumerWidget {
                         final Event event = comingEvents[index];
 
                         return EventGridTile(
-                          onTap: () => _openQrScanner(event, context, ref),
+                          onTap: () => _openQrScanner(event),
                           event: event,
                         );
                       },
