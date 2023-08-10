@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/constants/constants.dart';
 import '../../../../core/models/models.dart';
 import '../../my_leads/data/leads_controller.dart';
-import '../../my_leads/widgets/lead_delete_button.dart';
+import '../widgets/lead_delete_button.dart';
 import '../widgets/contact_information.dart';
 import '../widgets/lead_detail_header_text.dart';
 import '../widgets/lead_detail_page_app_bar.dart';
