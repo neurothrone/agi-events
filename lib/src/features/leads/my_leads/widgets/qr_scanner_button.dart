@@ -1,26 +1,72 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/constants/constants.dart';
+import '../../../../core/models/models.dart';
+import '../../../../core/utils/enums/enums.dart';
+import '../../../../core/utils/utils.dart';
 import '../../../../core/widgets/widgets.dart';
+import '../../../qr_scan/data/qr_scan_controller.dart';
+import '../../lead_detail/views/lead_detail_page.dart';
+import '../data/leads_controller.dart';
 
-class QrScannerButton extends StatelessWidget {
+class QrScannerButton extends ConsumerWidget {
   const QrScannerButton({
     super.key,
-    this.onPressed,
-    required this.label,
+    required this.event,
   });
 
-  final VoidCallback? onPressed;
-  final String label;
+  final Event event;
+
+  Future<void> _openQrScanner(
+    BuildContext context,
+    WidgetRef ref,
+  ) async {
+    final navigator = Navigator.of(context);
+
+    await ref.read(qrScanControllerProvider).showQrScanner(
+          scanType: ScanType.visitor,
+          context: context,
+          onQrCodeScanned: (String qrCode) async {
+            final Lead? newLead =
+                await ref.read(leadsControllerProvider.notifier).addLeadByQR(
+                      qrCode: qrCode,
+                      event: event,
+                      onError: (String errorMessage) {
+                        showSnackbar(
+                          message: errorMessage,
+                          context: context,
+                        );
+                      },
+                    );
+
+            if (newLead != null) {
+              navigator.push(
+                LeadDetailPage.route(lead: newLead),
+              );
+            }
+          },
+        );
+  }
 
   @override
-  Widget build(BuildContext context) {
-    return PrimaryButton(
-      onPressed: onPressed,
-      label: label,
-      icon: Icons.qr_code_scanner_rounded,
-      height: 50.0,
-      backgroundColor: AppConstants.primaryBlueLighter,
+  Widget build(BuildContext context, WidgetRef ref) {
+    return SafeArea(
+      minimum: Platform.isIOS
+          ? const EdgeInsets.only(bottom: 20.0)
+          : EdgeInsets.zero,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        child: PrimaryButton(
+          onPressed: () => _openQrScanner(context, ref),
+          label: "Scan new lead",
+          icon: Icons.qr_code_scanner_rounded,
+          height: 50.0,
+          backgroundColor: AppConstants.primaryBlueLighter,
+        ),
+      ),
     );
   }
 }

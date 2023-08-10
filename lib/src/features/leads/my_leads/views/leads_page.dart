@@ -5,11 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/models/models.dart';
-import '../../../../core/utils/enums/enums.dart';
 import '../../../../core/utils/utils.dart';
 import '../../../../core/widgets/widgets.dart';
-import '../../lead_detail/views/lead_detail_page.dart';
-import '../../../qr_scan/data/qr_scan_controller.dart';
 import '../data/leads_controller.dart';
 import '../widgets/qr_scanner_button.dart';
 import '../widgets/leads_page_content.dart';
@@ -29,37 +26,6 @@ class LeadsPage extends StatelessWidget {
           event: event,
         ),
       );
-
-  Future<void> _openQrScanner(
-    BuildContext context,
-    WidgetRef ref,
-  ) async {
-    final navigator = Navigator.of(context);
-
-    await ref.read(qrScanControllerProvider).showQrScanner(
-          scanType: ScanType.visitor,
-          context: context,
-          onQrCodeScanned: (String qrCode) async {
-            final Lead? newLead =
-                await ref.read(leadsControllerProvider.notifier).addLeadByQR(
-                      qrCode: qrCode,
-                      event: event,
-                      onError: (String errorMessage) {
-                        showSnackbar(
-                          message: errorMessage,
-                          context: context,
-                        );
-                      },
-                    );
-
-            if (newLead != null) {
-              navigator.push(
-                LeadDetailPage.route(lead: newLead),
-              );
-            }
-          },
-        );
-  }
 
   Future<void> _shareLeads(
     BuildContext context,
@@ -116,20 +82,7 @@ class LeadsPage extends StatelessWidget {
                 }),
               ],
             ),
-      bottomNavigationBar: SafeArea(
-        minimum: Platform.isIOS
-            ? const EdgeInsets.only(bottom: 20.0)
-            : EdgeInsets.zero,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: Consumer(builder: (context, ref, _) {
-            return QrScannerButton(
-              onPressed: () => _openQrScanner(context, ref),
-              label: "Scan new lead",
-            );
-          }),
-        ),
-      ),
+      bottomNavigationBar: QrScannerButton(event: event),
       body: SafeArea(
         minimum: const EdgeInsets.symmetric(horizontal: 20.0),
         child: LeadsPageContentScrollView(event: event),
