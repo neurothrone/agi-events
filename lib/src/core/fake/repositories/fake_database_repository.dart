@@ -19,16 +19,6 @@ class FakeDatabaseRepository implements DatabaseRepository {
   }
 
   @override
-  Future<Event?> fetchEventById(String eventId) async {
-    for (final event in _events) {
-      if (event.eventId == eventId) {
-        return Future.value(event);
-      }
-    }
-    return Future.value(null);
-  }
-
-  @override
   Future<List<Event>> fetchEvents() async {
     final List<Event> events = _events.toList();
     events.sort((a, b) => b.startDate.compareTo(a.startDate));
