@@ -33,9 +33,12 @@ class EventGridTile extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10.0),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: SvgPicture.asset(
-                    AssetsConstants.imagePath(event.image),
-                    semanticsLabel: "Event logo",
+                  child: Hero(
+                    tag: "event-${event.eventId}",
+                    child: SvgPicture.asset(
+                      AssetsConstants.imagePath(event.image),
+                      semanticsLabel: "Event logo",
+                    ),
                   ),
                 ),
               ),

@@ -36,8 +36,11 @@ class LeadsPageContent extends ConsumerWidget {
                 children: [
                   SizedBox(
                     height: 100.0,
-                    child: SvgPicture.asset(
-                      AssetsConstants.imagePath(event.image),
+                    child: Hero(
+                      tag: "event-${event.eventId}",
+                      child: SvgPicture.asset(
+                        AssetsConstants.imagePath(event.image),
+                      ),
                     ),
                   ),
                   const SizedBox(height: 20.0),
