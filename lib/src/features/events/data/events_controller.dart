@@ -2,9 +2,11 @@ import 'package:flutter/cupertino.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/database/repositories/isar_database_repository.dart';
 import '../../../core/fake/data/providers.dart';
 import '../../../core/fake/repositories/fake_database_repository.dart';
 import '../../../core/fake/repositories/fake_realtime_repository.dart';
+import '../../../core/firebase/repositories/firebase_realtime_repository.dart';
 import '../../../core/interfaces/repositories/database_repository.dart';
 import '../../../core/interfaces/repositories/realtime_repository.dart';
 import '../../../core/models/models.dart';
@@ -12,29 +14,34 @@ import 'providers.dart';
 
 // region Providers
 
-final eventsControllerProvider =
-    StateNotifierProvider<EventsController, AsyncValue<List<Event>>>((ref) {
-  // !: Firebase Realtime database
+final eventsFutureProvider = FutureProvider<List<Event>>((ref) async {
+  return await fetchEventsFromJson();
+});
+
+final eventsControllerProvider = StateNotifierProvider.autoDispose<
+    EventsController, AsyncValue<List<Event>>>((ref) {
+  // !: Fake Local Database
+  // final DatabaseRepository databaseRepository = ref.watch(
+  //   fakeDatabaseRepositoryProvider,
+  // );
+  // !: Fake Realtime database
+  // final AsyncValue<Map<String, dynamic>> fakeRealtimeData = ref.watch(
+  //   fakeRealtimeDataFutureProvider,
+  // );
   // final RealtimeRepository realtimeRepository = ref.watch(
-  //   firebaseRealtimeRepositoryProvider,
+  //   fakeRealtimeRepositoryProvider(fakeRealtimeData),
   // );
 
-  // !: Fake Local Database
+  // !: Isar Local Database
   final DatabaseRepository databaseRepository = ref.watch(
-    fakeDatabaseRepositoryProvider,
+    isarDatabaseRepositoryProvider,
   );
-  // !: Fake Realtime database
-  final AsyncValue<Map<String, dynamic>> fakeRealtimeData = ref.watch(
-    fakeRealtimeDataFutureProvider,
-  );
+  // !: Firebase Realtime database
   final RealtimeRepository realtimeRepository = ref.watch(
-    fakeRealtimeRepositoryProvider(fakeRealtimeData),
+    firebaseRealtimeRepositoryProvider,
   );
-
-  final eventsData = ref.watch(eventsDataProvider);
 
   return EventsController(
-    events: eventsData,
     databaseRepository: databaseRepository,
     realtimeRepository: realtimeRepository,
   );
@@ -44,23 +51,16 @@ final eventsControllerProvider =
 
 class EventsController extends StateNotifier<AsyncValue<List<Event>>> {
   EventsController({
-    required List<Event> events,
     required DatabaseRepository databaseRepository,
     required RealtimeRepository realtimeRepository,
   })  : _databaseRepository = databaseRepository,
         _realtimeRepository = realtimeRepository,
-        super(const AsyncData([])) {
-    _init(events);
-  }
+        super(const AsyncData([]));
 
   final DatabaseRepository _databaseRepository;
   final RealtimeRepository _realtimeRepository;
 
   // region Events Management on Startup
-
-  Future<void> _init(List<Event> events) async {
-    await processEvents(events);
-  }
 
   Future<void> processEvents(List<Event> events) async {
     final List<Event> savedEvents = await _fetchSavedEvents();
@@ -76,15 +76,20 @@ class EventsController extends StateNotifier<AsyncValue<List<Event>>> {
       state = AsyncValue.data(currentEvents);
     } catch (e, st) {
       debugPrint(
-        "❌ -> Unexpected error while processing events.",
+        "❌ -> Unexpected error while processing events. Error: $e",
       );
       state = AsyncValue.error(e.toString(), st);
     }
   }
 
   Future<List<Event>> _fetchSavedEvents() async {
-    final List<Event> savedEvents = await _databaseRepository.fetchEvents();
-    return savedEvents;
+    try {
+      final List<Event> savedEvents = await _databaseRepository.fetchEvents();
+      return savedEvents;
+    } catch (e) {
+      debugPrint("❌ -> Caught an exception in _fetchSavedEvents(). Error: $e");
+      return [];
+    }
   }
 
   List<Event> _mergeAndKeepSaved(
@@ -171,5 +176,5 @@ class EventsController extends StateNotifier<AsyncValue<List<Event>>> {
     }
   }
 
-  // endregion
+// endregion
 }
