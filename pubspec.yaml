@@ -26,11 +26,17 @@ dependencies:
   flutter_riverpod: ^2.3.6
   # Date formatting
   intl: ^0.18.1
+  # Local database
+  isar: ^3.1.0+1
+  isar_flutter_libs: ^3.1.0+1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
+  # # Local database
+  isar_generator: ^3.1.0+1
+  build_runner: ^2.4.6
 
 flutter:
   uses-material-design: true
