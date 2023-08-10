@@ -40,20 +40,82 @@ class EventsPageContent extends ConsumerStatefulWidget {
   ConsumerState createState() => _EventsPageContentState();
 }
 
-class _EventsPageContentState extends ConsumerState<EventsPageContent> {
+class _EventsPageContentState extends ConsumerState<EventsPageContent>
+    with TickerProviderStateMixin {
   late Future<List<Event>> _eventsFuture;
+
+  late AnimationController _animationController;
+  late Animation<double> _opacityAnimation;
 
   @override
   void initState() {
     super.initState();
+
+    _animationController = AnimationController(
+      duration: const Duration(seconds: 1),
+      vsync: this,
+    );
+    _opacityAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      _animationController,
+    );
+
+    _loadData();
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _loadData() async {
     _eventsFuture = fetchEventsFromJson().then((List<Event> events) {
       // When the future completes, call processEvents
       ref.read(eventsControllerProvider.notifier).processEvents(events);
+
+      _animationController.forward();
+
       return events;
     });
   }
 
-  Future<void> _openQrScanner(Event event) async {
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: _eventsFuture,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.hasError) {
+            return Text("Error: ${snapshot.error}");
+          } else {
+            return AnimatedBuilder(
+              animation: _opacityAnimation,
+              builder: (context, child) {
+                return Opacity(
+                  opacity: _opacityAnimation.value,
+                  child: child,
+                );
+              },
+              child: const EventsPageContentGrids(),
+            );
+          }
+        } else {
+          // While the future is still running
+          return const CenteredProgressIndicator();
+        }
+      },
+    );
+  }
+}
+
+class EventsPageContentGrids extends ConsumerWidget {
+  const EventsPageContentGrids({super.key});
+
+  Future<void> _openQrScanner({
+    required Event event,
+    required BuildContext context,
+    required WidgetRef ref,
+  }) async {
     await ref.read(qrScanControllerProvider).showQrScanner(
           scanType: ScanType.exhibitor,
           context: context,
@@ -74,98 +136,87 @@ class _EventsPageContentState extends ConsumerState<EventsPageContent> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: _eventsFuture,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
-          if (snapshot.hasError) {
-            return Text("Error: ${snapshot.error}");
+  Widget build(BuildContext context, WidgetRef ref) {
+    final AsyncValue<List<Event>> eventsState = ref.watch(
+      eventsControllerProvider,
+    );
+
+    return eventsState.when(
+      data: (List<Event> events) {
+        List<Widget> slivers = [
+          const EventsPageSliverTitle(),
+        ];
+
+        List<Event> yourEvents = [];
+        List<Event> comingEvents = [];
+
+        for (final event in events) {
+          if (event.saved) {
+            yourEvents.add(event);
           } else {
-            // Show events as Grid
-            final AsyncValue<List<Event>> eventsState = ref.watch(
-              eventsControllerProvider,
-            );
-
-            return eventsState.when(
-              data: (List<Event> events) {
-                List<Widget> slivers = [
-                  const EventsPageSliverTitle(),
-                ];
-
-                List<Event> yourEvents = [];
-                List<Event> comingEvents = [];
-
-                for (final event in events) {
-                  if (event.saved) {
-                    yourEvents.add(event);
-                  } else {
-                    comingEvents.add(event);
-                  }
-                }
-
-                // !: Your Events
-                slivers.add(
-                  const EventsSliverGridTitle(title: "Your Events"),
-                );
-                if (yourEvents.isNotEmpty) {
-                  slivers.addAll([
-                    EventsSliverGrid(
-                      eventsLength: yourEvents.length,
-                      builder: (context, index) {
-                        final event = yourEvents[index];
-
-                        return EventGridTile(
-                          onTap: () => Navigator.push(
-                            context,
-                            LeadsPage.route(event: event),
-                          ),
-                          event: event,
-                        );
-                      },
-                    ),
-                  ]);
-                } else {
-                  slivers.add(
-                    const YourEventsPlaceholder(),
-                  );
-                }
-
-                // !: Coming Events
-                if (comingEvents.isNotEmpty) {
-                  slivers.addAll([
-                    const EventsSliverGridTitle(title: "Coming Events"),
-                    EventsSliverGrid(
-                      eventsLength: comingEvents.length,
-                      builder: (context, index) {
-                        final Event event = comingEvents[index];
-
-                        return EventGridTile(
-                          onTap: () => _openQrScanner(event),
-                          event: event,
-                        );
-                      },
-                    )
-                  ]);
-                }
-
-                return SafeArea(
-                  minimum: const EdgeInsets.symmetric(horizontal: 20.0),
-                  child: CustomScrollView(slivers: slivers),
-                );
-              },
-              loading: () => const CenteredProgressIndicator(),
-              error: (error, __) {
-                return Center(
-                  child: Text("❌ -> Failed to fetch Events. Error: $error"),
-                );
-              },
-            );
+            comingEvents.add(event);
           }
-        } else {
-          // While the future is still running
-          return const CenteredProgressIndicator();
         }
+
+        // !: Your Events
+        slivers.add(
+          const EventsSliverGridTitle(title: "Your Events"),
+        );
+        if (yourEvents.isNotEmpty) {
+          slivers.addAll([
+            EventsSliverGrid(
+              eventsLength: yourEvents.length,
+              builder: (context, index) {
+                final event = yourEvents[index];
+
+                return EventGridTile(
+                  onTap: () => Navigator.push(
+                    context,
+                    LeadsPage.route(event: event),
+                  ),
+                  event: event,
+                );
+              },
+            ),
+          ]);
+        } else {
+          slivers.add(
+            const YourEventsPlaceholder(),
+          );
+        }
+
+        // !: Coming Events
+        if (comingEvents.isNotEmpty) {
+          slivers.addAll([
+            const EventsSliverGridTitle(title: "Coming Events"),
+            EventsSliverGrid(
+              eventsLength: comingEvents.length,
+              builder: (context, index) {
+                final Event event = comingEvents[index];
+
+                return EventGridTile(
+                  onTap: () => _openQrScanner(
+                    event: event,
+                    context: context,
+                    ref: ref,
+                  ),
+                  event: event,
+                );
+              },
+            )
+          ]);
+        }
+
+        return SafeArea(
+          minimum: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: CustomScrollView(slivers: slivers),
+        );
+      },
+      loading: () => const CenteredProgressIndicator(),
+      error: (error, __) {
+        return Center(
+          child: Text("❌ -> Failed to fetch Events. Error: $error"),
+        );
       },
     );
   }
