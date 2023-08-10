@@ -18,7 +18,7 @@ final eventsFutureProvider = FutureProvider<List<Event>>((ref) async {
   return await fetchEventsFromJson();
 });
 
-final eventsControllerProvider = StateNotifierProvider.autoDispose<
+final eventsControllerProvider = StateNotifierProvider<
     EventsController, AsyncValue<List<Event>>>((ref) {
   // !: Fake Local Database
   // final DatabaseRepository databaseRepository = ref.watch(
