@@ -10,15 +10,13 @@ class EventsSliverGridTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SliverToBoxAdapter(
-      child: Padding(
-        padding: const EdgeInsets.only(bottom: 10.0),
-        child: Text(
-          title,
-          style: const TextStyle(
-            fontSize: 24.0,
-            fontWeight: FontWeight.bold,
-          ),
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10.0),
+      child: Text(
+        title,
+        style: const TextStyle(
+          fontSize: 24.0,
+          fontWeight: FontWeight.bold,
         ),
       ),
     );
