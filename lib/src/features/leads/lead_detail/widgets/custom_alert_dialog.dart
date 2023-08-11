@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/constants/constants.dart';
+import 'custom_filled_button.dart';
 
 class CustomAlertDialog extends StatelessWidget {
   const CustomAlertDialog({
@@ -11,6 +12,8 @@ class CustomAlertDialog extends StatelessWidget {
     required this.confirmText,
     required this.cancelColor,
     required this.confirmColor,
+    this.isCancelProminent = false,
+    this.isConfirmProminent = false,
     required this.onCancel,
     required this.onConfirm,
   });
@@ -22,6 +25,8 @@ class CustomAlertDialog extends StatelessWidget {
   final String confirmText;
   final Color cancelColor;
   final Color confirmColor;
+  final bool isCancelProminent;
+  final bool isConfirmProminent;
   final VoidCallback onCancel;
   final VoidCallback onConfirm;
 
@@ -44,39 +49,34 @@ class CustomAlertDialog extends StatelessWidget {
         ),
         textAlign: TextAlign.center,
       ),
-      actionsAlignment: MainAxisAlignment.spaceBetween,
+      contentPadding: const EdgeInsets.all(20.0),
       actions: [
-        FilledButton(
-          onPressed: () {
-            onCancel();
-            Navigator.pop(context);
-          },
-          style: FilledButton.styleFrom(
-            elevation: 5.0,
-            backgroundColor: Colors.black,
-          ),
-          child: Text(
-            cancelText,
-            style: TextStyle(
-              color: cancelColor,
+        Row(
+          children: [
+            Expanded(
+              child: CustomFilledButton(
+                onPressed: () {
+                  onCancel();
+                  Navigator.pop(context);
+                },
+                text: cancelText,
+                foregroundColor: cancelColor,
+                isTextProminent: isCancelProminent,
+              ),
             ),
-          ),
-        ),
-        FilledButton(
-          onPressed: () {
-            onConfirm();
-            Navigator.pop(context);
-          },
-          style: FilledButton.styleFrom(
-            elevation: 5.0,
-            backgroundColor: Colors.black,
-          ),
-          child: Text(
-            confirmText,
-            style: TextStyle(
-              color: confirmColor,
+            const SizedBox(width: 20.0),
+            Expanded(
+              child: CustomFilledButton(
+                onPressed: () {
+                  onConfirm();
+                  Navigator.pop(context);
+                },
+                text: confirmText,
+                foregroundColor: confirmColor,
+                isTextProminent: isConfirmProminent,
+              ),
             ),
-          ),
+          ],
         ),
       ],
     );

@@ -75,6 +75,7 @@ class _LeadDetailPageState extends State<LeadDetailPage> {
             confirmText: "Save",
             cancelColor: AppConstants.destructive,
             confirmColor: AppConstants.secondaryBlue,
+            isConfirmProminent: true,
             onCancel: () {
               // TODO: Do nothing
             },
@@ -109,6 +110,7 @@ class _LeadDetailPageState extends State<LeadDetailPage> {
           confirmText: "Delete",
           cancelColor: AppConstants.secondaryBlue,
           confirmColor: AppConstants.destructive,
+          isCancelProminent: true,
           onCancel: () {},
           onConfirm: () {
             // Delete Lead and pop navigator
