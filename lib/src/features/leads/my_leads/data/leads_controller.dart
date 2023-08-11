@@ -81,7 +81,6 @@ class LeadsController extends StateNotifier<AsyncValue<List<Lead>>> {
 
   Future<void> addLeadManually({
     required Event event,
-    required BuildContext context,
     required String firstName,
     required String lastName,
     required String company,
@@ -91,6 +90,8 @@ class LeadsController extends StateNotifier<AsyncValue<List<Lead>>> {
     String? address,
     String? zipCode,
     String? city,
+    String? product,
+    String? seller,
     Function(String)? onError,
   }) async {
     final hashedString =
@@ -106,6 +107,8 @@ class LeadsController extends StateNotifier<AsyncValue<List<Lead>>> {
       address: address,
       zipCode: zipCode,
       city: city,
+      product: product,
+      seller: seller,
       scannedAt: DateTime.now(),
       hashedString: hashedString,
     );
