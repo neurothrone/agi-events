@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../constants/app_constants.dart';
+
 void showSnackbar({
   required String message,
   IconData icon = Icons.info_outline_rounded,
@@ -8,11 +10,11 @@ void showSnackbar({
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
       behavior: SnackBarBehavior.floating,
-      backgroundColor: Colors.black,
-      elevation: 3.0,
+      backgroundColor: AppConstants.primaryBlueDarker,
+      elevation: 5.0,
       shape: RoundedRectangleBorder(
         side: const BorderSide(
-          color: Colors.white,
+          color: Colors.grey,
           width: 1.0,
         ),
         borderRadius: BorderRadius.circular(20.0),
