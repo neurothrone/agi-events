@@ -5,6 +5,7 @@ import 'package:mobile_scanner/mobile_scanner.dart';
 import '../../../core/utils/enums/enums.dart';
 import '../../../core/utils/utils.dart';
 import '../../../core/widgets/widgets.dart';
+import '../widgets/inactive_qr_scanner_content.dart';
 
 const int kQrCodeRequiredLength = 40;
 
@@ -25,6 +26,7 @@ class QrScannerSheet extends StatefulWidget {
 class _QrScannerSheetState extends State<QrScannerSheet> {
   MobileScanner? _scanner;
   bool _isLoading = true;
+  bool _isScannerOpen = false;
 
   @override
   void initState() {
@@ -71,6 +73,10 @@ class _QrScannerSheetState extends State<QrScannerSheet> {
     navigator.pop();
   }
 
+  void _openScanner() {
+    setState(() => _isScannerOpen = true);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -85,9 +91,11 @@ class _QrScannerSheetState extends State<QrScannerSheet> {
           ),
         ),
       ),
-      body: _scanner == null || _isLoading
-          ? const CenteredProgressIndicator()
-          : _scanner,
+      body: !_isScannerOpen
+          ? InactiveQrScannerContent(onStartScanner: _openScanner)
+          : _scanner == null || _isLoading
+              ? const CenteredProgressIndicator()
+              : _scanner,
     );
   }
 }
