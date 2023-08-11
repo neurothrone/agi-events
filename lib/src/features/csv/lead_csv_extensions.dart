@@ -25,6 +25,8 @@ extension LeadCsvExtensions on Lead {
         address ?? "",
         zipCode ?? "",
         city ?? "",
+        product ?? "",
+        seller ?? "",
         notes ?? "",
         scannedAt.formattedForExport,
       ];
@@ -39,6 +41,8 @@ extension LeadCsvExtensions on Lead {
         "Address",
         "Zip Code",
         "City",
+        "Product(s)",
+        "Seller",
         "Notes",
         "Scanned at time",
       ];
