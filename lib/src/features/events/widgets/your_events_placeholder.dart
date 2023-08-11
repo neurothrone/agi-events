@@ -11,7 +11,7 @@ class YourEventsPlaceholder extends StatelessWidget {
         text: const TextSpan(
           children: [
             TextSpan(
-              text: "You do not have events yet. Tap on "
+              text: "You do not have any events yet. Tap on "
                   "an Event in the ",
               style: TextStyle(
                 color: Colors.grey,
