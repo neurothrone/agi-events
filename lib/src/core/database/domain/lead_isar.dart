@@ -17,6 +17,8 @@ class LeadIsar {
   String? address;
   String? zipCode;
   String? city;
+  String? product;
+  String? seller;
   String? notes;
   @Index(caseSensitive: false)
   late DateTime scannedAt;
