@@ -13,6 +13,8 @@ class Lead {
     this.address,
     this.zipCode,
     this.city,
+    this.product,
+    this.seller,
     this.notes,
     required this.scannedAt,
     required this.hashedString,
@@ -74,6 +76,8 @@ class Lead {
   final String? address;
   final String? zipCode;
   final String? city;
+  final String? product;
+  final String? seller;
   final String? notes;
   final DateTime scannedAt;
   final String hashedString;
@@ -94,6 +98,8 @@ class Lead {
         " address: $address,\n"
         " zipCode: $zipCode,\n"
         " city: $city,\n"
+        " product: $product,\n"
+        " seller: $seller,\n"
         " notes: $notes,\n"
         " scannedAt: $scannedAt,\n"
         " hashedString: $hashedString,\n"
@@ -112,6 +118,8 @@ class Lead {
     String? address,
     String? zipCode,
     String? city,
+    String? product,
+    String? seller,
     String? notes,
     DateTime? scannedAt,
     String? hashedString,
@@ -128,6 +136,8 @@ class Lead {
       address: address ?? this.address,
       zipCode: zipCode ?? this.zipCode,
       city: city ?? this.city,
+      product: product ?? this.product,
+      seller: seller ?? this.seller,
       notes: notes ?? this.notes,
       scannedAt: scannedAt ?? this.scannedAt,
       hashedString: hashedString ?? this.hashedString,
