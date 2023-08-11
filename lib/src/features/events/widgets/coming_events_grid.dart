@@ -50,6 +50,9 @@ class ComingEventsGrid extends ConsumerWidget {
 
     return eventsState.when(
       data: (List<Event> events) {
+        // Cache `now`
+        final now = DateTime.now();
+
         return EventsGrid(
           onTap: (event, context, ref) {
             _openQrScanner(
@@ -58,7 +61,7 @@ class ComingEventsGrid extends ConsumerWidget {
               ref: ref,
             );
           },
-          filter: (event) => !event.saved,
+          filter: (event) => !event.saved && event.endDate.isNotAfter(now),
           placeholder: const SizedBox.shrink(),
           scrollController: scrollController,
         );
