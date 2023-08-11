@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/constants/app_constants.dart';
 import '../../../../core/models/models.dart';
+import 'lead_detail_header_text.dart';
 import 'lead_detail_text_icon_row.dart';
 
 class ContactInformation extends StatelessWidget {
@@ -19,6 +19,10 @@ class ContactInformation extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          const LeadDetailHeaderText(
+            title: "Contact Information",
+          ),
+          const SizedBox(height: 10.0),
           LeadDetailTextIconRow(
             text: lead.fullName,
             icon: Icons.person_rounded,
