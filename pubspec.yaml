@@ -1,5 +1,5 @@
 name: agi_events
-description: A new Flutter project.
+description: A Flutter app for exhibitors in AGI Events
 publish_to: 'none'
 version: 0.1.0
 
@@ -11,10 +11,11 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.5
-  flutter_svg: ^2.0.7 # Widget for SVG assets
-  # Firebase
+  # Widget for SVG assets
+  flutter_svg: ^2.0.7
+  # Firebase & Realtime Database
   firebase_core: ^2.15.0
-  firebase_database: ^10.2.4 # Realtime Database
+  firebase_database: ^10.2.4
   # QR Code Scanner
   mobile_scanner: ^3.3.0
   # Export & Share CSV
@@ -24,9 +25,9 @@ dependencies:
   share_plus: ^7.1.0
   # State Management
   flutter_riverpod: ^2.3.6
-  # Date formatting
+  # Date Formatting
   intl: ^0.18.1
-  # Local database
+  # Local Database
   isar: ^3.1.0+1
   isar_flutter_libs: ^3.1.0+1
   # Animate SliverGrids [EventsPage]
@@ -36,7 +37,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
-  # # Local database
+  # Local Database [Tools]
   isar_generator: ^3.1.0+1
   build_runner: ^2.4.6
 
