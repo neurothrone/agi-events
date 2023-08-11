@@ -38,6 +38,8 @@ class EventsGrid extends ConsumerWidget {
           );
         }
 
+        final Orientation orientation = MediaQuery.orientationOf(context);
+
         return LiveSliverGrid.options(
           controller: scrollController,
           options: const LiveOptions(
@@ -71,13 +73,10 @@ class EventsGrid extends ConsumerWidget {
             );
           },
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount:
-                MediaQuery.orientationOf(context) == Orientation.portrait
-                    ? 2
-                    : 3,
+            crossAxisCount: orientation == Orientation.portrait ? 2 : 3,
             crossAxisSpacing: 20.0,
             mainAxisSpacing: 20.0,
-            childAspectRatio: 0.65,
+            childAspectRatio: orientation == Orientation.portrait ? 0.65 : 0.7,
           ),
           itemCount: filteredEvents.length,
         );
@@ -93,5 +92,17 @@ class EventsGrid extends ConsumerWidget {
         );
       },
     );
+  }
+}
+
+int determineCrossAxisCount(double width) {
+  if (width < 400) {
+    return 2;
+  } else if (width < 600) {
+    return 3;
+  } else if (width < 900) {
+    return 4;
+  } else {
+    return 5;
   }
 }
