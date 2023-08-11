@@ -5,6 +5,7 @@ import 'package:path_provider/path_provider.dart';
 import '../../interfaces/repositories/database_repository.dart';
 import '../../models/models.dart';
 import '../domain/domain.dart';
+import '../utils/utils.dart';
 
 final isarDatabaseRepositoryProvider = Provider<IsarDatabaseRepository>((ref) {
   return IsarDatabaseRepository();
@@ -50,13 +51,7 @@ class IsarDatabaseRepository implements DatabaseRepository {
 
   @override
   Future<void> saveEvent(Event event) async {
-    final eventIsar = EventIsar()
-      ..eventId = event.eventId
-      ..title = event.title
-      ..image = event.image
-      ..startDate = event.startDate
-      ..endDate = event.endDate
-      ..saved = event.saved;
+    final eventIsar = EventIsarExtensions.fromEvent(event);
 
     final Isar isar = await db;
     await isar.writeTxn(() async {
@@ -71,16 +66,7 @@ class IsarDatabaseRepository implements DatabaseRepository {
         await isar.eventIsars.where().sortByStartDate().findAll();
 
     final List<Event> events = eventIsars
-        .map(
-          (EventIsar e) => Event(
-            eventId: e.eventId,
-            title: e.title,
-            image: e.image,
-            startDate: e.startDate,
-            endDate: e.endDate,
-            saved: e.saved,
-          ),
-        )
+        .map((EventIsar eventIsar) => EventExtensions.fromEventIsar(eventIsar))
         .toList();
     return events;
   }
@@ -91,22 +77,7 @@ class IsarDatabaseRepository implements DatabaseRepository {
 
   @override
   Future<void> saveLead(Lead lead) async {
-    final leadIsar = LeadIsar()
-      ..eventId = lead.eventId
-      ..firstName = lead.firstName
-      ..lastName = lead.lastName
-      ..company = lead.company
-      ..email = lead.email
-      ..phone = lead.phone
-      ..position = lead.position
-      ..address = lead.address
-      ..zipCode = lead.zipCode
-      ..city = lead.city
-      ..product = lead.product
-      ..seller = lead.seller
-      ..notes = lead.notes
-      ..scannedAt = lead.scannedAt
-      ..hashedString = lead.hashedString;
+    final leadIsar = LeadIsarExtensions.fromLead(lead);
 
     final Isar isar = await db;
     await isar.writeTxn(() async {
@@ -119,55 +90,19 @@ class IsarDatabaseRepository implements DatabaseRepository {
     final Isar isar = await db;
     final List<LeadIsar> leadIsars = await isar.leadIsars
         .filter()
-        .eventIdEqualTo(
-          eventId,
-        )
+        .eventIdEqualTo(eventId)
         .sortByScannedAt()
         .findAll();
 
     final List<Lead> leads = leadIsars
-        .map(
-          (l) => Lead(
-            eventId: l.eventId,
-            firstName: l.firstName,
-            lastName: l.lastName,
-            company: l.company,
-            email: l.email,
-            phone: l.phone,
-            position: l.position,
-            countryCode: l.countryCode,
-            address: l.address,
-            zipCode: l.zipCode,
-            city: l.city,
-            product: l.product,
-            seller: l.seller,
-            notes: l.notes,
-            scannedAt: l.scannedAt,
-            hashedString: l.hashedString,
-          ),
-        )
+        .map((leadIsar) => LeadExtensions.fromLeadIsar(leadIsar))
         .toList();
     return leads;
   }
 
   @override
   Future<void> updateLead(Lead lead) async {
-    final leadIsar = LeadIsar()
-      ..eventId = lead.eventId
-      ..firstName = lead.firstName
-      ..lastName = lead.lastName
-      ..company = lead.company
-      ..email = lead.email
-      ..phone = lead.phone
-      ..position = lead.position
-      ..address = lead.address
-      ..zipCode = lead.zipCode
-      ..city = lead.city
-      ..product = lead.product
-      ..seller = lead.seller
-      ..notes = lead.notes
-      ..scannedAt = lead.scannedAt
-      ..hashedString = lead.hashedString;
+    final leadIsar = LeadIsarExtensions.fromLead(lead);
 
     final Isar isar = await db;
     await isar.writeTxn(() async {
