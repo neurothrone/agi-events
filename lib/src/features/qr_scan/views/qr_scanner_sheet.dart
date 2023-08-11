@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:mobile_scanner/mobile_scanner.dart';
 
+import '../../../core/constants/constants.dart';
 import '../../../core/utils/enums/enums.dart';
 import '../../../core/utils/utils.dart';
 import '../../../core/widgets/widgets.dart';
@@ -80,6 +81,7 @@ class _QrScannerSheetState extends State<QrScannerSheet> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppConstants.lighterBlack,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         centerTitle: true,
