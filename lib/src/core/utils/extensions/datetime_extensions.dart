@@ -18,3 +18,11 @@ extension StringFormat on DateTime {
   /// 2023/08/05 14:20 => 5 Aug
   String get formattedForDayAndMonth => DateFormat("d MMM").format(this);
 }
+
+extension DateTimeUtils on DateTime {
+  /// Returns whether the `date` passed in is after this [DateTime]
+  /// in both date and time
+  bool isNotAfter(DateTime date) {
+    return !date.isAfter(this);
+  }
+}
