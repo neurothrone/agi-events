@@ -102,6 +102,8 @@ class IsarDatabaseRepository implements DatabaseRepository {
       ..address = lead.address
       ..zipCode = lead.zipCode
       ..city = lead.city
+      ..product = lead.product
+      ..seller = lead.seller
       ..notes = lead.notes
       ..scannedAt = lead.scannedAt
       ..hashedString = lead.hashedString;
@@ -137,6 +139,8 @@ class IsarDatabaseRepository implements DatabaseRepository {
             address: l.address,
             zipCode: l.zipCode,
             city: l.city,
+            product: l.product,
+            seller: l.seller,
             notes: l.notes,
             scannedAt: l.scannedAt,
             hashedString: l.hashedString,
@@ -159,6 +163,8 @@ class IsarDatabaseRepository implements DatabaseRepository {
       ..address = lead.address
       ..zipCode = lead.zipCode
       ..city = lead.city
+      ..product = lead.product
+      ..seller = lead.seller
       ..notes = lead.notes
       ..scannedAt = lead.scannedAt
       ..hashedString = lead.hashedString;
