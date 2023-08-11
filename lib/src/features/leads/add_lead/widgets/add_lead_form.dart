@@ -28,6 +28,8 @@ class _AddLeadFormState extends State<AddLeadForm> {
   final _addressController = TextEditingController();
   final _zipCodeController = TextEditingController();
   final _cityController = TextEditingController();
+  final _productController = TextEditingController();
+  final _sellerController = TextEditingController();
 
   // Initially form is not valid since all fields are empty
   final ValueNotifier<bool> _isFormValid = ValueNotifier(false);
@@ -80,7 +82,6 @@ class _AddLeadFormState extends State<AddLeadForm> {
   void _addLead(WidgetRef ref) {
     ref.read(leadsControllerProvider.notifier).addLeadManually(
           event: widget.event,
-          context: context,
           firstName: _firstNameController.text,
           lastName: _lastNameController.text,
           company: _companyController.text,
@@ -94,6 +95,11 @@ class _AddLeadFormState extends State<AddLeadForm> {
           zipCode:
               _phoneController.text.isNotEmpty ? _phoneController.text : null,
           city: _phoneController.text.isNotEmpty ? _phoneController.text : null,
+          product: _productController.text.isNotEmpty
+              ? _productController.text
+              : null,
+          seller:
+              _sellerController.text.isNotEmpty ? _sellerController.text : null,
         );
     Navigator.pop(context);
   }
@@ -104,11 +110,6 @@ class _AddLeadFormState extends State<AddLeadForm> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // OriginalTextFormField(
-          //   controller: _lastNameController,
-          //   label: "Last Name",
-          //   hintText: "Enter last name",
-          // ),
           CustomTextFormField(
             controller: _firstNameController,
             labelText: "First Name",
@@ -162,6 +163,20 @@ class _AddLeadFormState extends State<AddLeadForm> {
             controller: _cityController,
             labelText: "City",
             hintText: "Enter city",
+            isRequired: false,
+          ),
+          const SizedBox(height: 20.0),
+          CustomTextFormField(
+            controller: _productController,
+            labelText: "Product(s)",
+            hintText: "Enter your product(s)",
+            isRequired: false,
+          ),
+          const SizedBox(height: 20.0),
+          CustomTextFormField(
+            controller: _sellerController,
+            labelText: "Seller",
+            hintText: "Enter seller",
             isRequired: false,
           ),
           const SizedBox(height: 40.0),
