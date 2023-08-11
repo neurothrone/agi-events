@@ -10,7 +10,12 @@ import 'your_events_placeholder.dart';
 import 'events_grid.dart';
 
 class YourEventsGrid extends ConsumerWidget {
-  const YourEventsGrid({super.key});
+  const YourEventsGrid({
+    super.key,
+    required this.scrollController,
+  });
+
+  final ScrollController scrollController;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -21,14 +26,15 @@ class YourEventsGrid extends ConsumerWidget {
     return eventsState.when(
       data: (List<Event> events) {
         return EventsGrid(
-          filter: (event) => event.saved,
-          placeholder: const YourEventsPlaceholder(),
           onTap: (event, context, _) {
             Navigator.push(
               context,
               LeadsPage.route(event: event),
             );
           },
+          filter: (event) => event.saved,
+          placeholder: const YourEventsPlaceholder(),
+          scrollController: scrollController,
         );
       },
       loading: () => const SliverToBoxAdapter(

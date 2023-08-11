@@ -38,6 +38,8 @@ class EventsPageContentScrollView extends ConsumerStatefulWidget {
 
 class _EventsPageContentScrollViewState
     extends ConsumerState<EventsPageContentScrollView> {
+  final _scrollController = ScrollController();
+
   @override
   void initState() {
     super.initState();
@@ -48,19 +50,19 @@ class _EventsPageContentScrollViewState
 
   @override
   Widget build(BuildContext context) {
-    return const CustomScrollView(
+    return CustomScrollView(
       slivers: [
-        SliverToBoxAdapter(
+        const SliverToBoxAdapter(
           child: EventsPageSliverTitle(),
         ),
-        SliverToBoxAdapter(
+        const SliverToBoxAdapter(
           child: EventsSliverGridTitle(title: "Your Events"),
         ),
-        YourEventsGrid(),
-        SliverToBoxAdapter(
+        YourEventsGrid(scrollController: _scrollController),
+        const SliverToBoxAdapter(
           child: EventsSliverGridTitle(title: "Coming Events"),
         ),
-        ComingEventsGrid(),
+        ComingEventsGrid(scrollController: _scrollController),
       ],
     );
   }

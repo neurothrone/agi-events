@@ -11,7 +11,12 @@ import '../data/events_controller.dart';
 import 'events_grid.dart';
 
 class ComingEventsGrid extends ConsumerWidget {
-  const ComingEventsGrid({super.key});
+  const ComingEventsGrid({
+    super.key,
+    required this.scrollController,
+  });
+
+  final ScrollController scrollController;
 
   Future<void> _openQrScanner({
     required Event event,
@@ -46,11 +51,16 @@ class ComingEventsGrid extends ConsumerWidget {
     return eventsState.when(
       data: (List<Event> events) {
         return EventsGrid(
+          onTap: (event, context, ref) {
+            _openQrScanner(
+              event: event,
+              context: context,
+              ref: ref,
+            );
+          },
           filter: (event) => !event.saved,
           placeholder: const SizedBox.shrink(),
-          onTap: (event, context, ref) {
-            _openQrScanner(event: event, context: context, ref: ref);
-          },
+          scrollController: scrollController,
         );
       },
       loading: () => const SliverToBoxAdapter(
