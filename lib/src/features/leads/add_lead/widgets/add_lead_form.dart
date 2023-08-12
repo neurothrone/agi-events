@@ -31,17 +31,54 @@ class _AddLeadFormState extends State<AddLeadForm> {
   final _productController = TextEditingController();
   final _sellerController = TextEditingController();
 
+  late FocusNode _firstNameNode;
+  late FocusNode _lastNameNode;
+  late FocusNode _companyNode;
+  late FocusNode _emailNode;
+  late FocusNode _phoneNode;
+  late FocusNode _addressNode;
+  late FocusNode _zipCodeNode;
+  late FocusNode _cityNode;
+  late FocusNode _productNode;
+  late FocusNode _sellerNode;
+
   // Initially form is not valid since all fields are empty
   final ValueNotifier<bool> _isFormValid = ValueNotifier(false);
 
   @override
   void initState() {
     super.initState();
+    _initNodes();
     _addFormValidationListeners();
   }
 
-  @override
-  void dispose() {
+  void _initNodes() {
+    _firstNameNode = FocusNode();
+    _lastNameNode = FocusNode();
+    _companyNode = FocusNode();
+    _emailNode = FocusNode();
+    _phoneNode = FocusNode();
+    _addressNode = FocusNode();
+    _zipCodeNode = FocusNode();
+    _cityNode = FocusNode();
+    _productNode = FocusNode();
+    _sellerNode = FocusNode();
+  }
+
+  void _disposeOfNodes() {
+    _firstNameNode.dispose();
+    _lastNameNode.dispose();
+    _companyNode.dispose();
+    _emailNode.dispose();
+    _phoneNode.dispose();
+    _addressNode.dispose();
+    _zipCodeNode.dispose();
+    _cityNode.dispose();
+    _productNode.dispose();
+    _sellerNode.dispose();
+  }
+
+  void _disposeOfControllers() {
     _firstNameController.dispose();
     _lastNameController.dispose();
     _companyController.dispose();
@@ -50,6 +87,12 @@ class _AddLeadFormState extends State<AddLeadForm> {
     _addressController.dispose();
     _zipCodeController.dispose();
     _cityController.dispose();
+  }
+
+  @override
+  void dispose() {
+    _disposeOfControllers();
+    _disposeOfNodes();
     super.dispose();
   }
 
@@ -111,72 +154,122 @@ class _AddLeadFormState extends State<AddLeadForm> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CustomTextFormField(
+            onFieldSubmitted: (_) {
+              FocusScope.of(context).requestFocus(_lastNameNode);
+            },
             controller: _firstNameController,
+            focusNode: _firstNameNode,
             labelText: "First Name",
             hintText: "Enter first name",
+            textInputAction: TextInputAction.next,
           ),
           const SizedBox(height: 20.0),
           CustomTextFormField(
+            onFieldSubmitted: (_) {
+              FocusScope.of(context).requestFocus(_companyNode);
+            },
             controller: _lastNameController,
+            focusNode: _lastNameNode,
             labelText: "Last Name",
             hintText: "Enter last name",
+            textInputAction: TextInputAction.next,
           ),
           const SizedBox(height: 20.0),
           CustomTextFormField(
+            onFieldSubmitted: (_) {
+              FocusScope.of(context).requestFocus(_emailNode);
+            },
             controller: _companyController,
+            focusNode: _companyNode,
             labelText: "Company",
             hintText: "Enter company",
+            textInputAction: TextInputAction.next,
           ),
           const SizedBox(height: 20.0),
           CustomTextFormField(
+            onFieldSubmitted: (_) {
+              FocusScope.of(context).requestFocus(_phoneNode);
+            },
             controller: _emailController,
+            focusNode: _emailNode,
             labelText: "E-mail",
             hintText: "Enter e-mail",
             keyboardType: TextInputType.emailAddress,
             textCapitalization: TextCapitalization.none,
+            textInputAction: TextInputAction.next,
           ),
           const SizedBox(height: 20.0),
           CustomTextFormField(
+            onFieldSubmitted: (_) {
+              FocusScope.of(context).requestFocus(_addressNode);
+            },
             controller: _phoneController,
+            focusNode: _phoneNode,
             labelText: "Phone",
             hintText: "Enter phone number",
-            keyboardType: TextInputType.phone,
+            keyboardType: const TextInputType.numberWithOptions(signed: true),
+            textInputAction: TextInputAction.next,
             isRequired: false,
           ),
           const SizedBox(height: 20.0),
           CustomTextFormField(
+            onFieldSubmitted: (_) {
+              FocusScope.of(context).requestFocus(_zipCodeNode);
+            },
             controller: _addressController,
+            focusNode: _addressNode,
             labelText: "Address",
             hintText: "Enter address",
             keyboardType: TextInputType.streetAddress,
+            textInputAction: TextInputAction.next,
             isRequired: false,
           ),
           const SizedBox(height: 20.0),
           CustomTextFormField(
+            onFieldSubmitted: (_) {
+              FocusScope.of(context).requestFocus(_cityNode);
+            },
             controller: _zipCodeController,
+            focusNode: _zipCodeNode,
             labelText: "Zip code",
             hintText: "Enter zip code",
+            textInputAction: TextInputAction.next,
             isRequired: false,
           ),
           const SizedBox(height: 20.0),
           CustomTextFormField(
+            onFieldSubmitted: (_) {
+              FocusScope.of(context).requestFocus(_productNode);
+            },
             controller: _cityController,
+            focusNode: _cityNode,
             labelText: "City",
             hintText: "Enter city",
+            textInputAction: TextInputAction.next,
             isRequired: false,
           ),
           const SizedBox(height: 20.0),
           CustomTextFormField(
+            onFieldSubmitted: (_) {
+              FocusScope.of(context).requestFocus(_sellerNode);
+            },
             controller: _productController,
+            focusNode: _productNode,
             labelText: "Product(s)",
             hintText: "Enter your product(s)",
+            textInputAction: TextInputAction.next,
             isRequired: false,
           ),
           const SizedBox(height: 20.0),
           CustomTextFormField(
+            onFieldSubmitted: (_) {
+              _sellerNode.unfocus();
+            },
             controller: _sellerController,
+            focusNode: _sellerNode,
             labelText: "Seller",
             hintText: "Enter seller",
+            textInputAction: TextInputAction.done,
             isRequired: false,
           ),
           const SizedBox(height: 40.0),
