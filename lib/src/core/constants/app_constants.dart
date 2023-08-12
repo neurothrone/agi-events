@@ -4,6 +4,9 @@ class AppConstants {
   // Strings
   static const String appTitle = "AGI Events";
 
+  // Misc
+  static const int timeoutSeconds = 5;
+
   // Dimensions
   static const double borderRadius = 10.0;
 
