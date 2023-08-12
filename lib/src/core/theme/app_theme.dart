@@ -10,7 +10,6 @@ class AppTheme {
       backgroundColor: Colors.black,
       elevation: 0.0,
       iconTheme: IconThemeData(
-        // color: Colors.blue,
         color: AppConstants.primaryBlueLightest,
       ),
     ),
