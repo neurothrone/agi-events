@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/constants/constants.dart';
-import '../../../core/database/repositories/isar_database_repository.dart';
+import '../../../infrastructure/database/repositories/isar_database_repository.dart';
 import '../../../infrastructure/firebase/repositories/firebase_realtime_repository.dart';
 import '../../../core/interfaces/database_repository.dart';
 import '../../../core/interfaces/realtime_repository.dart';

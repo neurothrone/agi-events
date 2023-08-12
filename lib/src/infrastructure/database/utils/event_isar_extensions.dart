@@ -1,4 +1,4 @@
-import '../../models/models.dart';
+import '../../../core/models/models.dart';
 import '../domain/domain.dart';
 
 extension EventIsarExtensions on EventIsar {

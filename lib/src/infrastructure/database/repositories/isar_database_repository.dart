@@ -2,8 +2,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
 
-import '../../interfaces/database_repository.dart';
-import '../../models/models.dart';
+import '../../../core/interfaces/database_repository.dart';
+import '../../../core/models/models.dart';
 import '../domain/domain.dart';
 import '../utils/utils.dart';
 
