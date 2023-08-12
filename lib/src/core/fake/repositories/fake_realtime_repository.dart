@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../interfaces/repositories/realtime_repository.dart';
+import '../../interfaces/realtime_repository.dart';
 import '../../models/models.dart';
 import '../../utils/enums/enums.dart';
 

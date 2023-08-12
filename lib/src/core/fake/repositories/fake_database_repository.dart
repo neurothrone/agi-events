@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../interfaces/repositories/database_repository.dart';
+import '../../interfaces/database_repository.dart';
 import '../../models/models.dart';
 
 final fakeDatabaseRepositoryProvider = Provider<FakeDatabaseRepository>((ref) {
