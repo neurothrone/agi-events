@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -207,7 +209,9 @@ class _AddLeadFormState extends State<AddLeadForm> {
             focusNode: _phoneNode,
             labelText: "Phone",
             hintText: "Enter phone number",
-            keyboardType: const TextInputType.numberWithOptions(signed: true),
+            keyboardType: Platform.isIOS
+                ? const TextInputType.numberWithOptions(signed: true)
+                : TextInputType.phone,
             textInputAction: TextInputAction.next,
             isRequired: false,
           ),
