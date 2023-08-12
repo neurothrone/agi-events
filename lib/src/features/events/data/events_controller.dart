@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -18,8 +20,8 @@ final eventsFutureProvider = FutureProvider<List<Event>>((ref) async {
   return await fetchEventsFromJson();
 });
 
-final eventsControllerProvider = StateNotifierProvider<
-    EventsController, AsyncValue<List<Event>>>((ref) {
+final eventsControllerProvider =
+    StateNotifierProvider<EventsController, AsyncValue<List<Event>>>((ref) {
   // !: Fake Local Database
   // final DatabaseRepository databaseRepository = ref.watch(
   //   fakeDatabaseRepositoryProvider,
@@ -127,15 +129,28 @@ class EventsController extends StateNotifier<AsyncValue<List<Event>>> {
     required Event event,
     Function(String)? onError,
   }) async {
-    final RawExhibitorData? exhibitor =
-        await _realtimeRepository.fetchExhibitorById(
-      exhibitorId: exhibitorId,
-      event: event,
-    );
+    RawExhibitorData? exhibitor;
+    String? errorMessage;
+
+    try {
+      exhibitor = await _realtimeRepository
+          .fetchExhibitorById(
+            exhibitorId: exhibitorId,
+            event: event,
+          )
+          .timeout(const Duration(seconds: 3));
+    } catch (e) {
+      if (e is TimeoutException) {
+        errorMessage = "Check your internet connection and try again.";
+      } else {
+        errorMessage = "An unexpected error occurred.";
+      }
+    }
 
     if (exhibitor == null) {
       if (onError != null) {
-        onError("You have not registered for this Event");
+        errorMessage ??= "You have not registered for this Event";
+        onError(errorMessage);
       }
       return;
     }
