@@ -40,9 +40,21 @@ dev_dependencies:
   # Local Database [Tools]
   isar_generator: ^3.1.0+1
   build_runner: ^2.4.6
+  # Command-line tool for updating Android & iOS launcher icons
+  flutter_launcher_icons: ^0.13.1
+
+flutter_launcher_icons:
+  image_path: "assets/images/app/app-icon.png"
+  android: true
+  adaptive_icon_background: "#FFFFFF"
+  adaptive_icon_foreground: "assets/images/app/app-icon.png"
+  min_sdk_android: 21
+  ios: true
+  remove_alpha_ios: true
 
 flutter:
   uses-material-design: true
   assets:
     - assets/data/
-    - assets/images/
+    - assets/images/app/
+    - assets/images/events/
