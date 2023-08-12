@@ -1,9 +1,11 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/constants/constants.dart';
 import '../../../../core/database/repositories/isar_database_repository.dart';
 import '../../../../core/fake/data/providers.dart';
 import '../../../../core/fake/repositories/fake_database_repository.dart';
@@ -68,7 +70,7 @@ class LeadsController extends StateNotifier<AsyncValue<List<Lead>>> {
 
   Future<void> fetchLeadsByEventId(String eventId) async {
     List<Lead> leads = await _databaseRepository.fetchLeadsByEventId(eventId);
-    
+
     try {
       state = AsyncData(leads);
     } catch (e, st) {
@@ -125,11 +127,26 @@ class LeadsController extends StateNotifier<AsyncValue<List<Lead>>> {
     required Event event,
     Function(String)? onError,
   }) async {
-    final Lead? newLead = await _fetchLead(qrCode: qrCode, event: event);
-    final String? errorMessage;
+    Lead? newLead;
+    String? errorMessage;
+
+    try {
+      newLead = await _fetchLead(
+        qrCode: qrCode,
+        event: event,
+      ).timeout(
+        const Duration(seconds: AppConstants.timeoutSeconds),
+      );
+    } catch (e) {
+      if (e is TimeoutException) {
+        errorMessage = "Check your internet connection and try again.";
+      } else {
+        errorMessage = "An unexpected error occurred.";
+      }
+    }
 
     if (newLead == null) {
-      errorMessage = "That user is not registered";
+      errorMessage ??= "That user is not registered to this Event.";
     } else {
       errorMessage = await _addLead(lead: newLead);
     }
