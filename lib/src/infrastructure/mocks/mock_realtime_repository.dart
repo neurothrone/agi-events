@@ -1,28 +1,38 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../interfaces/realtime_repository.dart';
-import '../../models/models.dart';
-import '../../utils/enums/enums.dart';
+import '../../core/constants/constants.dart';
+import '../../core/interfaces/interfaces.dart';
+import '../../core/models/models.dart';
+import '../../core/utils/enums/enums.dart';
+import '../../core/utils/utils.dart';
 
 // region Providers
 
-final fakeRealtimeRepositoryProvider =
-    Provider.family<FakeRealtimeRepository, AsyncValue<Map<String, dynamic>>>(
+final mockRealtimeDataFutureProvider =
+    FutureProvider<Map<String, dynamic>>((ref) async {
+  final Map<String, dynamic> realtimeData = await loadJsonFromAssets(
+    AssetsConstants.mockRealtimeJson,
+  );
+  return realtimeData;
+});
+
+final mockRealtimeRepositoryProvider =
+    Provider.family<MockRealtimeRepository, AsyncValue<Map<String, dynamic>>>(
         (ref, jsonData) {
   // Check if data is available
   if (jsonData is AsyncData<Map<String, dynamic>>) {
     // Data is available
-    return FakeRealtimeRepository(data: jsonData.value);
+    return MockRealtimeRepository(data: jsonData.value);
   } else {
     // Data is not yet available
-    return const FakeRealtimeRepository(data: {});
+    return const MockRealtimeRepository(data: {});
   }
 });
 
 // endregion
 
-class FakeRealtimeRepository implements RealtimeRepository {
-  const FakeRealtimeRepository({
+class MockRealtimeRepository implements RealtimeRepository {
+  const MockRealtimeRepository({
     required Map<String, dynamic> data,
   }) : _data = data;
 

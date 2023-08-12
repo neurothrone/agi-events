@@ -1,13 +1,13 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../interfaces/database_repository.dart';
-import '../../models/models.dart';
+import '../../core/interfaces/interfaces.dart';
+import '../../core/models/models.dart';
 
-final fakeDatabaseRepositoryProvider = Provider<FakeDatabaseRepository>((ref) {
-  return FakeDatabaseRepository();
+final mockDatabaseRepositoryProvider = Provider<MockDatabaseRepository>((ref) {
+  return MockDatabaseRepository();
 });
 
-class FakeDatabaseRepository implements DatabaseRepository {
+class MockDatabaseRepository implements DatabaseRepository {
   final Set<Event> _events = {};
   final Set<Lead> _leads = {};
 
@@ -52,5 +52,5 @@ class FakeDatabaseRepository implements DatabaseRepository {
     _leads.remove(lead);
   }
 
-  // endregion
+// endregion
 }
