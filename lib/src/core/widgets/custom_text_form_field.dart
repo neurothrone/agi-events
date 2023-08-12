@@ -5,6 +5,7 @@ import '../constants/app_constants.dart';
 class CustomTextFormField extends StatelessWidget {
   const CustomTextFormField({
     super.key,
+    this.onFieldSubmitted,
     this.controller,
     this.labelText,
     required this.hintText,
@@ -14,9 +15,12 @@ class CustomTextFormField extends StatelessWidget {
     this.isRequired = true,
     this.primaryColor,
     this.filled = false,
+    this.focusNode,
     this.textCapitalization = TextCapitalization.sentences,
+    this.textInputAction,
   });
 
+  final Function(String)? onFieldSubmitted;
   final TextEditingController? controller;
   final String? labelText;
   final String hintText;
@@ -26,17 +30,22 @@ class CustomTextFormField extends StatelessWidget {
   final bool? readOnly;
   final Color? primaryColor;
   final bool? filled;
+  final FocusNode? focusNode;
   final TextCapitalization textCapitalization;
+  final TextInputAction? textInputAction;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      onFieldSubmitted: onFieldSubmitted,
       controller: controller,
+      focusNode: focusNode,
+      textCapitalization: textCapitalization,
+      textInputAction: textInputAction,
       readOnly: readOnly ?? false,
       style: const TextStyle(
         color: Colors.white,
       ),
-      textCapitalization: textCapitalization,
       maxLines: maxLines ?? 1,
       keyboardType: keyboardType ?? TextInputType.text,
       cursorColor: primaryColor ?? AppConstants.primaryBlueLightest,
