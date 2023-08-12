@@ -2,7 +2,7 @@ class AssetsConstants {
   const AssetsConstants._();
 
   static const String _dataBasePath = "assets/data";
-  static const String _imagesBasePath = "assets/images";
+  static const String _imagesBasePath = "assets/images/events";
 
   static const String fakeRealtimeJson =
       "$_dataBasePath/fake-database-data.json";
