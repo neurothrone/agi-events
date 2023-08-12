@@ -5,9 +5,6 @@ import 'package:flutter/cupertino.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-// import '../../../../core/fake/data/providers.dart';
-// import '../../../../core/fake/repositories/fake_database_repository.dart';
-// import '../../../../core/fake/repositories/fake_realtime_repository.dart';
 import '../../../../core/constants/constants.dart';
 import '../../../../core/database/repositories/isar_database_repository.dart';
 import '../../../../core/firebase/repositories/firebase_realtime_repository.dart';
@@ -19,23 +16,9 @@ import '../../../csv/csv.dart';
 
 final leadsControllerProvider =
     StateNotifierProvider<LeadsController, AsyncValue<List<Lead>>>((ref) {
-  // !: Fake Local Database
-  // final DatabaseRepository databaseRepository = ref.watch(
-  //   fakeDatabaseRepositoryProvider,
-  // );
-  // !: Fake Realtime database
-  // final AsyncValue<Map<String, dynamic>> fakeRealtimeData = ref.watch(
-  //   fakeRealtimeDataFutureProvider,
-  // );
-  // final RealtimeRepository realtimeRepository = ref.watch(
-  //   fakeRealtimeRepositoryProvider(fakeRealtimeData),
-  // );
-
-  // !: Isar Local Database
   final DatabaseRepository databaseRepository = ref.watch(
     isarDatabaseRepositoryProvider,
   );
-  // // !: Firebase Realtime database
   final RealtimeRepository realtimeRepository = ref.watch(
     firebaseRealtimeRepositoryProvider,
   );
