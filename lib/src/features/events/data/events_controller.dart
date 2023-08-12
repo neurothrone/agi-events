@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 // import '../../../core/fake/data/providers.dart';
 // import '../../../core/fake/repositories/fake_database_repository.dart';
 // import '../../../core/fake/repositories/fake_realtime_repository.dart';
+import '../../../core/constants/constants.dart';
 import '../../../core/database/repositories/isar_database_repository.dart';
 import '../../../core/firebase/repositories/firebase_realtime_repository.dart';
 import '../../../core/interfaces/repositories/database_repository.dart';
@@ -138,7 +139,9 @@ class EventsController extends StateNotifier<AsyncValue<List<Event>>> {
             exhibitorId: exhibitorId,
             event: event,
           )
-          .timeout(const Duration(seconds: 3));
+          .timeout(
+            const Duration(seconds: AppConstants.timeoutSeconds),
+          );
     } catch (e) {
       if (e is TimeoutException) {
         errorMessage = "Check your internet connection and try again.";
@@ -149,7 +152,7 @@ class EventsController extends StateNotifier<AsyncValue<List<Event>>> {
 
     if (exhibitor == null) {
       if (onError != null) {
-        errorMessage ??= "You have not registered for this Event";
+        errorMessage ??= "You have not registered for this Event.";
         onError(errorMessage);
       }
       return;
