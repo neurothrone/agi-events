@@ -22,7 +22,6 @@ class QrScanController {
         scanType: scanType,
         onQrCodeScanned: (String qrCode) {
           if (onQrCodeScanned != null) {
-            debugPrint("ℹ️ -> QR Code scanned: $qrCode");
             onQrCodeScanned(qrCode);
           }
         },
