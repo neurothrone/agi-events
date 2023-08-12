@@ -14,6 +14,7 @@ import '../../../../core/firebase/repositories/firebase_realtime_repository.dart
 import '../../../../core/interfaces/repositories/database_repository.dart';
 import '../../../../core/interfaces/repositories/realtime_repository.dart';
 import '../../../../core/models/models.dart';
+import '../../../../core/utils/utils.dart';
 import '../../../csv/csv.dart';
 
 final leadsControllerProvider =
@@ -138,11 +139,7 @@ class LeadsController extends StateNotifier<AsyncValue<List<Lead>>> {
         const Duration(seconds: AppConstants.timeoutSeconds),
       );
     } catch (e) {
-      if (e is TimeoutException) {
-        errorMessage = "Check your internet connection and try again.";
-      } else {
-        errorMessage = "An unexpected error occurred.";
-      }
+      errorMessage = errorMessageFor(e);
     }
 
     if (newLead == null) {
