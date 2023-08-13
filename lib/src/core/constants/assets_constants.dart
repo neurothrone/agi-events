@@ -11,9 +11,9 @@ class AssetsConstants {
   static const String _dataBasePath = "assets/data";
   static const String _imagesBasePath = "assets/images/events";
 
-  /// The path to the `mock-realtime-data.json` file in assets
-  static const String mockRealtimeJson =
-      "$_dataBasePath/mock-realtime-data.json";
+  /// The path to the `prototype-realtime-data.json` file in assets
+  static const String prototypeRealtimeJson =
+      "$_dataBasePath/prototype-realtime-data.json";
 
   /// The path to the `events.json` file in assets
   static const String eventsJson = "$_dataBasePath/events.json";
