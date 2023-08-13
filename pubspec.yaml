@@ -44,6 +44,8 @@ dev_dependencies:
   flutter_launcher_icons: ^0.13.1
   # Command-line tool for updating Android & iOS splash screen
   flutter_native_splash: ^2.3.1
+  # Library for creating mock objects in Dart tests
+  mocktail: ^1.0.0
 
 flutter_launcher_icons:
   image_path: "assets/images/app/app-logo.png"
