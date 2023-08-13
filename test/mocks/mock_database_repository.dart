@@ -3,7 +3,7 @@ import 'package:mocktail/mocktail.dart';
 import 'package:agi_events/src/core/interfaces/interfaces.dart';
 import 'package:agi_events/src/core/models/models.dart';
 
-class TestMockDatabaseRepository extends Mock implements DatabaseRepository {
+class MockDatabaseRepository extends Mock implements DatabaseRepository {
   @override
   Future<List<Event>> fetchEvents() async {
     final event1 = Event(
