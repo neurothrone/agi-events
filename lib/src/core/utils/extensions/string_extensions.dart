@@ -1,8 +1,9 @@
 import 'package:flutter/foundation.dart';
 
 extension DateTimeFromString on String {
-  /// Returns the [String] converted to a [DateTime] if possible to parse
-  /// else the current date & time using the `now` constructor of [DateTime].
+  /// Converts the [String] to a [DateTime] if possible to parse
+  /// else returns the current date & time using the `now` constructor
+  /// of [DateTime].
   DateTime toDateTime() {
     if (isEmpty) return DateTime.now();
 
