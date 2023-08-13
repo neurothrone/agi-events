@@ -7,7 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/constants/app_constants.dart';
 import '../../../../core/models/models.dart';
 import '../../../../core/utils/utils.dart';
-import '../data/leads_controller.dart';
+import '../../shared/data/leads_controller.dart';
 
 class ShareButton extends ConsumerWidget {
   const ShareButton({

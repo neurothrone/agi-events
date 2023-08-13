@@ -7,7 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/constants/constants.dart';
 import '../../../../core/models/models.dart';
 import '../../../../core/widgets/widgets.dart';
-import '../../my_leads/data/leads_controller.dart';
+import '../../shared/data/leads_controller.dart';
 
 class AddLeadForm extends StatefulWidget {
   const AddLeadForm({

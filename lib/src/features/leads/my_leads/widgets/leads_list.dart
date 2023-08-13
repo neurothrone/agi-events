@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/models/models.dart';
 import '../../../../core/widgets/widgets.dart';
-import '../data/leads_controller.dart';
+import '../../shared/data/leads_controller.dart';
 import 'empty_leads_placeholder.dart';
 import 'leads_sliver_list.dart';
 

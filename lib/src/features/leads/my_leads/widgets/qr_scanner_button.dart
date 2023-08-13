@@ -10,7 +10,7 @@ import '../../../../core/utils/utils.dart';
 import '../../../../core/widgets/widgets.dart';
 import '../../../qr_scan/data/qr_scan_controller.dart';
 import '../../lead_detail/views/lead_detail_page.dart';
-import '../data/leads_controller.dart';
+import '../../shared/data/leads_controller.dart';
 
 class QrScannerButton extends ConsumerWidget {
   const QrScannerButton({
