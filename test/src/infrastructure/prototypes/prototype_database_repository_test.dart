@@ -2,19 +2,19 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:agi_events/src/infrastructure/mocks/mock_database_repository.dart';
+import 'package:agi_events/src/infrastructure/prototypes/prototype_database_repository.dart';
 import 'package:agi_events/src/core/models/models.dart';
 
 void main() {
-  group("mockDatabaseRepositoryProvider", () {
+  group("prototypeDatabaseRepositoryProvider", () {
     test(
       "mockDatabaseRepositoryProvider provides an instance "
       "of MockDatabaseRepository",
       () {
         final container = ProviderContainer();
-        final instance = container.read(mockDatabaseRepositoryProvider);
+        final instance = container.read(prototypeDatabaseRepositoryProvider);
 
-        expect(instance, isA<MockDatabaseRepository>());
+        expect(instance, isA<PrototypeDatabaseRepository>());
 
         container.dispose();
       },
@@ -22,10 +22,10 @@ void main() {
   });
 
   group("MockDatabaseRepository", () {
-    late MockDatabaseRepository repository;
+    late PrototypeDatabaseRepository repository;
 
     setUp(() {
-      repository = MockDatabaseRepository();
+      repository = PrototypeDatabaseRepository();
     });
 
     test(

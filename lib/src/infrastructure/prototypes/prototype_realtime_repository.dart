@@ -8,31 +8,31 @@ import '../../core/utils/utils.dart';
 
 // region Providers
 
-final mockRealtimeDataFutureProvider =
+final prototypeRealtimeDataFutureProvider =
     FutureProvider<Map<String, dynamic>>((ref) async {
   final Map<String, dynamic> realtimeData = await loadJsonFromAssets(
-    AssetsConstants.mockRealtimeJson,
+    AssetsConstants.prototypeRealtimeJson,
   );
   return realtimeData;
 });
 
-final mockRealtimeRepositoryProvider =
-    Provider.family<MockRealtimeRepository, AsyncValue<Map<String, dynamic>>>(
-        (ref, jsonData) {
+final prototypeRealtimeRepositoryProvider = Provider.family<
+    PrototypeRealtimeRepository,
+    AsyncValue<Map<String, dynamic>>>((ref, jsonData) {
   // Check if data is available
   if (jsonData is AsyncData<Map<String, dynamic>>) {
     // Data is available
-    return MockRealtimeRepository(data: jsonData.value);
+    return PrototypeRealtimeRepository(data: jsonData.value);
   } else {
     // Data is not yet available
-    return const MockRealtimeRepository(data: {});
+    return const PrototypeRealtimeRepository(data: {});
   }
 });
 
 // endregion
 
-class MockRealtimeRepository implements RealtimeRepository {
-  const MockRealtimeRepository({
+class PrototypeRealtimeRepository implements RealtimeRepository {
+  const PrototypeRealtimeRepository({
     required Map<String, dynamic> data,
   }) : _data = data;
 

@@ -4,13 +4,13 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:agi_events/src/infrastructure/mocks/mock_realtime_repository.dart';
+import 'package:agi_events/src/infrastructure/prototypes/prototype_realtime_repository.dart';
 import 'package:agi_events/src/core/models/models.dart';
 import 'package:agi_events/src/core/utils/utils.dart';
 
 void main() {
   group(
-    "MockRealtimeRepository Providers",
+    "PrototypeRealtimeRepository Providers",
     () {
       late ProviderContainer container;
 
@@ -24,7 +24,7 @@ void main() {
       });
 
       test(
-        "mockRealtimeDataFutureProvider returns the expected data",
+        "prototypeRealtimeDataFutureProvider returns the expected data",
         () async {
           // Arrange
           // [container] -> handled by setUp()
@@ -36,7 +36,7 @@ void main() {
           // Inside the microtask, we read from the provider and
           // complete the completer.
           Future.microtask(() {
-            container.read(mockRealtimeDataFutureProvider);
+            container.read(prototypeRealtimeDataFutureProvider);
             completer.complete();
           });
 
@@ -46,7 +46,7 @@ void main() {
           // Assert
           // At this point, the data should be loaded
           final providerResult = container.read(
-            mockRealtimeDataFutureProvider,
+            prototypeRealtimeDataFutureProvider,
           );
           final loadedData = providerResult.maybeWhen(
             data: (Map<String, dynamic> data) => data,
@@ -59,28 +59,28 @@ void main() {
       );
 
       test(
-        "mockRealtimeRepositoryProvider returns the expected repository",
+        "prototypeRealtimeRepositoryProvider returns the expected repository",
         () async {
           // Assert
           // [container] -> handled by setUp()
           final loadedData = await container.read(
-            mockRealtimeDataFutureProvider.future,
+            prototypeRealtimeDataFutureProvider.future,
           );
 
           // Act
           final repository = container.read(
-            mockRealtimeRepositoryProvider(AsyncValue.data(loadedData)),
+            prototypeRealtimeRepositoryProvider(AsyncValue.data(loadedData)),
           );
 
           // Assert
-          expect(repository, isA<MockRealtimeRepository>());
+          expect(repository, isA<PrototypeRealtimeRepository>());
         },
       );
     },
   );
 
-  group("MockRealtimeRepository", () {
-    late MockRealtimeRepository repository;
+  group("PrototypeRealtimeRepository", () {
+    late PrototypeRealtimeRepository repository;
     late Map<String, dynamic> mockData;
 
     late Event event;
@@ -89,9 +89,9 @@ void main() {
       TestWidgetsFlutterBinding.ensureInitialized();
 
       mockData = await loadJsonFromAssets(
-        "assets/data/mock-realtime-data.json",
+        "assets/data/prototype-realtime-data.json",
       );
-      repository = MockRealtimeRepository(data: mockData);
+      repository = PrototypeRealtimeRepository(data: mockData);
 
       event = Event(
         eventId: "sopno398628",

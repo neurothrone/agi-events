@@ -3,11 +3,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/interfaces/interfaces.dart';
 import '../../core/models/models.dart';
 
-final mockDatabaseRepositoryProvider = Provider<MockDatabaseRepository>((ref) {
-  return MockDatabaseRepository();
+final prototypeDatabaseRepositoryProvider = Provider<PrototypeDatabaseRepository>((ref) {
+  return PrototypeDatabaseRepository();
 });
 
-class MockDatabaseRepository implements DatabaseRepository {
+class PrototypeDatabaseRepository implements DatabaseRepository {
   final Set<Event> _events = {};
   final Set<Lead> _leads = {};
 
