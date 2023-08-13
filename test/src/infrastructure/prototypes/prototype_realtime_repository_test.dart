@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:agi_events/src/core/constants/assets_constants.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -89,7 +90,7 @@ void main() {
       TestWidgetsFlutterBinding.ensureInitialized();
 
       mockData = await loadJsonFromAssets(
-        "assets/data/prototype-realtime-data.json",
+        AssetsConstants.prototypeRealtimeJson,
       );
       repository = PrototypeRealtimeRepository(data: mockData);
 
