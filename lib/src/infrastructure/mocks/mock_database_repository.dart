@@ -21,7 +21,7 @@ class MockDatabaseRepository implements DatabaseRepository {
   @override
   Future<List<Event>> fetchEvents() async {
     final List<Event> events = _events.toList();
-    events.sort((a, b) => b.startDate.compareTo(a.startDate));
+    events.sort((a, b) => a.startDate.compareTo(b.startDate));
     return events;
   }
 
