@@ -8,8 +8,7 @@ import '../../../core/models/models.dart';
 import '../../../core/utils/enums/enums.dart';
 import '../data/providers.dart';
 
-final firebaseRealtimeRepositoryProvider =
-    Provider<FirebaseRealtimeRepository>((ref) {
+final firebaseRealtimeRepositoryProvider = Provider<RealtimeRepository>((ref) {
   final FirebaseDatabase database = ref.watch(firebaseDatabaseProvider);
   return FirebaseRealtimeRepository(database: database);
 });

@@ -7,7 +7,7 @@ import '../../../core/models/models.dart';
 import '../domain/domain.dart';
 import '../utils/utils.dart';
 
-final isarDatabaseRepositoryProvider = Provider<IsarDatabaseRepository>((ref) {
+final isarDatabaseRepositoryProvider = Provider<DatabaseRepository>((ref) {
   return IsarDatabaseRepository();
 });
 
