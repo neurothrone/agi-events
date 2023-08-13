@@ -1,9 +1,26 @@
 import 'package:flutter_test/flutter_test.dart';
 
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:agi_events/src/infrastructure/mocks/mock_database_repository.dart';
 import 'package:agi_events/src/core/models/models.dart';
 
 void main() {
+  group("mockDatabaseRepositoryProvider", () {
+    test(
+      "mockDatabaseRepositoryProvider provides an instance "
+      "of MockDatabaseRepository",
+      () {
+        final container = ProviderContainer();
+        final instance = container.read(mockDatabaseRepositoryProvider);
+
+        expect(instance, isA<MockDatabaseRepository>());
+
+        container.dispose();
+      },
+    );
+  });
+
   group("MockDatabaseRepository", () {
     late MockDatabaseRepository repository;
 
