@@ -159,6 +159,7 @@ class _AddLeadFormState extends State<AddLeadForm> {
             onFieldSubmitted: (_) {
               FocusScope.of(context).requestFocus(_lastNameNode);
             },
+            key: const Key("firstNameField"),
             controller: _firstNameController,
             focusNode: _firstNameNode,
             labelText: "First Name",
@@ -170,6 +171,7 @@ class _AddLeadFormState extends State<AddLeadForm> {
             onFieldSubmitted: (_) {
               FocusScope.of(context).requestFocus(_companyNode);
             },
+            key: const Key("lastNameField"),
             controller: _lastNameController,
             focusNode: _lastNameNode,
             labelText: "Last Name",
@@ -181,6 +183,7 @@ class _AddLeadFormState extends State<AddLeadForm> {
             onFieldSubmitted: (_) {
               FocusScope.of(context).requestFocus(_emailNode);
             },
+            key: const Key("companyField"),
             controller: _companyController,
             focusNode: _companyNode,
             labelText: "Company",
@@ -192,6 +195,7 @@ class _AddLeadFormState extends State<AddLeadForm> {
             onFieldSubmitted: (_) {
               FocusScope.of(context).requestFocus(_phoneNode);
             },
+            key: const Key("emailField"),
             controller: _emailController,
             focusNode: _emailNode,
             labelText: "E-mail",

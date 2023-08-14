@@ -37,6 +37,7 @@ class CustomTextFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      key: key,
       onFieldSubmitted: onFieldSubmitted,
       controller: controller,
       focusNode: focusNode,
