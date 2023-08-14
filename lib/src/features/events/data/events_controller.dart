@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -62,9 +62,11 @@ class EventsController extends StateNotifier<AsyncValue<List<Event>>> {
 
       state = AsyncValue.data(currentEvents);
     } catch (e, st) {
-      debugPrint(
-        "❌ -> Unexpected error while processing events. Error: $e",
-      );
+      if (kDebugMode) {
+        debugPrint(
+          "❌ -> Unexpected error while processing events. Error: $e",
+        );
+      }
       state = AsyncValue.error(e.toString(), st);
     }
   }
@@ -74,7 +76,10 @@ class EventsController extends StateNotifier<AsyncValue<List<Event>>> {
       final List<Event> savedEvents = await _databaseRepository.fetchEvents();
       return savedEvents;
     } catch (e) {
-      debugPrint("❌ -> Caught an exception in _fetchSavedEvents(). Error: $e");
+      if (kDebugMode) {
+        debugPrint(
+            "❌ -> Caught an exception in _fetchSavedEvents(). Error: $e");
+      }
       return [];
     }
   }
@@ -127,7 +132,7 @@ class EventsController extends StateNotifier<AsyncValue<List<Event>>> {
             const Duration(seconds: AppConstants.timeoutSeconds),
           );
     } catch (e) {
-      errorMessage = errorMessageFor(e);
+      errorMessage = errorMessageForInternetConnection(e);
     }
 
     if (exhibitor == null) {
@@ -156,7 +161,9 @@ class EventsController extends StateNotifier<AsyncValue<List<Event>>> {
       await _databaseRepository.saveEvent(event);
       return true;
     } catch (e) {
-      debugPrint("❌ -> Failed to save Event to local database. Error: $e");
+      if (kDebugMode) {
+        debugPrint("❌ -> Failed to save Event to local database. Error: $e");
+      }
       return false;
     }
   }
@@ -169,7 +176,9 @@ class EventsController extends StateNotifier<AsyncValue<List<Event>>> {
 
       state = AsyncValue.data(currentEvents);
     } catch (e) {
-      debugPrint("❌ -> Failed to update saved event in UI. Error: $e");
+      if (kDebugMode) {
+        debugPrint("❌ -> Failed to update saved event in UI. Error: $e");
+      }
     }
   }
 

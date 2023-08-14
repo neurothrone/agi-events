@@ -15,7 +15,9 @@ extension DateTimeFromString on String {
       DateTime dateTime = DateTime.parse(conformingString);
       return dateTime;
     } catch (e) {
-      debugPrint("❌ -> Failed to parse date String into a DateTime");
+      if (kDebugMode) {
+        debugPrint("❌ -> Failed to parse date String into a DateTime");
+      }
       return DateTime.now();
     }
   }

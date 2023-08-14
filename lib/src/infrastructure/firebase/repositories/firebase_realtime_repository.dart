@@ -79,10 +79,12 @@ class FirebaseRealtimeRepository implements RealtimeRepository {
       }
       return null;
     } catch (e) {
-      debugPrint(
-        "❌ -> Failed to fetch data with reference: "
-        "${reference.toString()}. Error: $e",
-      );
+      if (kDebugMode) {
+        debugPrint(
+          "❌ -> Failed to fetch data with reference: "
+          "${reference.toString()}. Error: $e",
+        );
+      }
       return null;
     }
   }

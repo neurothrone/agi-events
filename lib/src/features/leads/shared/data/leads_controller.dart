@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -58,7 +59,9 @@ class LeadsController extends StateNotifier<AsyncValue<List<Lead>>> {
     try {
       state = AsyncData(leads);
     } catch (e, st) {
-      debugPrint("❌ -> Failed to fetch Leads. Error: $e");
+      if (kDebugMode) {
+        debugPrint("❌ -> Failed to fetch Leads. Error: $e");
+      }
       state = AsyncError(e, st);
     }
   }
@@ -122,7 +125,7 @@ class LeadsController extends StateNotifier<AsyncValue<List<Lead>>> {
         const Duration(seconds: AppConstants.timeoutSeconds),
       );
     } catch (e) {
-      errorMessage = errorMessageFor(e);
+      errorMessage = errorMessageForInternetConnection(e);
     }
 
     if (newLead == null) {
@@ -186,7 +189,9 @@ class LeadsController extends StateNotifier<AsyncValue<List<Lead>>> {
       await _databaseRepository.saveLead(lead);
       return true;
     } catch (e) {
-      debugPrint("❌ -> Failed to save Lead to database. Error: $e");
+      if (kDebugMode) {
+        debugPrint("❌ -> Failed to save Lead to database. Error: $e");
+      }
       return false;
     }
   }
@@ -200,9 +205,11 @@ class LeadsController extends StateNotifier<AsyncValue<List<Lead>>> {
       currentLeads.insert(0, lead);
       state = AsyncValue.data(currentLeads);
     } catch (e, stacktrace) {
-      debugPrint(
-        "❌ -> Unexpected error while adding a Lead. Error: $e",
-      );
+      if (kDebugMode) {
+        debugPrint(
+          "❌ -> Unexpected error while adding a Lead. Error: $e",
+        );
+      }
       state = AsyncValue.error(e.toString(), stacktrace);
     }
   }
@@ -241,7 +248,9 @@ class LeadsController extends StateNotifier<AsyncValue<List<Lead>>> {
         }
       },
       orElse: () {
-        debugPrint("❌ -> Unexpected state while updating a Lead's notes.");
+        if (kDebugMode) {
+          debugPrint("❌ -> Unexpected state while updating a Lead's notes.");
+        }
       },
     );
   }
@@ -262,7 +271,9 @@ class LeadsController extends StateNotifier<AsyncValue<List<Lead>>> {
         state = AsyncValue.data(currentLeads);
       },
       orElse: () {
-        debugPrint("❌ -> Unexpected state while deleting a Lead.");
+        if (kDebugMode) {
+          debugPrint("❌ -> Unexpected state while deleting a Lead.");
+        }
       },
     );
   }
@@ -293,7 +304,9 @@ class LeadsController extends StateNotifier<AsyncValue<List<Lead>>> {
         await _deleteFile(csvFile);
       },
       orElse: () {
-        debugPrint("❌ -> Unexpected state while exporting leads.");
+        if (kDebugMode) {
+          debugPrint("❌ -> Unexpected state while exporting leads.");
+        }
       },
     );
   }
@@ -303,7 +316,9 @@ class LeadsController extends StateNotifier<AsyncValue<List<Lead>>> {
       try {
         await file.delete();
       } catch (e) {
-        debugPrint("❌ -> Failed to delete file. Error: $e");
+        if (kDebugMode) {
+          debugPrint("❌ -> Failed to delete file. Error: $e");
+        }
       }
     }
   }
