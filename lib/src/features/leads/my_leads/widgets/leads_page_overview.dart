@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../core/constants/constants.dart';
@@ -30,9 +31,11 @@ class LeadsPageOverview extends StatelessWidget {
           height: 100.0,
           child: Hero(
             tag: "event-${event.eventId}",
-            child: SvgPicture.asset(
-              AssetsConstants.imagePath(event.image),
-            ),
+            child: AppEnvironment.isInTestMode
+                ? const Placeholder()
+                : SvgPicture.asset(
+                    AssetsConstants.imagePath(event.image),
+                  ),
           ),
         ),
         const SizedBox(height: 20.0),
