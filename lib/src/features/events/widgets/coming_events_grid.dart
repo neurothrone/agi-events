@@ -8,6 +8,7 @@ import '../../../core/utils/utils.dart';
 import '../../../core/widgets/centered_progress_indicator.dart';
 import '../../qr_scan/data/qr_scan_controller.dart';
 import '../data/events_controller.dart';
+import 'coming_events_placeholder.dart';
 import 'events_grid.dart';
 
 class ComingEventsGrid extends ConsumerWidget {
@@ -62,7 +63,7 @@ class ComingEventsGrid extends ConsumerWidget {
             );
           },
           filter: (event) => !event.saved && event.endDate.isNotAfter(now),
-          placeholder: const SizedBox.shrink(),
+          placeholder: const ComingEventsPlaceholder(),
           scrollController: scrollController,
         );
       },
