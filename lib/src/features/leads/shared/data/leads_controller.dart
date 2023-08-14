@@ -211,8 +211,6 @@ class LeadsController extends StateNotifier<AsyncValue<List<Lead>>> {
 
   // region Update Lead Management
 
-  // TODO: Move to UpdateLeadController
-  // TODO: create two new methods. One to update in database and second in UI
   Future<void> updateLeadNotes(Lead updatedLead) async {
     await _updateLeadInDatabase(updatedLead);
     await _updateLeadInLeads(updatedLead);

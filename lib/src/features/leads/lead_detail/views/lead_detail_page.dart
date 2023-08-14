@@ -77,7 +77,7 @@ class _LeadDetailPageState extends State<LeadDetailPage> {
             confirmColor: AppConstants.secondaryBlue,
             isConfirmProminent: true,
             onCancel: () {
-              // TODO: Do nothing
+              // Do nothing
             },
             onConfirm: () {
               _saveChanges(ref);
