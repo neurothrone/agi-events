@@ -1,6 +1,6 @@
 import 'dart:async';
 
-String errorMessageFor(Object e) {
+String errorMessageForInternetConnection(Object e) {
   if (e is TimeoutException) {
     return "Check your internet connection and try again.";
   } else {
