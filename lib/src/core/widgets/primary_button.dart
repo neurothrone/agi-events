@@ -16,6 +16,7 @@ class PrimaryButton extends StatelessWidget {
     this.foregroundColor = Colors.white,
     this.borderRadius = 10.0,
     this.useGradient = false,
+    this.uniqueKey,
   });
 
   final VoidCallback? onPressed;
@@ -27,6 +28,7 @@ class PrimaryButton extends StatelessWidget {
   final Color foregroundColor;
   final double borderRadius;
   final bool useGradient;
+  final Key? uniqueKey;
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +42,7 @@ class PrimaryButton extends StatelessWidget {
             height: height,
             child: ElevatedButton(
               onPressed: onPressed,
+              key: uniqueKey,
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.transparent,
                 foregroundColor: foregroundColor,
@@ -62,6 +65,7 @@ class PrimaryButton extends StatelessWidget {
             height: height,
             child: ElevatedButton(
               onPressed: onPressed,
+              key: uniqueKey,
               style: ElevatedButton.styleFrom(
                 backgroundColor: backgroundColor,
                 foregroundColor: foregroundColor,

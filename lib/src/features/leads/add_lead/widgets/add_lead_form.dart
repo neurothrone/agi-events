@@ -292,6 +292,7 @@ class _AddLeadFormState extends State<AddLeadForm> {
                     label: "Next",
                     height: 60.0,
                     backgroundColor: AppConstants.primaryBlueLighter,
+                    uniqueKey: const Key("nextButton"),
                   );
                 },
               );

@@ -23,6 +23,7 @@ class AddLeadIconButton extends StatelessWidget {
           color: Colors.transparent,
           child: InkWell(
             onTap: onTap,
+            key: const Key("addLeadManualButton"),
             borderRadius: BorderRadius.circular(10.0),
             child: const Padding(
               padding: EdgeInsets.all(6.0),
