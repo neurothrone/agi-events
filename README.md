@@ -1,7 +1,5 @@
 # AGI Events
 
----
-
 ## Supported Platforms and Versions
 
 Android:
@@ -16,8 +14,6 @@ Note:
 
 - While these versions are the minimum requirements, we recommend always using the app on the
   latest version of the OS for the best experience.
-
----
 
 ## Directory Structure of `lib`
 
