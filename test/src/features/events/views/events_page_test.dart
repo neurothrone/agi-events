@@ -50,5 +50,33 @@ void main() {
         expect(title, findsOneWidget);
       },
     );
+
+    testWidgets(
+      "EventsPage should have a Text widget with the text 'Your Events'",
+      (WidgetTester tester) async {
+        // Arrange
+        await setUpEventsPage(tester);
+
+        // Act
+        final text = find.text("Your Events");
+
+        // Assert
+        expect(text, findsOneWidget);
+      },
+    );
+
+    testWidgets(
+      "EventsPage should have a Text widget with the text 'Coming Events'",
+          (WidgetTester tester) async {
+        // Arrange
+        await setUpEventsPage(tester);
+
+        // Act
+        final text = find.text("Coming Events");
+
+        // Assert
+        expect(text, findsOneWidget);
+      },
+    );
   });
 }
