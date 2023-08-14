@@ -24,4 +24,9 @@ class MockDatabaseRepository extends Mock implements DatabaseRepository {
     );
     return [event1, event2];
   }
+
+  @override
+  Future<List<Lead>> fetchLeadsByEventId(String eventId) async {
+    return [];
+  }
 }
