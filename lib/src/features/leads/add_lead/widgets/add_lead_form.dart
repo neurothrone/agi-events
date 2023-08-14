@@ -159,43 +159,42 @@ class _AddLeadFormState extends State<AddLeadForm> {
             onFieldSubmitted: (_) {
               FocusScope.of(context).requestFocus(_lastNameNode);
             },
-            key: const Key("firstNameField"),
             controller: _firstNameController,
             focusNode: _firstNameNode,
             labelText: "First Name",
             hintText: "Enter first name",
             textInputAction: TextInputAction.next,
+            fieldKey: const Key("firstNameField"),
           ),
           const SizedBox(height: 20.0),
           CustomTextFormField(
             onFieldSubmitted: (_) {
               FocusScope.of(context).requestFocus(_companyNode);
             },
-            key: const Key("lastNameField"),
             controller: _lastNameController,
             focusNode: _lastNameNode,
             labelText: "Last Name",
             hintText: "Enter last name",
             textInputAction: TextInputAction.next,
+            fieldKey: const Key("lastNameField"),
           ),
           const SizedBox(height: 20.0),
           CustomTextFormField(
             onFieldSubmitted: (_) {
               FocusScope.of(context).requestFocus(_emailNode);
             },
-            key: const Key("companyField"),
             controller: _companyController,
             focusNode: _companyNode,
             labelText: "Company",
             hintText: "Enter company",
             textInputAction: TextInputAction.next,
+            fieldKey: const Key("companyField"),
           ),
           const SizedBox(height: 20.0),
           CustomTextFormField(
             onFieldSubmitted: (_) {
               FocusScope.of(context).requestFocus(_phoneNode);
             },
-            key: const Key("emailField"),
             controller: _emailController,
             focusNode: _emailNode,
             labelText: "E-mail",
@@ -203,6 +202,7 @@ class _AddLeadFormState extends State<AddLeadForm> {
             keyboardType: TextInputType.emailAddress,
             textCapitalization: TextCapitalization.none,
             textInputAction: TextInputAction.next,
+            fieldKey: const Key("emailField"),
           ),
           const SizedBox(height: 20.0),
           CustomTextFormField(
@@ -279,6 +279,7 @@ class _AddLeadFormState extends State<AddLeadForm> {
             hintText: "Enter seller",
             textInputAction: TextInputAction.done,
             isRequired: false,
+            fieldKey: const Key("sellerField"),
           ),
           const SizedBox(height: 40.0),
           ValueListenableBuilder(

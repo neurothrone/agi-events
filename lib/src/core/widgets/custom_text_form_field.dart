@@ -18,6 +18,7 @@ class CustomTextFormField extends StatelessWidget {
     this.focusNode,
     this.textCapitalization = TextCapitalization.sentences,
     this.textInputAction,
+    this.fieldKey,
   });
 
   final Function(String)? onFieldSubmitted;
@@ -33,11 +34,12 @@ class CustomTextFormField extends StatelessWidget {
   final FocusNode? focusNode;
   final TextCapitalization textCapitalization;
   final TextInputAction? textInputAction;
+  final Key? fieldKey;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      key: key,
+      key: fieldKey,
       onFieldSubmitted: onFieldSubmitted,
       controller: controller,
       focusNode: focusNode,
