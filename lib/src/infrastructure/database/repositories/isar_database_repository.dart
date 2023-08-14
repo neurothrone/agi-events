@@ -26,8 +26,7 @@ class IsarDatabaseRepository implements DatabaseRepository {
           EventIsarSchema,
           LeadIsarSchema,
         ],
-        // TODO: turn off inspector for production
-        inspector: true,
+        inspector: false,
         directory: directory.path,
       );
     }
