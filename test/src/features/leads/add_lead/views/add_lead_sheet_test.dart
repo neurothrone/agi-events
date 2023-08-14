@@ -15,14 +15,15 @@ void main() {
   group("AddLeadSheet tests", () {
     late MockDatabaseRepository mockDatabaseRepository;
     late MockRealtimeRepository mockRealtimeRepository;
+    late MockLeadsController mockLeadsController;
+    late Event event;
 
     setUp(() {
       mockDatabaseRepository = MockDatabaseRepository();
       mockRealtimeRepository = MockRealtimeRepository();
-    });
+      mockLeadsController = MockLeadsController();
 
-    Future<void> setUpAddLeadSheet(WidgetTester tester) async {
-      final event = Event(
+      event = Event(
         eventId: "eventId",
         title: "Random event",
         image: "image",
@@ -30,7 +31,9 @@ void main() {
         endDate: DateTime.now().add(const Duration(days: 3)),
         saved: true,
       );
+    });
 
+    Future<void> setUpAddLeadSheet(WidgetTester tester) async {
       await tester.pumpWidget(
         ProviderScope(
           overrides: [
@@ -53,10 +56,8 @@ void main() {
       (WidgetTester tester) async {
         // Arrange
         await setUpAddLeadSheet(tester);
-
         // Act
         final title = find.text("New lead");
-
         // Assert
         expect(title, findsOneWidget);
       },
@@ -154,6 +155,11 @@ void main() {
       "Pressing done on the Last Field removes focus (dismisses keyboard)",
       (tester) async {
         // Arrange
+        final originalSize = tester.binding.createViewConfiguration().size;
+        addTearDown(() async {
+          await tester.binding.setSurfaceSize(originalSize);
+        });
+
         await tester.binding.setSurfaceSize(const Size(800, 1600));
         await setUpAddLeadSheet(tester);
 
