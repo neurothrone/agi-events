@@ -138,7 +138,6 @@ class EventsController extends StateNotifier<AsyncValue<List<Event>>> {
       return;
     }
 
-    // !: If we got this far the exhibitor was registered in Firebase
     await _addEventToYourEvents(event);
   }
 
