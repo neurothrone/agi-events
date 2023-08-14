@@ -289,11 +289,23 @@ class LeadsController extends StateNotifier<AsyncValue<List<Lead>>> {
           shareSheetText: "Leads CSV",
           sharePositionOrigin: sharePositionOrigin,
         );
+
+        await _deleteFile(csvFile);
       },
       orElse: () {
         debugPrint("❌ -> Unexpected state while exporting leads.");
       },
     );
+  }
+
+  Future<void> _deleteFile(File file) async {
+    if (file.existsSync()) {
+      try {
+        await file.delete();
+      } catch (e) {
+        debugPrint("❌ -> Failed to delete file. Error: $e");
+      }
+    }
   }
 
 // endregion
