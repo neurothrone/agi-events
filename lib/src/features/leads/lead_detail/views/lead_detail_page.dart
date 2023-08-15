@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/constants/constants.dart';
 import '../../../../core/models/models.dart';
+import '../../../../core/widgets/widgets.dart';
 import '../../shared/data/leads_controller.dart';
 import '../widgets/additional_information.dart';
 import '../widgets/lead_delete_button.dart';
@@ -32,17 +33,49 @@ class LeadDetailPage extends StatefulWidget {
 }
 
 class _LeadDetailPageState extends State<LeadDetailPage> {
+  late TextEditingController _productController;
+  late TextEditingController _sellerController;
   late TextEditingController _notesController;
+
+  late FocusNode _productNode;
+  late FocusNode _sellerNode;
+  late FocusNode _notesNode;
 
   @override
   void initState() {
     super.initState();
+    _initControllers();
+    _initNodes();
+  }
+
+  void _initControllers() {
+    _productController = TextEditingController(text: widget.lead.product ?? "");
+    _sellerController = TextEditingController(text: widget.lead.seller ?? "");
     _notesController = TextEditingController(text: widget.lead.notes ?? "");
+  }
+
+  void _initNodes() {
+    _productNode = FocusNode();
+    _sellerNode = FocusNode();
+    _notesNode = FocusNode();
+  }
+
+  void _disposeOfControllers() {
+    _productController.dispose();
+    _sellerController.dispose();
+    _notesController.dispose();
+  }
+
+  void _disposeOfNodes() {
+    _productNode.dispose();
+    _sellerNode.dispose();
+    _notesNode.dispose();
   }
 
   @override
   void dispose() {
-    _notesController.dispose();
+    _disposeOfControllers();
+    _disposeOfNodes();
     super.dispose();
   }
 
@@ -156,9 +189,42 @@ class _LeadDetailPageState extends State<LeadDetailPage> {
                         const SizedBox(height: 40.0),
                         AdditionalInformation(lead: widget.lead),
                         const SizedBox(height: 40.0),
-                        NotesTextArea(
-                          lead: widget.lead,
-                          notesController: _notesController,
+                        CustomTextFormField(
+                          onFieldSubmitted: (_) {
+                            FocusScope.of(context).requestFocus(_sellerNode);
+                          },
+                          controller: _productController,
+                          focusNode: _productNode,
+                          labelText: "Product(s)",
+                          hintText: "Enter your product(s)",
+                          textInputAction: TextInputAction.next,
+                          isRequired: false,
+                        ),
+                        const SizedBox(height: 20.0),
+                        CustomTextFormField(
+                          onFieldSubmitted: (_) {
+                            FocusScope.of(context).requestFocus(_notesNode);
+                          },
+                          controller: _sellerController,
+                          focusNode: _sellerNode,
+                          labelText: "Seller",
+                          hintText: "Enter seller",
+                          textInputAction: TextInputAction.next,
+                          isRequired: false,
+                          fieldKey: const Key("sellerField"),
+                        ),
+                        const SizedBox(height: 20.0),
+                        CustomTextFormField(
+                          onFieldSubmitted: (_) {
+                            _notesNode.unfocus();
+                          },
+                          controller: _notesController,
+                          focusNode: _notesNode,
+                          labelText: "Notes",
+                          hintText: "Enter your notes here...",
+                          textInputAction: TextInputAction.done,
+                          maxLines: 10,
+                          isRequired: false,
                         ),
                         const SizedBox(height: 40.0),
                         const Spacer(),
