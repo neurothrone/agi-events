@@ -6,7 +6,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/constants/constants.dart';
 import '../../../../core/models/models.dart';
+import '../../../../core/utils/utils.dart';
 import '../../../../core/widgets/widgets.dart';
+import '../../lead_detail/views/lead_detail_page.dart';
 import '../../shared/data/leads_controller.dart';
 
 class AddLeadForm extends StatefulWidget {
@@ -116,8 +118,12 @@ class _AddLeadFormState extends State<AddLeadForm> {
     return !isFormNotValid;
   }
 
-  void _addLead(WidgetRef ref) {
-    ref.read(leadsControllerProvider.notifier).addLeadManually(
+  Future<void> _addLead(WidgetRef ref) async {
+    final navigator = Navigator.of(context);
+
+    final Lead? lead = await ref
+        .read(leadsControllerProvider.notifier)
+        .addLeadManually(
           event: widget.event,
           firstName: _firstNameController.text,
           lastName: _lastNameController.text,
@@ -125,15 +131,25 @@ class _AddLeadFormState extends State<AddLeadForm> {
           email: _emailController.text,
           phone:
               _phoneController.text.isNotEmpty ? _phoneController.text : null,
-          position:
-              _phoneController.text.isNotEmpty ? _phoneController.text : null,
-          address:
-              _phoneController.text.isNotEmpty ? _phoneController.text : null,
-          zipCode:
-              _phoneController.text.isNotEmpty ? _phoneController.text : null,
-          city: _phoneController.text.isNotEmpty ? _phoneController.text : null,
+          address: _addressController.text.isNotEmpty
+              ? _addressController.text
+              : null,
+          zipCode: _zipCodeController.text.isNotEmpty
+              ? _zipCodeController.text
+              : null,
+          city: _cityController.text.isNotEmpty ? _cityController.text : null,
+          onError: (_) {
+            showSnackbar(
+              message: "Failed to save Lead. Please try again.",
+              context: context,
+            );
+          },
         );
-    Navigator.pop(context);
+
+    if (lead != null) {
+      navigator.pop();
+      navigator.push(LeadDetailPage.route(lead: lead));
+    }
   }
 
   @override
