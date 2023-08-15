@@ -68,7 +68,7 @@ class LeadsController extends StateNotifier<AsyncValue<List<Lead>>> {
 
   // region Add Lead Management
 
-  Future<void> addLeadManually({
+  Future<Lead?> addLeadManually({
     required Event event,
     required String firstName,
     required String lastName,
@@ -106,7 +106,10 @@ class LeadsController extends StateNotifier<AsyncValue<List<Lead>>> {
 
     if (errorMessage != null && onError != null) {
       onError(errorMessage);
+      return null;
     }
+
+    return newLead;
   }
 
   Future<Lead?> addLeadByQR({
