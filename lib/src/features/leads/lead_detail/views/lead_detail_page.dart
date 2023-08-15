@@ -123,7 +123,7 @@ class _LeadDetailPageState extends State<LeadDetailPage> {
             cancelText: "Discard",
             confirmText: "Save",
             cancelColor: AppConstants.destructive,
-            confirmColor: AppConstants.secondaryBlue,
+            confirmColor: AppConstants.primaryBlue,
             isConfirmProminent: true,
             onCancel: () {
               // Do nothing
@@ -158,7 +158,7 @@ class _LeadDetailPageState extends State<LeadDetailPage> {
           backgroundColor: AppConstants.lighterBlack,
           cancelText: "Cancel",
           confirmText: "Delete",
-          cancelColor: AppConstants.secondaryBlue,
+          cancelColor: AppConstants.primaryBlue,
           confirmColor: AppConstants.destructive,
           isCancelProminent: true,
           onCancel: () {},
