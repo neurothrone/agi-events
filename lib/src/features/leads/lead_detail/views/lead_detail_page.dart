@@ -6,12 +6,10 @@ import '../../../../core/constants/constants.dart';
 import '../../../../core/models/models.dart';
 import '../../../../core/widgets/widgets.dart';
 import '../../shared/data/leads_controller.dart';
-import '../widgets/additional_information.dart';
 import '../widgets/lead_delete_button.dart';
 import '../widgets/contact_information.dart';
 import '../widgets/lead_detail_header_text.dart';
 import '../widgets/lead_detail_page_app_bar.dart';
-import '../widgets/notes_text_area.dart';
 import '../widgets/custom_alert_dialog.dart';
 
 class LeadDetailPage extends StatefulWidget {
