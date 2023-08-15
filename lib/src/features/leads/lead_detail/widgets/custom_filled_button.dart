@@ -6,8 +6,8 @@ class CustomFilledButton extends StatelessWidget {
     required this.onPressed,
     required this.text,
     this.isTextProminent = false,
-    required this.foregroundColor,
     this.backgroundColor = Colors.black,
+    required this.foregroundColor,
     this.elevation = 5.0,
     this.height = 45.0,
   });
@@ -15,8 +15,8 @@ class CustomFilledButton extends StatelessWidget {
   final VoidCallback onPressed;
   final String text;
   final bool isTextProminent;
-  final Color foregroundColor;
   final Color backgroundColor;
+  final Color foregroundColor;
   final double elevation;
   final double height;
 
@@ -34,6 +34,7 @@ class CustomFilledButton extends StatelessWidget {
           text,
           style: TextStyle(
             color: foregroundColor,
+            fontSize: 16.0,
             fontWeight: isTextProminent ? FontWeight.bold : FontWeight.normal,
           ),
         ),
