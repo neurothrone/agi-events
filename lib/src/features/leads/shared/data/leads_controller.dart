@@ -236,7 +236,11 @@ class LeadsController extends StateNotifier<AsyncValue<List<Lead>>> {
         List<Lead> updatedLeads = currentLeads.map((lead) {
           if (lead.hashedString == updatedLead.hashedString) {
             found = true;
-            return lead.copyWith(notes: updatedLead.notes);
+            return lead.copyWith(
+              product: updatedLead.product,
+              seller: updatedLead.seller,
+              notes: updatedLead.notes,
+            );
           } else {
             return lead;
           }

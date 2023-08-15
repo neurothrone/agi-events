@@ -9,6 +9,7 @@ import '../../shared/data/leads_controller.dart';
 import '../widgets/additional_information.dart';
 import '../widgets/lead_delete_button.dart';
 import '../widgets/contact_information.dart';
+import '../widgets/lead_detail_header_text.dart';
 import '../widgets/lead_detail_page_app_bar.dart';
 import '../widgets/notes_text_area.dart';
 import '../widgets/custom_alert_dialog.dart';
@@ -81,8 +82,24 @@ class _LeadDetailPageState extends State<LeadDetailPage> {
 
   Future<void> _saveChanges(WidgetRef ref) async {
     await ref.read(leadsControllerProvider.notifier).updateLeadNotes(
-          widget.lead.copyWith(notes: _notesController.text),
+          widget.lead.copyWith(
+            product: _productController.text,
+            seller: _sellerController.text,
+            notes: _notesController.text,
+          ),
         );
+  }
+
+  bool _hasUnsavedChanges() {
+    final String product = widget.lead.product ?? "";
+    final String seller = widget.lead.seller ?? "";
+    final String leadNotes = widget.lead.notes ?? "";
+
+    return [
+      product != _productController.text,
+      seller != _sellerController.text,
+      leadNotes != _notesController.text,
+    ].any((unsavedChange) => unsavedChange);
   }
 
   Future<void> _onCancelSaveChanges(WidgetRef ref) async {
@@ -95,8 +112,8 @@ class _LeadDetailPageState extends State<LeadDetailPage> {
       currentFocus.unfocus();
     }
 
-    final String leadNotes = widget.lead.notes ?? "";
-    if (leadNotes != _notesController.text) {
+    final showUnsavedChangesDialog = _hasUnsavedChanges();
+    if (showUnsavedChangesDialog) {
       await showDialog(
         context: context,
         barrierDismissible: false,
@@ -187,8 +204,10 @@ class _LeadDetailPageState extends State<LeadDetailPage> {
                       children: [
                         ContactInformation(lead: widget.lead),
                         const SizedBox(height: 40.0),
-                        AdditionalInformation(lead: widget.lead),
-                        const SizedBox(height: 40.0),
+                        const LeadDetailHeaderText(
+                          title: "Additional Information",
+                        ),
+                        const SizedBox(height: 20.0),
                         CustomTextFormField(
                           onFieldSubmitted: (_) {
                             FocusScope.of(context).requestFocus(_sellerNode);
