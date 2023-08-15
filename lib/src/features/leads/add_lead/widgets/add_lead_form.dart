@@ -30,8 +30,6 @@ class _AddLeadFormState extends State<AddLeadForm> {
   final _addressController = TextEditingController();
   final _zipCodeController = TextEditingController();
   final _cityController = TextEditingController();
-  final _productController = TextEditingController();
-  final _sellerController = TextEditingController();
 
   late FocusNode _firstNameNode;
   late FocusNode _lastNameNode;
@@ -41,8 +39,6 @@ class _AddLeadFormState extends State<AddLeadForm> {
   late FocusNode _addressNode;
   late FocusNode _zipCodeNode;
   late FocusNode _cityNode;
-  late FocusNode _productNode;
-  late FocusNode _sellerNode;
 
   // Initially form is not valid since all fields are empty
   final ValueNotifier<bool> _isFormValid = ValueNotifier(false);
@@ -63,8 +59,6 @@ class _AddLeadFormState extends State<AddLeadForm> {
     _addressNode = FocusNode();
     _zipCodeNode = FocusNode();
     _cityNode = FocusNode();
-    _productNode = FocusNode();
-    _sellerNode = FocusNode();
   }
 
   void _disposeOfNodes() {
@@ -76,8 +70,6 @@ class _AddLeadFormState extends State<AddLeadForm> {
     _addressNode.dispose();
     _zipCodeNode.dispose();
     _cityNode.dispose();
-    _productNode.dispose();
-    _sellerNode.dispose();
   }
 
   void _disposeOfControllers() {
@@ -140,11 +132,6 @@ class _AddLeadFormState extends State<AddLeadForm> {
           zipCode:
               _phoneController.text.isNotEmpty ? _phoneController.text : null,
           city: _phoneController.text.isNotEmpty ? _phoneController.text : null,
-          product: _productController.text.isNotEmpty
-              ? _productController.text
-              : null,
-          seller:
-              _sellerController.text.isNotEmpty ? _sellerController.text : null,
         );
     Navigator.pop(context);
   }
@@ -247,39 +234,14 @@ class _AddLeadFormState extends State<AddLeadForm> {
           const SizedBox(height: 20.0),
           CustomTextFormField(
             onFieldSubmitted: (_) {
-              FocusScope.of(context).requestFocus(_productNode);
+              _cityNode.unfocus();
             },
             controller: _cityController,
             focusNode: _cityNode,
             labelText: "City",
             hintText: "Enter city",
-            textInputAction: TextInputAction.next,
-            isRequired: false,
-          ),
-          const SizedBox(height: 20.0),
-          CustomTextFormField(
-            onFieldSubmitted: (_) {
-              FocusScope.of(context).requestFocus(_sellerNode);
-            },
-            controller: _productController,
-            focusNode: _productNode,
-            labelText: "Product(s)",
-            hintText: "Enter your product(s)",
-            textInputAction: TextInputAction.next,
-            isRequired: false,
-          ),
-          const SizedBox(height: 20.0),
-          CustomTextFormField(
-            onFieldSubmitted: (_) {
-              _sellerNode.unfocus();
-            },
-            controller: _sellerController,
-            focusNode: _sellerNode,
-            labelText: "Seller",
-            hintText: "Enter seller",
             textInputAction: TextInputAction.done,
             isRequired: false,
-            fieldKey: const Key("sellerField"),
           ),
           const SizedBox(height: 40.0),
           ValueListenableBuilder(
