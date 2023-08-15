@@ -10,16 +10,23 @@ class LeadDeleteButton extends StatelessWidget {
   const LeadDeleteButton({
     super.key,
     this.onPressed,
+    required this.label,
+    required this.width,
+    required this.height,
   });
 
   final VoidCallback? onPressed;
+  final String label;
+  final double width;
+  final double height;
 
   @override
   Widget build(BuildContext context) {
     return PrimaryButton(
       onPressed: onPressed,
-      label: "Delete Lead",
-      height: 50.0,
+      label: label,
+      width: width,
+      height: height,
       icon: Platform.isIOS ? CupertinoIcons.trash : Icons.delete,
       backgroundColor: AppConstants.destructive,
     );
