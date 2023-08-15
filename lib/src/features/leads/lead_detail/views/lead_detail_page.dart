@@ -71,6 +71,7 @@ class _LeadDetailPageState extends State<LeadDetailPage> {
           return CustomAlertDialog(
             title: "You have unsaved changes",
             content: "Do you want to save them?",
+            backgroundColor: AppConstants.lighterBlack,
             cancelText: "Discard",
             confirmText: "Save",
             cancelColor: AppConstants.destructive,
@@ -106,6 +107,7 @@ class _LeadDetailPageState extends State<LeadDetailPage> {
           title: "Delete Lead",
           content: "This will delete your Lead from the database. "
               "Are you sure?",
+          backgroundColor: AppConstants.lighterBlack,
           cancelText: "Cancel",
           confirmText: "Delete",
           cancelColor: AppConstants.secondaryBlue,

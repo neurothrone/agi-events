@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/constants/constants.dart';
 import 'custom_filled_button.dart';
 
 class CustomAlertDialog extends StatelessWidget {
@@ -8,6 +7,7 @@ class CustomAlertDialog extends StatelessWidget {
     super.key,
     required this.title,
     required this.content,
+    required this.backgroundColor,
     required this.cancelText,
     required this.confirmText,
     required this.cancelColor,
@@ -20,6 +20,7 @@ class CustomAlertDialog extends StatelessWidget {
 
   final String title;
   final String content;
+  final Color backgroundColor;
 
   final String cancelText;
   final String confirmText;
@@ -33,7 +34,8 @@ class CustomAlertDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      backgroundColor: AppConstants.primaryBlue,
+      backgroundColor: backgroundColor,
+      surfaceTintColor: backgroundColor,
       elevation: 5.0,
       title: Text(
         title,
@@ -60,7 +62,8 @@ class CustomAlertDialog extends StatelessWidget {
                   Navigator.pop(context);
                 },
                 text: cancelText,
-                foregroundColor: cancelColor,
+                backgroundColor: cancelColor,
+                foregroundColor: Colors.white,
                 isTextProminent: isCancelProminent,
               ),
             ),
@@ -72,7 +75,8 @@ class CustomAlertDialog extends StatelessWidget {
                   Navigator.pop(context);
                 },
                 text: confirmText,
-                foregroundColor: confirmColor,
+                backgroundColor: confirmColor,
+                foregroundColor: Colors.white,
                 isTextProminent: isConfirmProminent,
               ),
             ),
