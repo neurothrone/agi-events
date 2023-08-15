@@ -11,7 +11,7 @@ class MockLeadsController extends Mock implements LeadsController {
   }
 
   @override
-  Future<void> addLeadManually({
+  Future<Lead?> addLeadManually({
     required Event event,
     required String firstName,
     required String lastName,
@@ -25,5 +25,7 @@ class MockLeadsController extends Mock implements LeadsController {
     String? product,
     String? seller,
     Function(String)? onError,
-  }) async {}
+  }) async {
+    return null;
+  }
 }
