@@ -54,6 +54,7 @@ class CustomTextFormField extends StatelessWidget {
       cursorColor: primaryColor ?? AppConstants.primaryBlueLightest,
       decoration: InputDecoration(
         filled: filled,
+        alignLabelWithHint: true,
         enabledBorder: OutlineInputBorder(
           borderSide: const BorderSide(
             color: Colors.grey,
