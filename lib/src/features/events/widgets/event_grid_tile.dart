@@ -25,9 +25,9 @@ class EventGridTile extends StatelessWidget {
             aspectRatio: 1.0,
             child: Material(
               borderRadius: BorderRadius.circular(10.0),
-              color: AppConstants.primaryBlueLighter,
+              color: AppConstants.primaryBlueDarker,
               elevation: 3.0,
-              shadowColor: AppConstants.primaryBlueLighter,
+              shadowColor: AppConstants.primaryBlueDarker,
               child: InkWell(
                 onTap: onTap,
                 borderRadius: BorderRadius.circular(10.0),
