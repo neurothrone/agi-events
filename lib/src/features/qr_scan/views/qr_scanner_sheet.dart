@@ -14,10 +14,14 @@ class QrScannerSheet extends StatefulWidget {
   const QrScannerSheet({
     super.key,
     required this.scanType,
+    this.showAppBar = true,
+    this.showPlaceholder = false,
     required this.onQrCodeScanned,
   });
 
   final ScanType scanType;
+  final bool showAppBar;
+  final bool showPlaceholder;
   final Function(String) onQrCodeScanned;
 
   @override
@@ -27,11 +31,13 @@ class QrScannerSheet extends StatefulWidget {
 class _QrScannerSheetState extends State<QrScannerSheet> {
   MobileScanner? _scanner;
   bool _isLoading = true;
-  bool _isScannerOpen = false;
+  late bool _showPlaceholder;
 
   @override
   void initState() {
     super.initState();
+
+    _showPlaceholder = widget.showPlaceholder;
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _loadScanner();
@@ -75,25 +81,27 @@ class _QrScannerSheetState extends State<QrScannerSheet> {
   }
 
   void _openScanner() {
-    setState(() => _isScannerOpen = true);
+    setState(() => _showPlaceholder = false);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppConstants.lighterBlack,
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        centerTitle: true,
-        title: Text(
-          widget.scanType.title,
-          style: const TextStyle(
-            fontSize: 20.0,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-      ),
-      body: !_isScannerOpen
+      appBar: widget.showAppBar
+          ? AppBar(
+              automaticallyImplyLeading: false,
+              centerTitle: true,
+              title: Text(
+                widget.scanType.title,
+                style: const TextStyle(
+                  fontSize: 22.0,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            )
+          : null,
+      body: _showPlaceholder
           ? InactiveQrScannerContent(onStartScanner: _openScanner)
           : _scanner == null || _isLoading
               ? const CenteredProgressIndicator()

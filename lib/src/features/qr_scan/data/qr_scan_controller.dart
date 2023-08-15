@@ -13,6 +13,8 @@ final qrScanControllerProvider = Provider<QrScanController>((ref) {
 class QrScanController {
   Future<void> showQrScanner({
     required ScanType scanType,
+    bool showAppBar = true,
+    bool showPlaceholder = false,
     required BuildContext context,
     Function(String)? onQrCodeScanned,
   }) async {
@@ -20,6 +22,8 @@ class QrScanController {
       context: context,
       child: QrScannerSheet(
         scanType: scanType,
+        showAppBar: showAppBar,
+        showPlaceholder: showPlaceholder,
         onQrCodeScanned: (String qrCode) {
           if (onQrCodeScanned != null) {
             onQrCodeScanned(qrCode);
