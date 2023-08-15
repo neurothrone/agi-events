@@ -26,7 +26,7 @@ class InactiveQrScannerContent extends StatelessWidget {
           ),
           const SizedBox(height: 20.0),
           const Text(
-            "Start\nQR Scanner",
+            "Press to get started",
             style: TextStyle(
               fontSize: 24.0,
               fontWeight: FontWeight.bold,
