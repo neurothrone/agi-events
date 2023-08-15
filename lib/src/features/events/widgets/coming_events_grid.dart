@@ -26,6 +26,8 @@ class ComingEventsGrid extends ConsumerWidget {
   }) async {
     await ref.read(qrScanControllerProvider).showQrScanner(
           scanType: ScanType.exhibitor,
+          showAppBar: false,
+          showPlaceholder: true,
           context: context,
           onQrCodeScanned: (String qrCode) async {
             await ref
