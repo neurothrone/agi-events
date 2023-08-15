@@ -161,9 +161,15 @@ class _LeadDetailPageState extends State<LeadDetailPage> {
                         const SizedBox(height: 40.0),
                         const Spacer(),
                         Consumer(
-                          builder: (_, ref, __) {
-                            return LeadDeleteButton(
-                              onPressed: () => _onDelete(ref),
+                          builder: (context, ref, __) {
+                            return Align(
+                              alignment: Alignment.center,
+                              child: LeadDeleteButton(
+                                onPressed: () => _onDelete(ref),
+                                label: "Delete Lead",
+                                width: MediaQuery.sizeOf(context).width * 0.5,
+                                height: 50.0,
+                              ),
                             );
                           },
                         ),
