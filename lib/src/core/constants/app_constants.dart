@@ -32,22 +32,15 @@ class AppConstants {
 
   // region Colors
 
-  static const Color darkSlateBlue = Color(0xFF483D8B);
-  static const Color dodgerBlue = Color(0xFF1E90FF);
-
   /// Primary color used throughout the app.
-  static const Color primaryBlue = darkSlateBlue;
-
-  /// Secondary color used throughout the app.
-  static const Color secondaryBlue = dodgerBlue;
+  static const Color primaryBlue = Color(0xFF0B84FF);
 
   /// Represents a color used for destructive actions.
   /// Chosen to be closer to "indian-red" in order to provide good contrast
-  /// against black backgrounds and harmonize with a primary color theme
-  /// of "Dark Slate Blue".
+  /// against black backgrounds and harmonize with a [primaryBlue] color theme
   static const Color destructive = Color(0xFFCD5C5C);
 
-  /// Represents a variation of "Dark Slate Blue" that's made lighter.
+  /// Represents a variation of [primaryBlue] that's made lighter.
   /// This is achieved by blending the primary blue with white.
   static Color primaryBlueLighter = Color.lerp(
         // Color.lerp() will only return null if both colors passed
@@ -58,8 +51,8 @@ class AppConstants {
       ) ??
       primaryBlue;
 
-  /// Represents a variation of "Dark Slate Blue" that's made even
-  /// lighter than `primaryBlueLighter`. This is achieved by blending
+  /// Represents a variation of [primaryBlue] that's made even
+  /// lighter than [primaryBlueLighter]. This is achieved by blending
   /// the primary blue with a higher proportion of white.
   static Color primaryBlueLightest = Color.lerp(
         primaryBlue,
@@ -68,7 +61,7 @@ class AppConstants {
       ) ??
       primaryBlue;
 
-  /// Represents a variation of "Dark Slate Blue" that's darker than the
+  /// Represents a variation of [primaryBlue] that's darker than the
   /// original `primaryBlue`. This is achieved by reducing the lightness
   /// of the primary blue by 15%.
   static Color primaryBlueDarker = darken(primaryBlue, 0.15);
@@ -88,10 +81,10 @@ class AppConstants {
   // region Gradients
 
   /// A linear gradient of the Primary Blue and Secondary Blue colors
-  static const LinearGradient primaryGradient = LinearGradient(
+  static final LinearGradient primaryGradient = LinearGradient(
     colors: [
       primaryBlue,
-      secondaryBlue,
+      primaryBlueDarker,
     ],
   );
 
