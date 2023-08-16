@@ -3,12 +3,13 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/constants/constants.dart';
 import '../../../../core/models/models.dart';
+import '../../../../core/utils/enums/enums.dart';
 import '../../../../core/utils/utils.dart';
 import '../../../../core/widgets/widgets.dart';
-import '../../lead_detail/views/lead_detail_page.dart';
 import '../../shared/data/leads_controller.dart';
 
 class AddLeadForm extends StatefulWidget {
@@ -119,8 +120,6 @@ class _AddLeadFormState extends State<AddLeadForm> {
   }
 
   Future<void> _addLead(WidgetRef ref) async {
-    final navigator = Navigator.of(context);
-
     final Lead? lead = await ref
         .read(leadsControllerProvider.notifier)
         .addLeadManually(
@@ -146,9 +145,11 @@ class _AddLeadFormState extends State<AddLeadForm> {
           },
         );
 
-    if (lead != null) {
-      navigator.pop();
-      navigator.push(LeadDetailPage.route(lead: lead));
+    // Pop the AddLeadSheet and navigate directly to LeadDetailPage
+    // with the new Lead
+    if (lead != null && context.mounted) {
+      context.pop();
+      context.pushNamed(AppRoute.leadDetail.name, extra: lead);
     }
   }
 

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
+import 'package:go_router/go_router.dart';
+
 import '../../../../core/models/models.dart';
+import '../../../../core/utils/enums/enums.dart';
 import '../../../../core/utils/utils.dart';
-import '../../lead_detail/views/lead_detail_page.dart';
 
 class LeadRow extends StatelessWidget {
   const LeadRow({
@@ -17,10 +19,7 @@ class LeadRow extends StatelessWidget {
     return Column(
       children: [
         InkWell(
-          onTap: () => Navigator.push(
-            context,
-            LeadDetailPage.route(lead: lead),
-          ),
+          onTap: () => context.pushNamed(AppRoute.leadDetail.name, extra: lead),
           child: Column(
             children: [
               const SizedBox(height: 10.0),

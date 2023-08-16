@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/constants/constants.dart';
 import '../../../../core/models/models.dart';
@@ -9,7 +10,6 @@ import '../../../../core/utils/enums/enums.dart';
 import '../../../../core/utils/utils.dart';
 import '../../../../core/widgets/widgets.dart';
 import '../../../qr_scan/data/qr_scan_controller.dart';
-import '../../lead_detail/views/lead_detail_page.dart';
 import '../../shared/data/leads_controller.dart';
 
 class QrScannerButton extends ConsumerWidget {
@@ -24,8 +24,6 @@ class QrScannerButton extends ConsumerWidget {
     BuildContext context,
     WidgetRef ref,
   ) async {
-    final navigator = Navigator.of(context);
-
     await ref.read(qrScanControllerProvider).showQrScanner(
           scanType: ScanType.visitor,
           context: context,
@@ -42,10 +40,11 @@ class QrScannerButton extends ConsumerWidget {
                       },
                     );
 
-            if (newLead != null) {
-              navigator.push(
-                LeadDetailPage.route(lead: newLead),
-              );
+            // Pop the QrScannerSheet and navigate directly to LeadDetailPage
+            // with the new Lead
+            if (newLead != null && context.mounted) {
+              context.pop();
+              context.pushNamed(AppRoute.leadDetail.name, extra: newLead);
             }
           },
         );

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../core/models/models.dart';
+import '../../../core/utils/enums/enums.dart';
 import '../../../core/widgets/centered_progress_indicator.dart';
-import '../../leads/my_leads/views/leads_page.dart';
 import '../data/events_controller.dart';
 import 'your_events_placeholder.dart';
 import 'events_grid.dart';
@@ -27,10 +28,7 @@ class YourEventsGrid extends ConsumerWidget {
       data: (List<Event> events) {
         return EventsGrid(
           onTap: (event, context, _) {
-            Navigator.push(
-              context,
-              LeadsPage.route(event: event),
-            );
+            context.pushNamed(AppRoute.leads.name, extra: event);
           },
           filter: (event) => event.saved,
           placeholder: const YourEventsPlaceholder(),
