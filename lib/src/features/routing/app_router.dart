@@ -1,10 +1,11 @@
 import 'package:go_router/go_router.dart';
 
 import '../../core/models/models.dart';
-import '../../core/utils/enums/app_route.dart';
+import '../../core/utils/enums/enums.dart';
 import '../events/views/events_page.dart';
 import '../leads/lead_detail/views/lead_detail_page.dart';
 import '../leads/my_leads/views/leads_page.dart';
+import 'custom_slide_transition.dart';
 
 class AppRouter {
   const AppRouter._();
@@ -20,17 +21,23 @@ class AppRouter {
       GoRoute(
         path: "/leads",
         name: AppRoute.leads.name,
-        builder: (context, state) {
+        pageBuilder: (_, state) {
           final event = state.extra as Event;
-          return LeadsPage(event: event);
+          return CustomSlideTransition(
+            key: state.pageKey,
+            child: LeadsPage(event: event),
+          );
         },
       ),
       GoRoute(
         path: "/leads/detail",
         name: AppRoute.leadDetail.name,
-        builder: (context, state) {
+        pageBuilder: (_, state) {
           final lead = state.extra as Lead;
-          return LeadDetailPage(lead: lead);
+          return CustomSlideTransition(
+            key: state.pageKey,
+            child: LeadDetailPage(lead: lead),
+          );
         },
       ),
     ],
