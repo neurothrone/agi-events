@@ -5,12 +5,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/constants/constants.dart';
-import '../../../infrastructure/database/repositories/isar_database_repository.dart';
-import '../../../infrastructure/firebase/repositories/firebase_realtime_repository.dart';
 import '../../../core/interfaces/database_repository.dart';
 import '../../../core/interfaces/realtime_repository.dart';
 import '../../../core/models/models.dart';
+import '../../../core/utils/enums/enums.dart';
 import '../../../core/utils/utils.dart';
+import '../../../infrastructure/database/repositories/isar_database_repository.dart';
+import '../../../infrastructure/firebase/repositories/firebase_realtime_repository.dart';
 import 'providers.dart';
 
 // region Providers
@@ -119,31 +120,35 @@ class EventsController extends StateNotifier<AsyncValue<List<Event>>> {
     required Event event,
     Function(String)? onError,
   }) async {
-    RawExhibitorData? exhibitor;
     String? errorMessage;
+    RawExhibitorData? exhibitor;
 
     try {
       exhibitor = await _realtimeRepository
-          .fetchExhibitorById(
-            exhibitorId: exhibitorId,
-            event: event,
-          )
+          .fetchExhibitorById(exhibitorId: exhibitorId, event: event)
           .timeout(
-            const Duration(seconds: AppConstants.timeoutSeconds),
+        const Duration(seconds: AppConstants.timeoutSeconds),
+        onTimeout: () {
+          throw RealtimeException(
+            error: RealtimeError.noInternetConnection,
+            message: RealtimeError.noInternetConnection.message,
           );
+        },
+      );
     } catch (e) {
-      errorMessage = errorMessageForInternetConnection(e);
+      if (e is RealtimeException) {
+        errorMessage = e.message;
+      }
     }
 
-    if (exhibitor == null) {
-      if (onError != null) {
-        errorMessage ??= "You have not registered for this Event.";
-        onError(errorMessage);
-      }
+    if (exhibitor != null) {
+      await _addEventToYourEvents(event);
       return;
     }
 
-    await _addEventToYourEvents(event);
+    if (onError != null) {
+      onError(errorMessage ?? "You have not registered for this Event.");
+    }
   }
 
   Future<void> _addEventToYourEvents(Event event) async {
