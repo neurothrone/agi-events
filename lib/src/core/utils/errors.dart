@@ -1,9 +1,16 @@
-import 'dart:async';
+import 'enums/enums.dart';
 
-String errorMessageForInternetConnection(Object e) {
-  if (e is TimeoutException) {
-    return "Check your internet connection and try again.";
-  } else {
-    return "An unexpected error occurred.";
+class RealtimeException implements Exception {
+  RealtimeException({
+    required this.error,
+    this.message,
+  });
+
+  final RealtimeError error;
+  final String? message;
+
+  @override
+  String toString() {
+    return message ?? error.toString();
   }
 }
