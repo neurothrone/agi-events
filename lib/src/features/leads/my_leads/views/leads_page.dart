@@ -16,13 +16,6 @@ class LeadsPage extends StatelessWidget {
 
   final Event event;
 
-  static MaterialPageRoute<void> route({required Event event}) =>
-      MaterialPageRoute(
-        builder: (context) => LeadsPage(
-          event: event,
-        ),
-      );
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

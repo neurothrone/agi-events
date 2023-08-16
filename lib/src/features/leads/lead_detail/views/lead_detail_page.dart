@@ -20,13 +20,6 @@ class LeadDetailPage extends StatefulWidget {
 
   final Lead lead;
 
-  static MaterialPageRoute<void> route({required Lead lead}) =>
-      MaterialPageRoute(
-        builder: (context) => LeadDetailPage(
-          lead: lead,
-        ),
-      );
-
   @override
   State<LeadDetailPage> createState() => _LeadDetailPageState();
 }
