@@ -1,11 +1,13 @@
 import 'package:flutter/foundation.dart';
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/interfaces/realtime_repository.dart';
 import '../../../core/models/models.dart';
 import '../../../core/utils/enums/enums.dart';
+import '../../../core/utils/utils.dart';
 import '../data/providers.dart';
 
 final firebaseRealtimeRepositoryProvider = Provider<RealtimeRepository>((ref) {
@@ -25,15 +27,22 @@ class FirebaseRealtimeRepository implements RealtimeRepository {
     required String exhibitorId,
     required Event event,
   }) async {
-    final data = await _fetchDataById(
-      userCategory: UserCategory.exhibitor,
-      userId: exhibitorId,
-      event: event,
-    );
+    try {
+      final data = await _fetchDataById(
+        userCategory: UserCategory.exhibitor,
+        userId: exhibitorId,
+        event: event,
+      );
 
-    if (data != null) {
-      return RawExhibitorData.fromMap(data);
+      if (data != null) {
+        return RawExhibitorData.fromMap(data);
+      }
+    } catch (e) {
+      if (e is RealtimeException) {
+        rethrow;
+      }
     }
+
     return null;
   }
 
@@ -42,15 +51,22 @@ class FirebaseRealtimeRepository implements RealtimeRepository {
     required String visitorId,
     required Event event,
   }) async {
-    final data = await _fetchDataById(
-      userCategory: UserCategory.visitor,
-      userId: visitorId,
-      event: event,
-    );
+    try {
+      final data = await _fetchDataById(
+        userCategory: UserCategory.visitor,
+        userId: visitorId,
+        event: event,
+      );
 
-    if (data != null) {
-      return RawVisitorData.fromMap(data);
+      if (data != null) {
+        return RawVisitorData.fromMap(data);
+      }
+    } catch (e) {
+      if (e is RealtimeException) {
+        rethrow;
+      }
     }
+
     return null;
   }
 
@@ -79,6 +95,13 @@ class FirebaseRealtimeRepository implements RealtimeRepository {
       }
       return null;
     } catch (e) {
+      if (e is FirebaseException && e.code == "permission-denied") {
+        throw RealtimeException(
+          error: RealtimeError.noInternetConnection,
+          message: RealtimeError.noInternetConnection.message,
+        );
+      }
+
       if (kDebugMode) {
         debugPrint(
           "❌ -> Failed to fetch data with reference: "
