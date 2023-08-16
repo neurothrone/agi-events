@@ -32,6 +32,8 @@ dependencies:
   isar_flutter_libs: ^3.1.0+1
   # Animate SliverGrids [EventsPage]
   auto_animated: ^3.2.0
+  # Navigation
+  go_router: ^10.0.0
 
 dev_dependencies:
   flutter_test:
