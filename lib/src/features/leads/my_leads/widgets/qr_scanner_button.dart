@@ -40,10 +40,8 @@ class QrScannerButton extends ConsumerWidget {
                       },
                     );
 
-            // Pop the QrScannerSheet and navigate directly to LeadDetailPage
-            // with the new Lead
+            // Navigate directly to LeadDetailPage with the new Lead
             if (newLead != null && context.mounted) {
-              context.pop();
               context.pushNamed(AppRoute.leadDetail.name, extra: newLead);
             }
           },
