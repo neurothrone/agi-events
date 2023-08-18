@@ -15,8 +15,17 @@ class LeadsSliverList extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
-        (BuildContext context, int index) => LeadRow(lead: leads[index]),
         childCount: leads.length,
+        (BuildContext context, int index) => TweenAnimationBuilder(
+          tween: Tween<double>(begin: 0.0, end: 1.0),
+          duration: const Duration(milliseconds: 500),
+          builder: (context, double value, child) {
+            return Opacity(
+              opacity: value,
+              child: LeadRow(lead: leads[index]),
+            );
+          },
+        ),
       ),
     );
   }
