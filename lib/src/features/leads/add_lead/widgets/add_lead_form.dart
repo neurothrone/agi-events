@@ -259,6 +259,7 @@ class _AddLeadFormState extends State<AddLeadForm> {
             hintText: "Enter city",
             textInputAction: TextInputAction.done,
             isRequired: false,
+            fieldKey: const Key("cityField"),
           ),
           const SizedBox(height: 40.0),
           ValueListenableBuilder(
