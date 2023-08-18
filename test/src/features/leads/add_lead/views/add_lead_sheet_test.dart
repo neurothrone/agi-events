@@ -71,7 +71,7 @@ void main() {
         // Act
         final results = find.byType(TextFormField);
         // Assert
-        expect(results, findsNWidgets(10));
+        expect(results, findsNWidgets(8));
       },
     );
 
@@ -163,18 +163,18 @@ void main() {
         await tester.binding.setSurfaceSize(const Size(800, 1600));
         await setUpAddLeadSheet(tester);
 
-        final sellerField = find.byKey(const Key("sellerField"));
+        final cityField = find.byKey(const Key("cityField"));
 
         final scrollable = find.byType(ListView);
         await tester.dragUntilVisible(
           scrollable,
-          sellerField,
+          cityField,
           const Offset(0, -300),
         );
         await tester.pumpAndSettle();
 
         // Act
-        await tester.tap(sellerField);
+        await tester.tap(cityField);
         await tester.testTextInput.receiveAction(TextInputAction.done);
 
         // Assert
