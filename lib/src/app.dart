@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'core/constants/constants.dart';
 import 'core/theme/app_theme.dart';
-import 'features/routing/app_router.dart';
+import 'routing/app_router.dart';
 
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
