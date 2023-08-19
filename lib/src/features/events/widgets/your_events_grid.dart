@@ -18,6 +18,13 @@ class YourEventsGrid extends ConsumerWidget {
 
   final ScrollController scrollController;
 
+  void _navigateToLeadsPage({
+    required Event event,
+    required BuildContext context,
+  }) {
+    context.pushNamed(AppRoute.leads.name, extra: event);
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final AsyncValue<List<Event>> eventsState = ref.watch(
@@ -29,8 +36,10 @@ class YourEventsGrid extends ConsumerWidget {
         final filteredEvents = events.where((e) => e.saved).toList();
 
         return EventsGrid(
-          onTap: (event) =>
-              context.pushNamed(AppRoute.leads.name, extra: event),
+          onTap: (event) => _navigateToLeadsPage(
+            event: event,
+            context: context,
+          ),
           events: filteredEvents,
           placeholder: const YourEventsPlaceholder(),
           scrollController: scrollController,
