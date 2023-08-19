@@ -30,19 +30,31 @@ class ComingEventsGrid extends ConsumerWidget {
           showPlaceholder: true,
           context: context,
           onQrCodeScanned: (String qrCode) async {
-            await ref
-                .read(eventsControllerProvider.notifier)
-                .addEventByExhibitorId(
-                    exhibitorId: qrCode,
-                    event: event,
-                    onError: (String message) {
-                      showSnackbar(
-                        message: message,
-                        context: context,
-                      );
-                    });
+            await _addEventByExhibitorId(
+              exhibitorId: qrCode,
+              event: event,
+              context: context,
+              ref: ref,
+            );
           },
         );
+  }
+
+  Future<void> _addEventByExhibitorId({
+    required String exhibitorId,
+    required Event event,
+    required BuildContext context,
+    required WidgetRef ref,
+  }) async {
+    await ref.read(eventsControllerProvider.notifier).addEventByExhibitorId(
+        exhibitorId: exhibitorId,
+        event: event,
+        onError: (String message) {
+          showSnackbar(
+            message: message,
+            context: context,
+          );
+        });
   }
 
   @override
@@ -59,13 +71,11 @@ class ComingEventsGrid extends ConsumerWidget {
             events.where((e) => !e.saved && e.endDate.isNotAfter(now)).toList();
 
         return EventsGrid(
-          onTap: (event) {
-            _openQrScanner(
-              event: event,
-              context: context,
-              ref: ref,
-            );
-          },
+          onTap: (event) => _openQrScanner(
+            event: event,
+            context: context,
+            ref: ref,
+          ),
           events: filteredEvents,
           placeholder: const ComingEventsPlaceholder(),
           scrollController: scrollController,
