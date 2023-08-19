@@ -71,15 +71,3 @@ class EventsGrid extends StatelessWidget {
     );
   }
 }
-
-int determineCrossAxisCount(double width) {
-  if (width < 400) {
-    return 2;
-  } else if (width < 600) {
-    return 3;
-  } else if (width < 900) {
-    return 4;
-  } else {
-    return 5;
-  }
-}
