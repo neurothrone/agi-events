@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../core/models/models.dart';
 import '../../../core/utils/enums/enums.dart';
-import '../../../core/widgets/centered_progress_indicator.dart';
+import '../../../core/widgets/widgets.dart';
 import '../data/events_controller.dart';
 import 'your_events_placeholder.dart';
 import 'events_grid.dart';
@@ -26,11 +26,12 @@ class YourEventsGrid extends ConsumerWidget {
 
     return eventsState.when(
       data: (List<Event> events) {
+        final filteredEvents = events.where((e) => e.saved).toList();
+
         return EventsGrid(
-          onTap: (event, context, _) {
-            context.pushNamed(AppRoute.leads.name, extra: event);
-          },
-          filter: (event) => event.saved,
+          onTap: (event) =>
+              context.pushNamed(AppRoute.leads.name, extra: event),
+          events: filteredEvents,
           placeholder: const YourEventsPlaceholder(),
           scrollController: scrollController,
         );

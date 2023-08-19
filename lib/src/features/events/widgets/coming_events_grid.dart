@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/models/models.dart';
 import '../../../core/utils/enums/enums.dart';
 import '../../../core/utils/utils.dart';
-import '../../../core/widgets/centered_progress_indicator.dart';
+import '../../../core/widgets/widgets.dart';
 import '../../qr_scan/data/qr_scan_controller.dart';
 import '../data/events_controller.dart';
 import 'coming_events_placeholder.dart';
@@ -55,16 +55,18 @@ class ComingEventsGrid extends ConsumerWidget {
       data: (List<Event> events) {
         // Cache `now`
         final now = DateTime.now();
+        final filteredEvents =
+            events.where((e) => !e.saved && e.endDate.isNotAfter(now)).toList();
 
         return EventsGrid(
-          onTap: (event, context, ref) {
+          onTap: (event) {
             _openQrScanner(
               event: event,
               context: context,
               ref: ref,
             );
           },
-          filter: (event) => !event.saved && event.endDate.isNotAfter(now),
+          events: filteredEvents,
           placeholder: const ComingEventsPlaceholder(),
           scrollController: scrollController,
         );
