@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../constants/app_constants.dart';
+import '../constants/constants.dart';
 
 void showSnackbar({
   required String message,
@@ -11,13 +11,13 @@ void showSnackbar({
     SnackBar(
       behavior: SnackBarBehavior.floating,
       backgroundColor: AppConstants.primaryBlueDarker,
-      elevation: 5.0,
+      elevation: AppDimensions.elevation,
       shape: RoundedRectangleBorder(
         side: const BorderSide(
           color: Colors.grey,
           width: 1.0,
         ),
-        borderRadius: BorderRadius.circular(20.0),
+        borderRadius: BorderRadius.circular(AppDimensions.borderRadius),
       ),
       content: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -25,9 +25,9 @@ void showSnackbar({
           Icon(
             icon,
             color: Colors.white,
-            size: 20.0,
+            size: AppSizes.s20,
           ),
-          const SizedBox(width: 8.0),
+          const SizedBox(width: AppSizes.s8),
           Flexible(
             child: Text(
               message,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../constants/app_constants.dart';
+import '../constants/constants.dart';
 
 class CustomTextFormField extends StatelessWidget {
   const CustomTextFormField({
@@ -60,14 +60,14 @@ class CustomTextFormField extends StatelessWidget {
             color: Colors.grey,
             width: 1.0,
           ),
-          borderRadius: BorderRadius.circular(10.0),
+          borderRadius: BorderRadius.circular(AppDimensions.elevation),
         ),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
             color: primaryColor ?? AppConstants.primaryBlueLightest,
             width: 1.5,
           ),
-          borderRadius: BorderRadius.circular(10.0),
+          borderRadius: BorderRadius.circular(AppDimensions.elevation),
         ),
         labelText: isRequired ? "$labelText*" : labelText,
         labelStyle: const TextStyle(

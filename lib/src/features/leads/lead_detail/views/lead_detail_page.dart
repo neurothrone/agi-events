@@ -256,7 +256,7 @@ class _LeadDetailPageState extends State<LeadDetailPage> {
                                 onPressed: () => _onDelete(ref),
                                 label: "Delete Lead",
                                 width: MediaQuery.sizeOf(context).width * 0.6,
-                                height: 50.0,
+                                height: AppSizes.s48,
                               ),
                             );
                           },

@@ -9,7 +9,7 @@ Future<void> showCustomBottomSheet({
   await showModalBottomSheet(
     context: context,
     backgroundColor: AppConstants.primaryBlueLighter,
-    elevation: 2.0,
+    elevation: AppDimensions.elevation,
     showDragHandle: true,
     useSafeArea: true,
     isScrollControlled: true,

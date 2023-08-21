@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../constants/constants.dart';
+
 class TextIconRow extends StatelessWidget {
   const TextIconRow({
     super.key,
@@ -16,7 +18,7 @@ class TextIconRow extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Icon(icon),
-        const SizedBox(width: 15.0),
+        const SizedBox(width: AppSizes.s16),
         Text(
           label,
           style: const TextStyle(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../constants/app_constants.dart';
+import '../constants/constants.dart';
 import 'text_icon_row.dart';
 
 class PrimaryButton extends StatelessWidget {
@@ -10,11 +10,10 @@ class PrimaryButton extends StatelessWidget {
     required this.label,
     this.icon,
     this.width = double.infinity,
-    this.height = 40.0,
+    this.height = AppSizes.s48,
     this.backgroundColor = AppConstants.primaryBlue,
-    // this.backgroundColor = Colors.blue,
     this.foregroundColor = Colors.white,
-    this.borderRadius = 10.0,
+    this.borderRadius = AppDimensions.borderRadius,
     this.useGradient = false,
     this.uniqueKey,
   });
