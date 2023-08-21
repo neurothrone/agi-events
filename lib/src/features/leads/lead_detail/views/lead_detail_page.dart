@@ -25,6 +25,8 @@ class LeadDetailPage extends StatefulWidget {
 }
 
 class _LeadDetailPageState extends State<LeadDetailPage> {
+  // region Fields
+
   late TextEditingController _productController;
   late TextEditingController _sellerController;
   late TextEditingController _notesController;
@@ -32,6 +34,10 @@ class _LeadDetailPageState extends State<LeadDetailPage> {
   late FocusNode _productNode;
   late FocusNode _sellerNode;
   late FocusNode _notesNode;
+
+  // endregion
+
+  // region Methods
 
   @override
   void initState() {
@@ -165,6 +171,10 @@ class _LeadDetailPageState extends State<LeadDetailPage> {
     );
   }
 
+  // endregion
+
+  // region UI
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -262,4 +272,6 @@ class _LeadDetailPageState extends State<LeadDetailPage> {
       ),
     );
   }
+
+// endregion
 }
