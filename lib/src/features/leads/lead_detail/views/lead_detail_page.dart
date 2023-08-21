@@ -199,16 +199,16 @@ class _LeadDetailPageState extends State<LeadDetailPage> {
                 ),
                 child: IntrinsicHeight(
                   child: Padding(
-                    padding: const EdgeInsets.all(20.0),
+                    padding: const EdgeInsets.all(AppSizes.s20),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         ContactInformation(lead: widget.lead),
-                        const SizedBox(height: 40.0),
+                        const SizedBox(height: AppSizes.s40),
                         const LeadDetailHeaderText(
                           title: "Additional Information",
                         ),
-                        const SizedBox(height: 20.0),
+                        const SizedBox(height: AppSizes.s20),
                         CustomTextFormField(
                           onFieldSubmitted: (_) {
                             FocusScope.of(context).requestFocus(_sellerNode);
@@ -220,7 +220,7 @@ class _LeadDetailPageState extends State<LeadDetailPage> {
                           textInputAction: TextInputAction.next,
                           isRequired: false,
                         ),
-                        const SizedBox(height: 20.0),
+                        const SizedBox(height: AppSizes.s20),
                         CustomTextFormField(
                           onFieldSubmitted: (_) {
                             FocusScope.of(context).requestFocus(_notesNode);
@@ -233,7 +233,7 @@ class _LeadDetailPageState extends State<LeadDetailPage> {
                           isRequired: false,
                           fieldKey: const Key("sellerField"),
                         ),
-                        const SizedBox(height: 20.0),
+                        const SizedBox(height: AppSizes.s20),
                         CustomTextFormField(
                           onFieldSubmitted: (_) {
                             _notesNode.unfocus();
@@ -246,7 +246,7 @@ class _LeadDetailPageState extends State<LeadDetailPage> {
                           maxLines: 10,
                           isRequired: false,
                         ),
-                        const SizedBox(height: 40.0),
+                        const SizedBox(height: AppSizes.s40),
                         const Spacer(),
                         Consumer(
                           builder: (context, ref, __) {

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/constants/constants.dart';
+
 class LeadDetailTextIconRow extends StatelessWidget {
   const LeadDetailTextIconRow({
     super.key,
@@ -14,8 +16,8 @@ class LeadDetailTextIconRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(icon, color: Colors.grey, size: 20.0),
-        const SizedBox(width: 8.0),
+        Icon(icon, color: Colors.grey, size: AppSizes.s20),
+        const SizedBox(width: AppSizes.s8),
         Text(text),
       ],
     );

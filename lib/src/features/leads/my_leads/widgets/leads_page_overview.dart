@@ -38,7 +38,7 @@ class LeadsPageOverview extends StatelessWidget {
                   ),
           ),
         ),
-        const SizedBox(height: 20.0),
+        const SizedBox(height: AppSizes.s20),
         Row(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [

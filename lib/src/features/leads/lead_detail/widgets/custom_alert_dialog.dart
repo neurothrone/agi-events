@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/constants/constants.dart';
 import 'custom_filled_button.dart';
 
 class CustomAlertDialog extends StatelessWidget {
@@ -36,7 +37,7 @@ class CustomAlertDialog extends StatelessWidget {
     return AlertDialog(
       backgroundColor: backgroundColor,
       surfaceTintColor: backgroundColor,
-      elevation: 5.0,
+      elevation: AppDimensions.elevation,
       title: Text(
         title,
         style: const TextStyle(
@@ -51,7 +52,7 @@ class CustomAlertDialog extends StatelessWidget {
         ),
         textAlign: TextAlign.center,
       ),
-      contentPadding: const EdgeInsets.all(20.0),
+      contentPadding: const EdgeInsets.all(AppSizes.s20),
       actions: [
         Row(
           children: [
@@ -67,7 +68,7 @@ class CustomAlertDialog extends StatelessWidget {
                 isTextProminent: isCancelProminent,
               ),
             ),
-            const SizedBox(width: 20.0),
+            const SizedBox(width: AppSizes.s20),
             Expanded(
               child: CustomFilledButton(
                 onPressed: () {

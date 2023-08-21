@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/constants/constants.dart';
 import '../../../../core/models/models.dart';
 import 'leads_list.dart';
 import 'leads_page_header.dart';
@@ -15,7 +16,7 @@ class LeadsPageContentScrollView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      minimum: const EdgeInsets.symmetric(horizontal: 20.0),
+      minimum: const EdgeInsets.symmetric(horizontal: AppSizes.s20),
       child: CustomScrollView(
         slivers: [
           SliverPersistentHeader(

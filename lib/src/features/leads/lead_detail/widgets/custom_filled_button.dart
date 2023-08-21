@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/constants/constants.dart';
+
 class CustomFilledButton extends StatelessWidget {
   const CustomFilledButton({
     super.key,
@@ -8,8 +10,8 @@ class CustomFilledButton extends StatelessWidget {
     this.isTextProminent = false,
     this.backgroundColor = Colors.black,
     required this.foregroundColor,
-    this.elevation = 5.0,
-    this.height = 45.0,
+    this.elevation = AppDimensions.elevation,
+    this.height = AppSizes.s48,
   });
 
   final VoidCallback onPressed;

@@ -72,7 +72,7 @@ class LeadsPageHeader extends SliverPersistentHeaderDelegate {
               ),
             ),
           ),
-          const SizedBox(height: 10.0),
+          const SizedBox(height: AppSizes.s10),
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
@@ -91,7 +91,7 @@ class LeadsPageHeader extends SliverPersistentHeaderDelegate {
           ),
           const Divider(
             color: AppConstants.primaryBlue,
-            height: 20.0,
+            height: AppSizes.s20,
             thickness: 1.0,
           ),
         ],

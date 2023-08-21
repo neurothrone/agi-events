@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/constants/constants.dart';
 import '../../../../core/models/models.dart';
 import '../../../../core/utils/enums/enums.dart';
 import '../../../../core/utils/utils.dart';
@@ -22,7 +23,7 @@ class LeadRow extends StatelessWidget {
           onTap: () => context.pushNamed(AppRoute.leadDetail.name, extra: lead),
           child: Column(
             children: [
-              const SizedBox(height: 10.0),
+              const SizedBox(height: AppSizes.s10),
               Row(
                 children: [
                   Column(
@@ -32,7 +33,7 @@ class LeadRow extends StatelessWidget {
                         lead.fullName,
                         style: const TextStyle(fontSize: 18.0),
                       ),
-                      const SizedBox(height: 2.0),
+                      const SizedBox(height: AppSizes.s2),
                       Text(
                         lead.company,
                         style: const TextStyle(
@@ -52,7 +53,7 @@ class LeadRow extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 10.0),
+              const SizedBox(height: AppSizes.s10),
             ],
           ),
         ),

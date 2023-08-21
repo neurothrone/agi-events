@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/constants/constants.dart';
+
 class EmptyLeadsPlaceholder extends StatelessWidget {
   const EmptyLeadsPlaceholder({super.key});
 
@@ -7,7 +9,7 @@ class EmptyLeadsPlaceholder extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Column(
       children: [
-        SizedBox(height: 20.0),
+        SizedBox(height: AppSizes.s20),
         Text(
           "You have no leads yet",
           style: TextStyle(

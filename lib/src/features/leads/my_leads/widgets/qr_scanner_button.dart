@@ -52,15 +52,15 @@ class QrScannerButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return SafeArea(
       minimum: Platform.isIOS
-          ? const EdgeInsets.only(bottom: 20.0)
+          ? const EdgeInsets.only(bottom: AppSizes.s20)
           : EdgeInsets.zero,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        padding: const EdgeInsets.symmetric(horizontal: AppSizes.s20),
         child: PrimaryButton(
           onPressed: () => _openQrScanner(context, ref),
           label: "Scan new lead",
           icon: Icons.qr_code_scanner_rounded,
-          height: 50.0,
+          height: AppSizes.s48,
           backgroundColor: AppConstants.primaryBlueLighter,
         ),
       ),
