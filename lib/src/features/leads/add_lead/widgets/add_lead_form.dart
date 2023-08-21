@@ -180,7 +180,7 @@ class _AddLeadFormState extends State<AddLeadForm> {
             textInputAction: TextInputAction.next,
             fieldKey: const Key("firstNameField"),
           ),
-          const SizedBox(height: 20.0),
+          const SizedBox(height: AppSizes.s20),
           CustomTextFormField(
             onFieldSubmitted: (_) {
               FocusScope.of(context).requestFocus(_companyNode);
@@ -192,7 +192,7 @@ class _AddLeadFormState extends State<AddLeadForm> {
             textInputAction: TextInputAction.next,
             fieldKey: const Key("lastNameField"),
           ),
-          const SizedBox(height: 20.0),
+          const SizedBox(height: AppSizes.s20),
           CustomTextFormField(
             onFieldSubmitted: (_) {
               FocusScope.of(context).requestFocus(_emailNode);
@@ -204,7 +204,7 @@ class _AddLeadFormState extends State<AddLeadForm> {
             textInputAction: TextInputAction.next,
             fieldKey: const Key("companyField"),
           ),
-          const SizedBox(height: 20.0),
+          const SizedBox(height: AppSizes.s20),
           CustomTextFormField(
             onFieldSubmitted: (_) {
               FocusScope.of(context).requestFocus(_phoneNode);
@@ -218,7 +218,7 @@ class _AddLeadFormState extends State<AddLeadForm> {
             textInputAction: TextInputAction.next,
             fieldKey: const Key("emailField"),
           ),
-          const SizedBox(height: 20.0),
+          const SizedBox(height: AppSizes.s20),
           CustomTextFormField(
             onFieldSubmitted: (_) {
               FocusScope.of(context).requestFocus(_addressNode);
@@ -233,7 +233,7 @@ class _AddLeadFormState extends State<AddLeadForm> {
             textInputAction: TextInputAction.next,
             isRequired: false,
           ),
-          const SizedBox(height: 20.0),
+          const SizedBox(height: AppSizes.s20),
           CustomTextFormField(
             onFieldSubmitted: (_) {
               FocusScope.of(context).requestFocus(_zipCodeNode);
@@ -246,7 +246,7 @@ class _AddLeadFormState extends State<AddLeadForm> {
             textInputAction: TextInputAction.next,
             isRequired: false,
           ),
-          const SizedBox(height: 20.0),
+          const SizedBox(height: AppSizes.s20),
           CustomTextFormField(
             onFieldSubmitted: (_) {
               FocusScope.of(context).requestFocus(_cityNode);
@@ -258,7 +258,7 @@ class _AddLeadFormState extends State<AddLeadForm> {
             textInputAction: TextInputAction.next,
             isRequired: false,
           ),
-          const SizedBox(height: 20.0),
+          const SizedBox(height: AppSizes.s20),
           CustomTextFormField(
             onFieldSubmitted: (_) {
               _cityNode.unfocus();
@@ -271,7 +271,7 @@ class _AddLeadFormState extends State<AddLeadForm> {
             isRequired: false,
             fieldKey: const Key("cityField"),
           ),
-          const SizedBox(height: 40.0),
+          const SizedBox(height: AppSizes.s40),
           ValueListenableBuilder(
             valueListenable: _isFormValid,
             builder: (_, bool isFormValid, __) {
