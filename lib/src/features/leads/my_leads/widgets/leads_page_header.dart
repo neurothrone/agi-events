@@ -37,17 +37,24 @@ class LeadsPageHeader extends SliverPersistentHeaderDelegate {
     );
   }
 
+  /// Calculate the opacity of the image as we scroll
+  double _imageOpacity(double shrinkOffset) {
+    return (1 - shrinkOffset / maxExtent).clamp(0, 1);
+  }
+
+  /// Calculate remaining space for the image after shrinking
+  double _imageHeight(double shrinkOffset) {
+    return (imageHeight - shrinkOffset).clamp(0, 100);
+  }
+
   @override
   Widget build(
-      BuildContext context,
-      double shrinkOffset,
-      bool overlapsContent,
-      ) {
-    // Calculate the opacity of the image as we scroll
-    final double opacity = (1 - shrinkOffset / maxExtent).clamp(0, 1);
-
-    // Calculate remaining space for the image after shrinking
-    final double imageHeight = (this.imageHeight - shrinkOffset).clamp(0, 100);
+    BuildContext context,
+    double shrinkOffset,
+    bool overlapsContent,
+  ) {
+    final double opacity = _imageOpacity(shrinkOffset);
+    final double imageHeight = _imageHeight(shrinkOffset);
 
     return Container(
       color: Colors.black,
