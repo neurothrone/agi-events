@@ -25,6 +25,8 @@ class AddLeadForm extends StatefulWidget {
 }
 
 class _AddLeadFormState extends State<AddLeadForm> {
+  // region Fields
+
   final _firstNameController = TextEditingController();
   final _lastNameController = TextEditingController();
   final _companyController = TextEditingController();
@@ -45,6 +47,10 @@ class _AddLeadFormState extends State<AddLeadForm> {
 
   // Initially form is not valid since all fields are empty
   final ValueNotifier<bool> _isFormValid = ValueNotifier(false);
+
+  // endregion
+
+  // region Methods
 
   @override
   void initState() {
@@ -152,6 +158,10 @@ class _AddLeadFormState extends State<AddLeadForm> {
       context.pushNamed(AppRoute.leadDetail.name, extra: lead);
     }
   }
+
+  // endregion
+
+  // region UI
 
   @override
   Widget build(BuildContext context) {
@@ -282,4 +292,6 @@ class _AddLeadFormState extends State<AddLeadForm> {
       ),
     );
   }
+
+// endregion
 }
