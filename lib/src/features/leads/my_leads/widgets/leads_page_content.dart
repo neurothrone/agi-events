@@ -14,13 +14,16 @@ class LeadsPageContentScrollView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      slivers: [
-        SliverToBoxAdapter(
-          child: LeadsPageOverview(event: event),
-        ),
-        LeadsList(event: event),
-      ],
+    return SafeArea(
+      minimum: const EdgeInsets.symmetric(horizontal: 20.0),
+      child: CustomScrollView(
+        slivers: [
+          SliverToBoxAdapter(
+            child: LeadsPageOverview(event: event),
+          ),
+          LeadsList(event: event),
+        ],
+      ),
     );
   }
 }

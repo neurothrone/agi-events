@@ -32,10 +32,7 @@ class LeadsPage extends StatelessWidget {
               ],
             ),
       bottomNavigationBar: QrScannerButton(event: event),
-      body: SafeArea(
-        minimum: const EdgeInsets.symmetric(horizontal: 20.0),
-        child: LeadsPageContentScrollView(event: event),
-      ),
+      body: LeadsPageContentScrollView(event: event),
     );
   }
 }
