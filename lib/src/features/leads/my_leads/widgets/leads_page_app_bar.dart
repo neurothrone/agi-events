@@ -21,6 +21,7 @@ class LeadsPageAppBar extends StatelessWidget implements PreferredSizeWidget {
             trailing: ShareButton(event: event),
           )
         : AppBar(
+            surfaceTintColor: Colors.transparent,
             actions: [
               ShareButton(event: event),
             ],
