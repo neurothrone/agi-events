@@ -18,7 +18,7 @@ class AddLeadSheet extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppConstants.lighterBlack,
       body: SafeArea(
-        minimum: const EdgeInsets.all(20.0),
+        minimum: const EdgeInsets.all(AppSizes.s20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -27,7 +27,7 @@ class AddLeadSheet extends StatelessWidget {
             Expanded(
               child: ListView(
                 children: [
-                  const SizedBox(height: 10.0),
+                  const SizedBox(height: AppSizes.s10),
                   AddLeadForm(event: event),
                 ],
               ),

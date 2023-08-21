@@ -24,7 +24,7 @@ class InactiveQrScannerContent extends StatelessWidget {
               onTap: onStartScanner,
             ),
           ),
-          const SizedBox(height: 20.0),
+          const SizedBox(height: AppSizes.s20),
           const Text(
             "Press to get started",
             style: TextStyle(
