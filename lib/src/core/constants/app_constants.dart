@@ -24,12 +24,6 @@ class AppConstants {
 
   // endregion
 
-  // region Dimensions
-
-  static const double borderRadius = 10.0;
-
-  // endregion
-
   // region Colors
 
   /// Primary color used throughout the app.
