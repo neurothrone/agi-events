@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../core/constants/constants.dart';
-import '../../../core/models/event.dart';
+import '../../../core/models/models.dart';
 
 class EventGridTile extends StatelessWidget {
   const EventGridTile({
@@ -24,15 +24,15 @@ class EventGridTile extends StatelessWidget {
           AspectRatio(
             aspectRatio: 1.0,
             child: Material(
-              borderRadius: BorderRadius.circular(10.0),
+              borderRadius: BorderRadius.circular(AppDimensions.borderRadius),
               color: AppConstants.primaryBlueDarker,
-              elevation: 3.0,
+              elevation: AppDimensions.elevation,
               shadowColor: AppConstants.primaryBlueDarker,
               child: InkWell(
                 onTap: onTap,
-                borderRadius: BorderRadius.circular(10.0),
+                borderRadius: BorderRadius.circular(AppDimensions.borderRadius),
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(AppSizes.s8),
                   child: Hero(
                     tag: "event-${event.eventId}",
                     child: SvgPicture.asset(
@@ -46,9 +46,9 @@ class EventGridTile extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.only(
-              top: 8.0,
-              left: 8.0,
-              right: 8.0,
+              top: AppSizes.s8,
+              left: AppSizes.s8,
+              right: AppSizes.s8,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

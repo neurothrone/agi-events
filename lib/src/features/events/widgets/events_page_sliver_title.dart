@@ -10,7 +10,7 @@ class EventsPageSliverTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Padding(
-      padding: EdgeInsets.only(top: 20.0, bottom: 40.0),
+      padding: EdgeInsets.only(top: AppSizes.s20, bottom: AppSizes.s40),
       child: Text(
         "Welcome to\n${AppConstants.appTitle}",
         style: TextStyle(

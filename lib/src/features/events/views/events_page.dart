@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/constants/constants.dart';
 import '../data/events_controller.dart';
 import '../data/providers.dart';
 import '../widgets/events_page_background.dart';
@@ -20,7 +21,7 @@ class EventsPage extends StatelessWidget {
         children: [
           EventsPageBackground(),
           SafeArea(
-            minimum: EdgeInsets.symmetric(horizontal: 20.0),
+            minimum: EdgeInsets.symmetric(horizontal: AppSizes.s20),
             child: EventsPageContentScrollView(),
           ),
         ],

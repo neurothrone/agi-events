@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:auto_animated/auto_animated.dart';
 
+import '../../../core/constants/app_sizes.dart';
 import '../../../core/models/models.dart';
 import 'event_grid_tile.dart';
 
@@ -37,8 +38,8 @@ class EventsGrid extends StatelessWidget {
       ),
       gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
         maxCrossAxisExtent: 200.0,
-        mainAxisSpacing: 20.0,
-        crossAxisSpacing: 20.0,
+        mainAxisSpacing: 0.0,
+        crossAxisSpacing: AppSizes.s20,
         childAspectRatio: 0.65,
       ),
       itemCount: events.length,

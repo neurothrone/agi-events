@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/constants/constants.dart';
+
 class YourEventsPlaceholder extends StatelessWidget {
   const YourEventsPlaceholder({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 20.0, bottom: 40.0),
+      padding: const EdgeInsets.only(top: AppSizes.s20, bottom: AppSizes.s40),
       child: RichText(
         text: const TextSpan(
           children: [
