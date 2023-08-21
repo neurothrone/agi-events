@@ -36,7 +36,7 @@ class EventGridTile extends StatelessWidget {
                   child: Hero(
                     tag: "event-${event.eventId}",
                     child: SvgPicture.asset(
-                      AssetsConstants.imagePath(event.image),
+                      AppAssets.imagePath(event.image),
                       semanticsLabel: "Event logo",
                     ),
                   ),

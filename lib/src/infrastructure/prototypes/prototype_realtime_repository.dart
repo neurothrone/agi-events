@@ -11,7 +11,7 @@ import '../../core/utils/utils.dart';
 final prototypeRealtimeDataFutureProvider =
     FutureProvider<Map<String, dynamic>>((ref) async {
   final Map<String, dynamic> realtimeData = await loadJsonFromAssets(
-    AssetsConstants.prototypeRealtimeJson,
+    AppAssets.prototypeRealtimeJson,
   );
   return realtimeData;
 });

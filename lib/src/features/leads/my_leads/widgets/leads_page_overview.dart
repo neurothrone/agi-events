@@ -34,7 +34,7 @@ class LeadsPageOverview extends StatelessWidget {
             child: AppEnvironment.isInTestMode
                 ? const Placeholder()
                 : SvgPicture.asset(
-                    AssetsConstants.imagePath(event.image),
+                    AppAssets.imagePath(event.image),
                   ),
           ),
         ),

@@ -3,10 +3,10 @@
 ///
 /// This class centralizes paths and constants for easier management and
 /// access of assets, especially images and data files in the project.
-class AssetsConstants {
+class AppAssets {
   /// A utility class, not meant to be instantiated or extended;
   /// hence the private constructor.
-  const AssetsConstants._();
+  const AppAssets._();
 
   static const String _dataBasePath = "assets/data";
   static const String _imagesBasePath = "assets/images/events";

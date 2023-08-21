@@ -6,7 +6,7 @@ import '../../../core/utils/utils.dart';
 
 final eventsFutureProvider = FutureProvider<Map<String, dynamic>>((ref) async {
   final Map<String, dynamic> eventsJson = await loadJsonFromAssets(
-    AssetsConstants.eventsJson,
+    AppAssets.eventsJson,
   );
   return eventsJson;
 });
@@ -52,7 +52,7 @@ List<Map<String, dynamic>> _processEventsDataFromJson(
 }
 
 Future<List<Event>> fetchEventsFromJson() async {
-  final Map<String, dynamic> eventsJson = await loadJsonFromAssets(AssetsConstants.eventsJson);
+  final Map<String, dynamic> eventsJson = await loadJsonFromAssets(AppAssets.eventsJson);
   List<Map<String, dynamic>> listOfEventMap = _processEventsDataFromJson(eventsJson);
   List<Event> events = listOfEventMap
       .map((Map<String, dynamic> eventMap) => Event.fromMap(eventMap))

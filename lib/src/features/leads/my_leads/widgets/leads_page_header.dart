@@ -67,7 +67,7 @@ class LeadsPageHeader extends SliverPersistentHeaderDelegate {
               child: Hero(
                 tag: "event-${event.eventId}",
                 child: SvgPicture.asset(
-                  AssetsConstants.imagePath(event.image),
+                  AppAssets.imagePath(event.image),
                 ),
               ),
             ),
