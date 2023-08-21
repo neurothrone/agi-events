@@ -37,6 +37,13 @@ class EventsGrid extends StatelessWidget {
         visibleFraction: 0.025,
         reAnimateOnVisibility: false,
       ),
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: orientation == Orientation.portrait ? 2 : 3,
+        crossAxisSpacing: 20.0,
+        mainAxisSpacing: 20.0,
+        childAspectRatio: orientation == Orientation.portrait ? 0.65 : 0.7,
+      ),
+      itemCount: events.length,
       itemBuilder: (
         BuildContext context,
         int index,
@@ -61,13 +68,6 @@ class EventsGrid extends StatelessWidget {
           ),
         );
       },
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: orientation == Orientation.portrait ? 2 : 3,
-        crossAxisSpacing: 20.0,
-        mainAxisSpacing: 20.0,
-        childAspectRatio: orientation == Orientation.portrait ? 0.65 : 0.7,
-      ),
-      itemCount: events.length,
     );
   }
 }
