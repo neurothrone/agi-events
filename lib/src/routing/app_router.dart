@@ -16,28 +16,32 @@ class AppRouter {
         path: "/",
         name: AppRoute.events.name,
         builder: (context, state) => const EventsPage(),
-      ),
-      GoRoute(
-        path: "/leads",
-        name: AppRoute.leads.name,
-        pageBuilder: (_, state) {
-          final event = state.extra as Event;
-          return CustomSlideTransition(
-            key: state.pageKey,
-            child: LeadsPage(event: event),
-          );
-        },
-      ),
-      GoRoute(
-        path: "/leads/detail",
-        name: AppRoute.leadDetail.name,
-        pageBuilder: (_, state) {
-          final lead = state.extra as Lead;
-          return CustomSlideTransition(
-            key: state.pageKey,
-            child: LeadDetailPage(lead: lead),
-          );
-        },
+        routes: [
+          GoRoute(
+            path: "leads",
+            name: AppRoute.leads.name,
+            pageBuilder: (_, state) {
+              final event = state.extra as Event;
+              return CustomSlideTransition(
+                key: state.pageKey,
+                child: LeadsPage(event: event),
+              );
+            },
+            routes: [
+              GoRoute(
+                path: "detail",
+                name: AppRoute.leadDetail.name,
+                pageBuilder: (_, state) {
+                  final lead = state.extra as Lead;
+                  return CustomSlideTransition(
+                    key: state.pageKey,
+                    child: LeadDetailPage(lead: lead),
+                  );
+                },
+              ),
+            ],
+          ),
+        ],
       ),
     ],
   );
