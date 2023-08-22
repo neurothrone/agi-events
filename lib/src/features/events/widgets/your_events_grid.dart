@@ -4,8 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/models/models.dart';
-import '../../../core/utils/enums/enums.dart';
 import '../../../core/widgets/widgets.dart';
+import '../../../routing/routing.dart';
 import '../data/events_controller.dart';
 import 'your_events_placeholder.dart';
 import 'events_grid.dart';

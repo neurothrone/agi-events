@@ -1,11 +1,10 @@
 import 'package:go_router/go_router.dart';
 
 import '../core/models/models.dart';
-import '../core/utils/enums/enums.dart';
 import '../features/events/views/events_page.dart';
 import '../features/leads/lead_detail/views/lead_detail_page.dart';
 import '../features/leads/my_leads/views/leads_page.dart';
-import 'custom_slide_transition.dart';
+import 'routing.dart';
 
 class AppRouter {
   const AppRouter._();

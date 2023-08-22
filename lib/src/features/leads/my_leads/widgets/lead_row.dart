@@ -4,8 +4,8 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/constants/constants.dart';
 import '../../../../core/models/models.dart';
-import '../../../../core/utils/enums/enums.dart';
 import '../../../../core/utils/utils.dart';
+import '../../../../routing/routing.dart';
 
 class LeadRow extends StatelessWidget {
   const LeadRow({

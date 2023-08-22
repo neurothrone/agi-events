@@ -9,6 +9,7 @@ import '../../../../core/models/models.dart';
 import '../../../../core/utils/enums/enums.dart';
 import '../../../../core/utils/utils.dart';
 import '../../../../core/widgets/widgets.dart';
+import '../../../../routing/routing.dart';
 import '../../../qr_scan/data/qr_scan_controller.dart';
 import '../../shared/data/leads_controller.dart';
 
