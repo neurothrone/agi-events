@@ -23,7 +23,7 @@ class AddLeadSheet extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const AddLeadTitleText(),
-            const Divider(color: Colors.white24),
+            const Divider(color: AppConstants.primaryBlue),
             Expanded(
               child: ListView(
                 children: [

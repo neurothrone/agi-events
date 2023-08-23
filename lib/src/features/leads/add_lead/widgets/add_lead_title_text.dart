@@ -10,8 +10,8 @@ class AddLeadTitleText extends StatelessWidget {
     return const Text(
       "New lead",
       style: TextStyle(
-        color: Colors.grey,
-        fontSize: 16.0,
+        color: Colors.white,
+        fontSize: 22.0,
         fontWeight: FontWeight.w500,
       ),
     );
