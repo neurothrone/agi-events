@@ -66,6 +66,6 @@ class DefaultFirebaseOptions {
     databaseURL: 'https://devops-registrering-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'devops-registrering.appspot.com',
     iosClientId: '769821380069-knoochc0gcdgqod52opiik1ks49c5knh.apps.googleusercontent.com',
-    iosBundleId: 'tech.neurothrone.agiEvents.RunnerTests',
+    iosBundleId: 'com.agi.EmJo-Exhibitor',
   );
 }
