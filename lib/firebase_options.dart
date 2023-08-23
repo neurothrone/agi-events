@@ -60,12 +60,12 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyBGxwW1jDoXb4jtjN66vd_OW5MawwLThAE',
-    appId: '1:769821380069:ios:59c437935414e0249b330c',
+    appId: '1:769821380069:ios:6c78c3a32454fd0e9b330c',
     messagingSenderId: '769821380069',
     projectId: 'devops-registrering',
     databaseURL: 'https://devops-registrering-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'devops-registrering.appspot.com',
-    iosClientId: '769821380069-knoochc0gcdgqod52opiik1ks49c5knh.apps.googleusercontent.com',
+    iosClientId: '769821380069-bsvdigguipi1kaonjnd7cd4r6nhfhvv2.apps.googleusercontent.com',
     iosBundleId: 'com.agi.EmJo-Exhibitor',
   );
 }
