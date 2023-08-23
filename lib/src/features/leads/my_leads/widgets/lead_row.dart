@@ -20,7 +20,10 @@ class LeadRow extends StatelessWidget {
     return Column(
       children: [
         InkWell(
-          onTap: () => context.pushNamed(AppRoute.leadDetail.name, extra: lead),
+          onTap: () => context.pushNamed(
+            AppRoute.leadDetail.name,
+            extra: lead,
+          ),
           child: Column(
             children: [
               const SizedBox(height: AppSizes.s10),
