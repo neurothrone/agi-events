@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>17995575553-o1igohqatgeu4jbnb0771crbbfe4nogu.apps.googleusercontent.com</string>
+	<string>769821380069-knoochc0gcdgqod52opiik1ks49c5knh.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.17995575553-o1igohqatgeu4jbnb0771crbbfe4nogu</string>
+	<string>com.googleusercontent.apps.769821380069-knoochc0gcdgqod52opiik1ks49c5knh</string>
 	<key>API_KEY</key>
-	<string>AIzaSyAkKSZdXgVDxoYYzuXZU6rrn9J1_KaFL5U</string>
+	<string>AIzaSyBGxwW1jDoXb4jtjN66vd_OW5MawwLThAE</string>
 	<key>GCM_SENDER_ID</key>
-	<string>17995575553</string>
+	<string>769821380069</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>tech.neurothrone.agiEvents</string>
+	<string>tech.neurothrone.agiEvents.RunnerTests</string>
 	<key>PROJECT_ID</key>
-	<string>agi-sandbox-90b17</string>
+	<string>devops-registrering</string>
 	<key>STORAGE_BUCKET</key>
-	<string>agi-sandbox-90b17.appspot.com</string>
+	<string>devops-registrering.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,8 +29,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:17995575553:ios:ba1b7cd49dbe9fa4b3ab00</string>
+	<string>1:769821380069:ios:59c437935414e0249b330c</string>
 	<key>DATABASE_URL</key>
-	<string>https://agi-sandbox-90b17-default-rtdb.europe-west1.firebasedatabase.app</string>
+	<string>https://devops-registrering-default-rtdb.europe-west1.firebasedatabase.app</string>
 </dict>
 </plist>

@@ -1,41 +1,41 @@
 {
   "project_info": {
-    "project_number": "17995575553",
-    "firebase_url": "https://agi-sandbox-90b17-default-rtdb.europe-west1.firebasedatabase.app",
-    "project_id": "agi-sandbox-90b17",
-    "storage_bucket": "agi-sandbox-90b17.appspot.com"
+    "project_number": "769821380069",
+    "firebase_url": "https://devops-registrering-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "devops-registrering",
+    "storage_bucket": "devops-registrering.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:17995575553:android:9ea5e43484d9f756b3ab00",
+        "mobilesdk_app_id": "1:769821380069:android:99288e2741221f6a9b330c",
         "android_client_info": {
-          "package_name": "tech.neurothrone.agi"
+          "package_name": "com.agi.emjo_exhibitor"
         }
       },
       "oauth_client": [
         {
-          "client_id": "17995575553-ek168ueeskj4nutd12rhqodpbkrn9dl4.apps.googleusercontent.com",
+          "client_id": "769821380069-9alrac9198srbciopbka8ipinp719u59.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDTJTtgwxY-BqmjLjHKQTaiDFVAagPmfsk"
+          "current_key": "AIzaSyBYNUS0ZVkZZ0oxJLsHxjKoHHg_5duEzWk"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "17995575553-ek168ueeskj4nutd12rhqodpbkrn9dl4.apps.googleusercontent.com",
+              "client_id": "769821380069-9alrac9198srbciopbka8ipinp719u59.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "17995575553-jk07t7q65lpn0hbnauofbp6q6a34bdah.apps.googleusercontent.com",
+              "client_id": "769821380069-4fbekpu3m764lidftshl7eo3dl3drfkb.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "tech.neurothrone.agi"
+                "bundle_id": "agi.qrReader3"
               }
             }
           ]
@@ -44,34 +44,34 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:17995575553:android:41c7e9315cdee752b3ab00",
+        "mobilesdk_app_id": "1:769821380069:android:3242938417b5fc3d9b330c",
         "android_client_info": {
           "package_name": "tech.neurothrone.agi_events"
         }
       },
       "oauth_client": [
         {
-          "client_id": "17995575553-ek168ueeskj4nutd12rhqodpbkrn9dl4.apps.googleusercontent.com",
+          "client_id": "769821380069-9alrac9198srbciopbka8ipinp719u59.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDTJTtgwxY-BqmjLjHKQTaiDFVAagPmfsk"
+          "current_key": "AIzaSyBYNUS0ZVkZZ0oxJLsHxjKoHHg_5duEzWk"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "17995575553-ek168ueeskj4nutd12rhqodpbkrn9dl4.apps.googleusercontent.com",
+              "client_id": "769821380069-9alrac9198srbciopbka8ipinp719u59.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "17995575553-jk07t7q65lpn0hbnauofbp6q6a34bdah.apps.googleusercontent.com",
+              "client_id": "769821380069-4fbekpu3m764lidftshl7eo3dl3drfkb.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "tech.neurothrone.agi"
+                "bundle_id": "agi.qrReader3"
               }
             }
           ]
