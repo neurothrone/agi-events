@@ -18,7 +18,13 @@ class LeadDetailTextIconRow extends StatelessWidget {
       children: [
         Icon(icon, color: Colors.grey, size: AppSizes.s20),
         const SizedBox(width: AppSizes.s8),
-        Text(text),
+        Expanded(
+          child: Text(
+            text,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
       ],
     );
   }
