@@ -1,23 +1,9 @@
 {
-  "sopno398628": {
-    "eventId": "sopno398628",
-    "title": "Sign & Print Norway",
-    "image": "SIPP-no-logo",
-    "startDate": "2023/02/07 06:00",
-    "endDate": "2023/02/10 23:59"
-  },
   "sopse295842": {
     "eventId": "sopse295842",
     "title": "Sign & Print Scandinavia",
     "image": "SOPSE-Logo-White",
-    "startDate": "2022/09/19 06:00",
-    "endDate": "2022/09/21 23:59"
-  },
-  "sopdk730956": {
-    "eventId": "sopdk730956",
-    "title": "Sign Print & Pack Denmark",
-    "image": "SOPDK-Logo-white",
-    "startDate": "2022/09/14 06:00",
-    "endDate": "2022/09/15 23:59"
+    "startDate": "2023/09/19 06:00",
+    "endDate": "2023/09/21 23:59"
   }
 }
