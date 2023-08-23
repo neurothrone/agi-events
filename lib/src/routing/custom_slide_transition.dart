@@ -2,12 +2,16 @@ import 'package:flutter/material.dart';
 
 import 'package:go_router/go_router.dart';
 
+import '../core/constants/constants.dart';
+
 class CustomSlideTransition extends CustomTransitionPage<void> {
   CustomSlideTransition({
     super.key,
     required super.child,
   }) : super(
-          transitionDuration: const Duration(milliseconds: 300),
+          transitionDuration: const Duration(
+            milliseconds: AppConstants.animationDuration,
+          ),
           transitionsBuilder: (_, animation, __, child) {
             return SlideTransition(
               position: animation.drive(
