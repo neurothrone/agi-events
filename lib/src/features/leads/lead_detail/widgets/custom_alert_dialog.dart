@@ -37,6 +37,7 @@ class CustomAlertDialog extends StatelessWidget {
     return AlertDialog(
       backgroundColor: backgroundColor,
       surfaceTintColor: backgroundColor,
+      shadowColor: backgroundColor,
       elevation: AppDimensions.elevation,
       title: Text(
         title,
