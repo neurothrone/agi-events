@@ -88,7 +88,7 @@ class _QrScannerSheetState extends State<QrScannerSheet> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppConstants.lighterBlack,
-      appBar: widget.showAppBar
+      appBar: widget.showAppBar && !_showPlaceholder
           ? AppBar(
               automaticallyImplyLeading: false,
               centerTitle: true,
