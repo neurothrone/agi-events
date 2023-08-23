@@ -22,6 +22,9 @@ class AppConstants {
   /// be allowed to take before timing out
   static const int timeoutSeconds = 5;
 
+  /// Animation duration (in milliseconds)
+  static const int animationDuration = 300;
+
   // endregion
 
   // region Colors
