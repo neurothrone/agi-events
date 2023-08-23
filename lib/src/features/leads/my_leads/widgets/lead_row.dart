@@ -7,6 +7,8 @@ import '../../../../core/models/models.dart';
 import '../../../../core/utils/utils.dart';
 import '../../../../routing/routing.dart';
 
+const int kRowTextMaxLength = 20;
+
 class LeadRow extends StatelessWidget {
   const LeadRow({
     super.key,
@@ -33,12 +35,16 @@ class LeadRow extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        lead.fullName,
+                        lead.fullName.length > kRowTextMaxLength
+                            ? "${lead.fullName.substring(0, kRowTextMaxLength)}..."
+                            : lead.fullName,
                         style: const TextStyle(fontSize: 18.0),
                       ),
                       const SizedBox(height: AppSizes.s2),
                       Text(
-                        lead.company,
+                        lead.company.length > kRowTextMaxLength
+                            ? "${lead.company.substring(0, kRowTextMaxLength)}..."
+                            : lead.company,
                         style: const TextStyle(
                           color: Colors.grey,
                           fontSize: 17.0,
