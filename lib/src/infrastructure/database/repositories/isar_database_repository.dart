@@ -90,7 +90,7 @@ class IsarDatabaseRepository implements DatabaseRepository {
     final List<LeadIsar> leadIsars = await isar.leadIsars
         .filter()
         .eventIdEqualTo(eventId)
-        .sortByScannedAt()
+        .sortByScannedAtDesc()
         .findAll();
 
     final List<Lead> leads = leadIsars
