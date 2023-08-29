@@ -55,20 +55,6 @@ class CustomTextFormField extends StatelessWidget {
       decoration: InputDecoration(
         filled: filled,
         alignLabelWithHint: true,
-        enabledBorder: OutlineInputBorder(
-          borderSide: const BorderSide(
-            color: Colors.grey,
-            width: 1.0,
-          ),
-          borderRadius: BorderRadius.circular(AppDimensions.elevation),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: primaryColor ?? AppConstants.primaryBlueLightest,
-            width: 1.5,
-          ),
-          borderRadius: BorderRadius.circular(AppDimensions.elevation),
-        ),
         labelText: isRequired ? "$labelText*" : labelText,
         labelStyle: const TextStyle(
           color: Colors.grey,
@@ -84,6 +70,20 @@ class CustomTextFormField extends StatelessWidget {
           color: primaryColor ?? AppConstants.primaryBlueLightest,
           fontSize: 20.0,
           fontWeight: FontWeight.bold,
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: const BorderSide(
+            color: Colors.grey,
+            width: 1.0,
+          ),
+          borderRadius: BorderRadius.circular(AppDimensions.elevation),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: primaryColor ?? AppConstants.primaryBlueLightest,
+            width: 1.5,
+          ),
+          borderRadius: BorderRadius.circular(AppDimensions.elevation),
         ),
       ),
     );
