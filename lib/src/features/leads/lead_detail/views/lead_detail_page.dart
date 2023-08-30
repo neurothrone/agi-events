@@ -240,7 +240,6 @@ class _LeadDetailPageState extends State<LeadDetailPage> {
                         ),
                         const SizedBox(height: AppSizes.s20),
                         CustomTextFormField(
-                          onFieldSubmitted: (_) {},
                           controller: _notesController,
                           focusNode: _notesNode,
                           labelText: "Notes",
