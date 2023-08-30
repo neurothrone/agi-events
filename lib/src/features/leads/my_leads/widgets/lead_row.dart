@@ -6,8 +6,7 @@ import '../../../../core/constants/constants.dart';
 import '../../../../core/models/models.dart';
 import '../../../../core/utils/utils.dart';
 import '../../../../routing/routing.dart';
-
-const int kRowTextMaxLength = 20;
+import 'lead_text_icon_row.dart';
 
 class LeadRow extends StatelessWidget {
   const LeadRow({
@@ -20,49 +19,49 @@ class LeadRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         InkWell(
           onTap: () => context.pushNamed(
             AppRoute.leadDetail.name,
             extra: lead,
           ),
-          child: Column(
+          child: Row(
             children: [
-              const SizedBox(height: AppSizes.s10),
-              Row(
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        lead.fullName.length > kRowTextMaxLength
-                            ? "${lead.fullName.substring(0, kRowTextMaxLength)}..."
-                            : lead.fullName,
-                        style: const TextStyle(fontSize: 18.0),
-                      ),
-                      const SizedBox(height: AppSizes.s2),
-                      Text(
-                        lead.company.length > kRowTextMaxLength
-                            ? "${lead.company.substring(0, kRowTextMaxLength)}..."
-                            : lead.company,
-                        style: const TextStyle(
-                          color: Colors.grey,
-                          fontSize: 17.0,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const Spacer(),
-                  Text(
-                    lead.scannedAt.formatted,
-                    style: const TextStyle(
-                      color: Colors.grey,
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: AppSizes.s10),
+                    LeadTextIconRow(
+                      text: lead.fullName,
+                      icon: Icons.person_rounded,
+                      textColor: Colors.white,
+                      fontSize: 18.0,
+                    ),
+                    const SizedBox(height: AppSizes.s4),
+                    LeadTextIconRow(
+                      text: lead.company,
+                      icon: Icons.business_rounded,
+                      textColor: Colors.white70,
+                      fontSize: 17.0,
+                    ),
+                    const SizedBox(height: AppSizes.s4),
+                    LeadTextIconRow(
+                      text: lead.scannedAt.formatted,
+                      icon: Icons.access_time_rounded,
+                      textColor: Colors.white54,
                       fontSize: 16.0,
                     ),
-                  ),
-                ],
+                    const SizedBox(height: AppSizes.s10),
+                  ],
+                ),
               ),
-              const SizedBox(height: AppSizes.s10),
+              const SizedBox(width: AppSizes.s20),
+              const Icon(
+                Icons.chevron_right_rounded,
+                color: Colors.grey,
+              ),
             ],
           ),
         ),
