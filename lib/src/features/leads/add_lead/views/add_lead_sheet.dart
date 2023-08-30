@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import '../../../../core/constants/constants.dart';
@@ -26,6 +28,9 @@ class AddLeadSheet extends StatelessWidget {
             const Divider(color: AppConstants.primaryBlue),
             Expanded(
               child: ListView(
+                keyboardDismissBehavior: Platform.isIOS
+                    ? ScrollViewKeyboardDismissBehavior.onDrag
+                    : ScrollViewKeyboardDismissBehavior.manual,
                 children: [
                   const SizedBox(height: AppSizes.s10),
                   AddLeadForm(event: event),
