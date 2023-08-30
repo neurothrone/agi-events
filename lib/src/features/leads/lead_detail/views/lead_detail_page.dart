@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -193,6 +195,9 @@ class _LeadDetailPageState extends State<LeadDetailPage> {
         child: LayoutBuilder(
           builder: (context, BoxConstraints viewportConstraints) {
             return SingleChildScrollView(
+              keyboardDismissBehavior: Platform.isIOS
+                  ? ScrollViewKeyboardDismissBehavior.onDrag
+                  : ScrollViewKeyboardDismissBehavior.manual,
               child: ConstrainedBox(
                 constraints: BoxConstraints(
                   minHeight: viewportConstraints.maxHeight,
@@ -235,15 +240,13 @@ class _LeadDetailPageState extends State<LeadDetailPage> {
                         ),
                         const SizedBox(height: AppSizes.s20),
                         CustomTextFormField(
-                          onFieldSubmitted: (_) {
-                            _notesNode.unfocus();
-                          },
+                          onFieldSubmitted: (_) {},
                           controller: _notesController,
                           focusNode: _notesNode,
                           labelText: "Notes",
                           hintText: "Enter your notes here...",
-                          textInputAction: TextInputAction.done,
                           maxLines: 10,
+                          keyboardType: TextInputType.multiline,
                           isRequired: false,
                         ),
                         const SizedBox(height: AppSizes.s40),
