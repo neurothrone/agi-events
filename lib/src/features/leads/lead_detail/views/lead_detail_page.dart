@@ -153,9 +153,8 @@ class _LeadDetailPageState extends State<LeadDetailPage> {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return CustomAlertDialog(
-          title: "Delete Lead",
-          content: "This will delete your Lead from the database. "
-              "Are you sure?",
+          title: "Are you sure?",
+          content: "Do you really want to delete this lead?",
           backgroundColor: AppConstants.lighterBlack,
           cancelText: "Cancel",
           confirmText: "Delete",
