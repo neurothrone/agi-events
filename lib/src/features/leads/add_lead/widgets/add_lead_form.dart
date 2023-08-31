@@ -101,28 +101,44 @@ class _AddLeadFormState extends State<AddLeadForm> {
 
   void _addFormValidationListeners() {
     _firstNameController.addListener(() {
-      _isFormValid.value = _isAllRequiredInputValid();
+      _isFormValid.value = _isAnyInputValid();
     });
     _lastNameController.addListener(() {
-      _isFormValid.value = _isAllRequiredInputValid();
+      _isFormValid.value = _isAnyInputValid();
     });
     _companyController.addListener(() {
-      _isFormValid.value = _isAllRequiredInputValid();
+      _isFormValid.value = _isAnyInputValid();
     });
     _emailController.addListener(() {
-      _isFormValid.value = _isAllRequiredInputValid();
+      _isFormValid.value = _isAnyInputValid();
+    });
+    _phoneController.addListener(() {
+      _isFormValid.value = _isAnyInputValid();
+    });
+    _addressController.addListener(() {
+      _isFormValid.value = _isAnyInputValid();
+    });
+    _zipCodeController.addListener(() {
+      _isFormValid.value = _isAnyInputValid();
+    });
+    _cityController.addListener(() {
+      _isFormValid.value = _isAnyInputValid();
     });
   }
 
-  bool _isAllRequiredInputValid() {
-    final isFormNotValid = [
-      _firstNameController.text.isEmpty,
-      _lastNameController.text.isEmpty,
-      _companyController.text.isEmpty,
-      _emailController.text.isEmpty,
-    ].any((isNotValid) => isNotValid);
+  bool _isAnyInputValid() {
+    final isFormValid = [
+      _firstNameController.text.isNotEmpty,
+      _lastNameController.text.isNotEmpty,
+      _companyController.text.isNotEmpty,
+      _emailController.text.isNotEmpty,
+      _phoneController.text.isNotEmpty,
+      _addressController.text.isNotEmpty,
+      _zipCodeController.text.isNotEmpty,
+      _cityController.text.isNotEmpty,
+    ].any((isValid) => isValid);
 
-    return !isFormNotValid;
+    return isFormValid;
   }
 
   Future<void> _addLead(WidgetRef ref) async {
@@ -178,6 +194,7 @@ class _AddLeadFormState extends State<AddLeadForm> {
             labelText: "First Name",
             hintText: "Enter first name",
             textInputAction: TextInputAction.next,
+            isRequired: false,
             fieldKey: const Key("firstNameField"),
           ),
           const SizedBox(height: AppSizes.s20),
@@ -190,6 +207,7 @@ class _AddLeadFormState extends State<AddLeadForm> {
             labelText: "Last Name",
             hintText: "Enter last name",
             textInputAction: TextInputAction.next,
+            isRequired: false,
             fieldKey: const Key("lastNameField"),
           ),
           const SizedBox(height: AppSizes.s20),
@@ -202,6 +220,7 @@ class _AddLeadFormState extends State<AddLeadForm> {
             labelText: "Company",
             hintText: "Enter company",
             textInputAction: TextInputAction.next,
+            isRequired: false,
             fieldKey: const Key("companyField"),
           ),
           const SizedBox(height: AppSizes.s20),
@@ -216,6 +235,7 @@ class _AddLeadFormState extends State<AddLeadForm> {
             keyboardType: TextInputType.emailAddress,
             textCapitalization: TextCapitalization.none,
             textInputAction: TextInputAction.next,
+            isRequired: false,
             fieldKey: const Key("emailField"),
           ),
           const SizedBox(height: AppSizes.s20),
