@@ -11,8 +11,10 @@ class CustomAlertDialog extends StatelessWidget {
     required this.backgroundColor,
     required this.cancelText,
     required this.confirmText,
-    required this.cancelColor,
-    required this.confirmColor,
+    this.cancelForegroundColor = Colors.white,
+    this.confirmForegroundColor = Colors.white,
+    required this.cancelBackgroundColor,
+    required this.confirmBackgroundColor,
     this.isCancelProminent = false,
     this.isConfirmProminent = false,
     required this.onCancel,
@@ -25,8 +27,10 @@ class CustomAlertDialog extends StatelessWidget {
 
   final String cancelText;
   final String confirmText;
-  final Color cancelColor;
-  final Color confirmColor;
+  final Color cancelForegroundColor;
+  final Color confirmForegroundColor;
+  final Color cancelBackgroundColor;
+  final Color confirmBackgroundColor;
   final bool isCancelProminent;
   final bool isConfirmProminent;
   final VoidCallback onCancel;
@@ -64,8 +68,8 @@ class CustomAlertDialog extends StatelessWidget {
                   Navigator.pop(context);
                 },
                 text: cancelText,
-                backgroundColor: cancelColor,
-                foregroundColor: Colors.white,
+                backgroundColor: cancelBackgroundColor,
+                foregroundColor: cancelForegroundColor,
                 isTextProminent: isCancelProminent,
               ),
             ),
@@ -77,8 +81,8 @@ class CustomAlertDialog extends StatelessWidget {
                   Navigator.pop(context);
                 },
                 text: confirmText,
-                backgroundColor: confirmColor,
-                foregroundColor: Colors.white,
+                backgroundColor: confirmBackgroundColor,
+                foregroundColor: confirmForegroundColor,
                 isTextProminent: isConfirmProminent,
               ),
             ),
