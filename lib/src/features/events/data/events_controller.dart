@@ -115,11 +115,12 @@ class EventsController extends StateNotifier<AsyncValue<List<Event>>> {
 
   // region Exhibitor & Event Management on Scan
 
-  Future<void> addEventByExhibitorId({
+  Future<Event?> addEventByExhibitorId({
     required String exhibitorId,
     required Event event,
     Function(String)? onError,
   }) async {
+    Event? newEvent;
     String? errorMessage;
     RawExhibitorData? exhibitor;
 
@@ -142,23 +143,28 @@ class EventsController extends StateNotifier<AsyncValue<List<Event>>> {
     }
 
     if (exhibitor != null) {
-      await _addEventToYourEvents(event);
-      return;
+      newEvent = await _addEventToYourEvents(event);
+      return newEvent;
     }
 
     if (onError != null) {
       onError(errorMessage ?? "You have not registered for this Event.");
     }
+
+    return null;
   }
 
-  Future<void> _addEventToYourEvents(Event event) async {
+  Future<Event?> _addEventToYourEvents(Event event) async {
     final Event newEvent = event.copyWith(saved: true);
     _replaceOldEventWithUpdatedEvent(newEvent);
 
     final bool hasSavedEvent = await _saveEventToDatabase(newEvent);
     if (hasSavedEvent) {
       _replaceOldEventWithUpdatedEvent(newEvent);
+      return newEvent;
     }
+
+    return null;
   }
 
   Future<bool> _saveEventToDatabase(Event event) async {
