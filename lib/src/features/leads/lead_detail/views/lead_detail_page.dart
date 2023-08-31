@@ -200,7 +200,7 @@ class _LeadDetailPageState extends State<LeadDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    final scaffold = Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(kToolbarHeight),
         child: Consumer(
@@ -295,6 +295,22 @@ class _LeadDetailPageState extends State<LeadDetailPage> {
         ),
       ),
     );
+
+    if (Platform.isAndroid) {
+      return Consumer(
+        builder: (_, ref, __) {
+          return WillPopScope(
+            onWillPop: () async {
+              _onBackPressed(ref);
+              return true;
+            },
+            child: scaffold,
+          );
+        },
+      );
+    }
+
+    return scaffold;
   }
 
 // endregion
