@@ -256,8 +256,8 @@ class _LeadDetailPageState extends State<LeadDetailPage> {
                               alignment: Alignment.center,
                               child: LeadDeleteButton(
                                 onPressed: () => _onDelete(ref),
-                                label: "Delete Lead",
-                                width: MediaQuery.sizeOf(context).width * 0.6,
+                                label: "Delete",
+                                width: MediaQuery.sizeOf(context).width * 0.4,
                                 height: AppSizes.s48,
                               ),
                             );
