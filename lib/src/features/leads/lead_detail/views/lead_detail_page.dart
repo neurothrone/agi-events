@@ -79,16 +79,6 @@ class _LeadDetailPageState extends State<LeadDetailPage> {
     super.dispose();
   }
 
-  Future<void> _saveChanges(WidgetRef ref) async {
-    await ref.read(leadsControllerProvider.notifier).updateLeadNotes(
-          widget.lead.copyWith(
-            product: _productController.text,
-            seller: _sellerController.text,
-            notes: _notesController.text,
-          ),
-        );
-  }
-
   bool _hasUnsavedChanges() {
     final String product = widget.lead.product ?? "";
     final String seller = widget.lead.seller ?? "";
@@ -145,7 +135,22 @@ class _LeadDetailPageState extends State<LeadDetailPage> {
     Navigator.of(context).pop();
   }
 
-  Future<void> _onDelete(WidgetRef ref) async {
+  Future<void> _saveChanges(WidgetRef ref) async {
+    await ref.read(leadsControllerProvider.notifier).updateLeadNotes(
+          widget.lead.copyWith(
+            product: _productController.text,
+            seller: _sellerController.text,
+            notes: _notesController.text,
+          ),
+        );
+  }
+
+  Future<void> _onBackPressed(WidgetRef ref) async {
+    _saveChanges(ref);
+    Navigator.of(context).pop();
+  }
+
+  Future<void> _onDeletePressed(WidgetRef ref) async {
     final navigator = Navigator.of(context);
 
     await showDialog(
@@ -185,8 +190,8 @@ class _LeadDetailPageState extends State<LeadDetailPage> {
         child: Consumer(
           builder: (_, ref, __) {
             return LeadDetailPageAppBar(
-              onCancel: () => _onCancelSaveChanges(ref),
-              onSave: () => _onConfirmSaveChanges(ref),
+              onBackPressed: () => _onBackPressed(ref),
+              onDeletePressed: () => _onDeletePressed(ref),
             );
           },
         ),
@@ -248,21 +253,21 @@ class _LeadDetailPageState extends State<LeadDetailPage> {
                           keyboardType: TextInputType.multiline,
                           isRequired: false,
                         ),
-                        const SizedBox(height: AppSizes.s40),
-                        const Spacer(),
-                        Consumer(
-                          builder: (context, ref, __) {
-                            return Align(
-                              alignment: Alignment.center,
-                              child: LeadDeleteButton(
-                                onPressed: () => _onDelete(ref),
-                                label: "Delete",
-                                width: MediaQuery.sizeOf(context).width * 0.4,
-                                height: AppSizes.s48,
-                              ),
-                            );
-                          },
-                        ),
+                        // const SizedBox(height: AppSizes.s40),
+                        // const Spacer(),
+                        // Consumer(
+                        //   builder: (context, ref, __) {
+                        //     return Align(
+                        //       alignment: Alignment.center,
+                        //       child: LeadDeleteButton(
+                        //         onPressed: () => _onDeletePressed(ref),
+                        //         label: "Delete",
+                        //         width: MediaQuery.sizeOf(context).width * 0.4,
+                        //         height: AppSizes.s48,
+                        //       ),
+                        //     );
+                        //   },
+                        // ),
                       ],
                     ),
                   ),

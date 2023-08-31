@@ -8,32 +8,23 @@ import '../../../../core/widgets/widgets.dart';
 class LeadDetailPageAppBar extends StatelessWidget {
   const LeadDetailPageAppBar({
     super.key,
-    required this.onCancel,
-    this.onSave,
+    required this.onBackPressed,
+    required this.onDeletePressed,
   });
 
-  final VoidCallback onCancel;
-  final VoidCallback? onSave;
+  final VoidCallback onBackPressed;
+  final VoidCallback onDeletePressed;
 
   @override
   Widget build(BuildContext context) {
     return Platform.isIOS
         ? CustomCupertinoAppBar(
-            onBackButtonPressed: onCancel,
+            onBackButtonPressed: onBackPressed,
             title: "Lead",
-            trailing: TextButton(
-              onPressed: onSave,
-              child: Text(
-                "Save",
-                style: TextStyle(
-                  fontSize: 18.0,
-                  color: AppConstants.primaryBlueLightest,
-                ),
-              ),
-            ),
+            trailing: LeadDetailAppBarDeleteButton(onPressed: onDeletePressed),
           )
         : AppBar(
-            leading: BackButton(onPressed: onCancel),
+            leading: BackButton(onPressed: onBackPressed),
             centerTitle: true,
             title: const Text(
               "Lead",
@@ -44,17 +35,31 @@ class LeadDetailPageAppBar extends StatelessWidget {
               ),
             ),
             actions: [
-              TextButton(
-                onPressed: onSave,
-                child: Text(
-                  "Save",
-                  style: TextStyle(
-                    fontSize: 18.0,
-                    color: AppConstants.primaryBlueLightest,
-                  ),
-                ),
-              ),
+              LeadDetailAppBarDeleteButton(onPressed: onDeletePressed),
             ],
           );
+  }
+}
+
+class LeadDetailAppBarDeleteButton extends StatelessWidget {
+  const LeadDetailAppBarDeleteButton({
+    super.key,
+    required this.onPressed,
+  });
+
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: onPressed,
+      child: const Text(
+        "Delete",
+        style: TextStyle(
+          fontSize: 18.0,
+          color: AppConstants.destructive,
+        ),
+      ),
+    );
   }
 }
