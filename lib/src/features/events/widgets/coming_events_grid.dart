@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../core/models/models.dart';
 import '../../../core/utils/enums/enums.dart';
 import '../../../core/utils/utils.dart';
 import '../../../core/widgets/widgets.dart';
+import '../../../routing/routing.dart';
 import '../../qr_scan/data/qr_scan_controller.dart';
 import '../data/events_controller.dart';
 import 'coming_events_placeholder.dart';
@@ -46,15 +48,20 @@ class ComingEventsGrid extends ConsumerWidget {
     required BuildContext context,
     required WidgetRef ref,
   }) async {
-    await ref.read(eventsControllerProvider.notifier).addEventByExhibitorId(
-        exhibitorId: exhibitorId,
-        event: event,
-        onError: (String message) {
-          showSnackbar(
-            message: message,
-            context: context,
-          );
-        });
+    final Event? newEvent =
+        await ref.read(eventsControllerProvider.notifier).addEventByExhibitorId(
+            exhibitorId: exhibitorId,
+            event: event,
+            onError: (String message) {
+              showSnackbar(
+                message: message,
+                context: context,
+              );
+            });
+
+    if (newEvent != null && context.mounted) {
+      context.pushNamed(AppRoute.leads.name, extra: newEvent);
+    }
   }
 
   @override
