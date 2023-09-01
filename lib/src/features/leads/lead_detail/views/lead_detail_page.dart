@@ -8,7 +8,6 @@ import '../../../../core/constants/constants.dart';
 import '../../../../core/models/models.dart';
 import '../../../../core/widgets/widgets.dart';
 import '../../shared/data/leads_controller.dart';
-import '../widgets/lead_delete_button.dart';
 import '../widgets/contact_information.dart';
 import '../widgets/lead_detail_header_text.dart';
 import '../widgets/lead_detail_page_app_bar.dart';
@@ -77,62 +76,6 @@ class _LeadDetailPageState extends State<LeadDetailPage> {
     _disposeOfControllers();
     _disposeOfNodes();
     super.dispose();
-  }
-
-  bool _hasUnsavedChanges() {
-    final String product = widget.lead.product ?? "";
-    final String seller = widget.lead.seller ?? "";
-    final String leadNotes = widget.lead.notes ?? "";
-
-    return [
-      product != _productController.text,
-      seller != _sellerController.text,
-      leadNotes != _notesController.text,
-    ].any((unsavedChange) => unsavedChange);
-  }
-
-  Future<void> _onCancelSaveChanges(WidgetRef ref) async {
-    FocusScopeNode currentFocus = FocusScope.of(context);
-
-    final navigator = Navigator.of(context);
-
-    // Temporarily disable the text field's focus when the dialog appears
-    if (!currentFocus.hasPrimaryFocus) {
-      currentFocus.unfocus();
-    }
-
-    final showUnsavedChangesDialog = _hasUnsavedChanges();
-    if (showUnsavedChangesDialog) {
-      await showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return CustomAlertDialog(
-            title: "You have unsaved changes",
-            content: "Do you want to save them?",
-            backgroundColor: AppConstants.lighterBlack,
-            cancelText: "Discard",
-            confirmText: "Save",
-            cancelBackgroundColor: AppConstants.destructive,
-            confirmBackgroundColor: AppConstants.primaryBlue,
-            isConfirmProminent: true,
-            onCancel: () {
-              // Do nothing
-            },
-            onConfirm: () {
-              _saveChanges(ref);
-            },
-          );
-        },
-      );
-    }
-
-    navigator.pop();
-  }
-
-  Future<void> _onConfirmSaveChanges(WidgetRef ref) async {
-    _saveChanges(ref);
-    Navigator.of(context).pop();
   }
 
   Future<void> _saveChanges(WidgetRef ref) async {
