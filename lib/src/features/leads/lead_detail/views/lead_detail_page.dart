@@ -37,8 +37,6 @@ class _LeadDetailPageState extends State<LeadDetailPage> {
   late FocusNode _sellerNode;
   late FocusNode _notesNode;
 
-  final ScrollController _scrollController = ScrollController();
-
   // endregion
 
   // region Methods
@@ -48,8 +46,6 @@ class _LeadDetailPageState extends State<LeadDetailPage> {
     super.initState();
     _initControllers();
     _initNodes();
-
-    _notesNode.addListener(_scrollToNotesField);
   }
 
   void _initControllers() {
@@ -78,21 +74,9 @@ class _LeadDetailPageState extends State<LeadDetailPage> {
 
   @override
   void dispose() {
-    _notesNode.removeListener(_scrollToNotesField);
-    _scrollController.dispose();
     _disposeOfControllers();
     _disposeOfNodes();
     super.dispose();
-  }
-
-  void _scrollToNotesField() {
-    if (!_notesNode.hasFocus) return;
-
-    _scrollController.animateTo(
-      _scrollController.position.maxScrollExtent,
-      duration: const Duration(milliseconds: AppConstants.animationDuration),
-      curve: Curves.ease,
-    );
   }
 
   bool _hasUnsavedChanges() {
@@ -216,7 +200,7 @@ class _LeadDetailPageState extends State<LeadDetailPage> {
         child: LayoutBuilder(
           builder: (context, BoxConstraints viewportConstraints) {
             return SingleChildScrollView(
-              controller: _scrollController,
+              reverse: true,
               keyboardDismissBehavior: Platform.isIOS
                   ? ScrollViewKeyboardDismissBehavior.onDrag
                   : ScrollViewKeyboardDismissBehavior.manual,
@@ -269,6 +253,9 @@ class _LeadDetailPageState extends State<LeadDetailPage> {
                           maxLines: 10,
                           keyboardType: TextInputType.multiline,
                           isRequired: false,
+                          // scrollPadding: EdgeInsets.symmetric(
+                          //   vertical: MediaQuery.viewInsetsOf(context).bottom,
+                          // ),
                         ),
                         // const SizedBox(height: AppSizes.s40),
                         // const Spacer(),
