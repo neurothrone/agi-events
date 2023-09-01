@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/constants/constants.dart';
@@ -51,15 +52,13 @@ class LeadDetailAppBarDeleteButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(
+    return IconButton(
       onPressed: onPressed,
-      child: const Text(
-        "Delete",
-        style: TextStyle(
-          fontSize: 18.0,
-          color: AppConstants.destructive,
-        ),
+      icon: Icon(
+        Platform.isIOS ? CupertinoIcons.trash : Icons.delete,
+        size: 24.0,
       ),
+      color: AppConstants.primaryBlueLighter,
     );
   }
 }
