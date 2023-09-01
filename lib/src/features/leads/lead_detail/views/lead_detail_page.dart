@@ -37,6 +37,8 @@ class _LeadDetailPageState extends State<LeadDetailPage> {
   late FocusNode _sellerNode;
   late FocusNode _notesNode;
 
+  final ScrollController _scrollController = ScrollController();
+
   // endregion
 
   // region Methods
@@ -46,6 +48,8 @@ class _LeadDetailPageState extends State<LeadDetailPage> {
     super.initState();
     _initControllers();
     _initNodes();
+
+    _notesNode.addListener(_scrollToNotesField);
   }
 
   void _initControllers() {
@@ -74,19 +78,21 @@ class _LeadDetailPageState extends State<LeadDetailPage> {
 
   @override
   void dispose() {
+    _notesNode.removeListener(_scrollToNotesField);
+    _scrollController.dispose();
     _disposeOfControllers();
     _disposeOfNodes();
     super.dispose();
   }
 
-  Future<void> _saveChanges(WidgetRef ref) async {
-    await ref.read(leadsControllerProvider.notifier).updateLeadNotes(
-          widget.lead.copyWith(
-            product: _productController.text,
-            seller: _sellerController.text,
-            notes: _notesController.text,
-          ),
-        );
+  void _scrollToNotesField() {
+    if (!_notesNode.hasFocus) return;
+
+    _scrollController.animateTo(
+      _scrollController.position.maxScrollExtent,
+      duration: const Duration(milliseconds: AppConstants.animationDuration),
+      curve: Curves.ease,
+    );
   }
 
   bool _hasUnsavedChanges() {
@@ -123,8 +129,8 @@ class _LeadDetailPageState extends State<LeadDetailPage> {
             backgroundColor: AppConstants.lighterBlack,
             cancelText: "Discard",
             confirmText: "Save",
-            cancelColor: AppConstants.destructive,
-            confirmColor: AppConstants.primaryBlue,
+            cancelBackgroundColor: AppConstants.destructive,
+            confirmBackgroundColor: AppConstants.primaryBlue,
             isConfirmProminent: true,
             onCancel: () {
               // Do nothing
@@ -145,7 +151,22 @@ class _LeadDetailPageState extends State<LeadDetailPage> {
     Navigator.of(context).pop();
   }
 
-  Future<void> _onDelete(WidgetRef ref) async {
+  Future<void> _saveChanges(WidgetRef ref) async {
+    await ref.read(leadsControllerProvider.notifier).updateLeadNotes(
+          widget.lead.copyWith(
+            product: _productController.text,
+            seller: _sellerController.text,
+            notes: _notesController.text,
+          ),
+        );
+  }
+
+  Future<void> _onBackPressed(WidgetRef ref) async {
+    _saveChanges(ref);
+    Navigator.of(context).pop();
+  }
+
+  Future<void> _onDeletePressed(WidgetRef ref) async {
     final navigator = Navigator.of(context);
 
     await showDialog(
@@ -153,14 +174,14 @@ class _LeadDetailPageState extends State<LeadDetailPage> {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return CustomAlertDialog(
-          title: "Delete Lead",
-          content: "This will delete your Lead from the database. "
-              "Are you sure?",
+          title: "Are you sure?",
+          content: "Do you really want to delete this lead?",
           backgroundColor: AppConstants.lighterBlack,
           cancelText: "Cancel",
           confirmText: "Delete",
-          cancelColor: AppConstants.primaryBlue,
-          confirmColor: AppConstants.destructive,
+          cancelForegroundColor: Colors.grey.shade900,
+          cancelBackgroundColor: Colors.grey,
+          confirmBackgroundColor: AppConstants.destructive,
           isCancelProminent: true,
           onCancel: () {},
           onConfirm: () {
@@ -179,14 +200,14 @@ class _LeadDetailPageState extends State<LeadDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    final scaffold = Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(kToolbarHeight),
         child: Consumer(
           builder: (_, ref, __) {
             return LeadDetailPageAppBar(
-              onCancel: () => _onCancelSaveChanges(ref),
-              onSave: () => _onConfirmSaveChanges(ref),
+              onBackPressed: () => _onBackPressed(ref),
+              onDeletePressed: () => _onDeletePressed(ref),
             );
           },
         ),
@@ -195,6 +216,7 @@ class _LeadDetailPageState extends State<LeadDetailPage> {
         child: LayoutBuilder(
           builder: (context, BoxConstraints viewportConstraints) {
             return SingleChildScrollView(
+              controller: _scrollController,
               keyboardDismissBehavior: Platform.isIOS
                   ? ScrollViewKeyboardDismissBehavior.onDrag
                   : ScrollViewKeyboardDismissBehavior.manual,
@@ -248,21 +270,21 @@ class _LeadDetailPageState extends State<LeadDetailPage> {
                           keyboardType: TextInputType.multiline,
                           isRequired: false,
                         ),
-                        const SizedBox(height: AppSizes.s40),
-                        const Spacer(),
-                        Consumer(
-                          builder: (context, ref, __) {
-                            return Align(
-                              alignment: Alignment.center,
-                              child: LeadDeleteButton(
-                                onPressed: () => _onDelete(ref),
-                                label: "Delete Lead",
-                                width: MediaQuery.sizeOf(context).width * 0.6,
-                                height: AppSizes.s48,
-                              ),
-                            );
-                          },
-                        ),
+                        // const SizedBox(height: AppSizes.s40),
+                        // const Spacer(),
+                        // Consumer(
+                        //   builder: (context, ref, __) {
+                        //     return Align(
+                        //       alignment: Alignment.center,
+                        //       child: LeadDeleteButton(
+                        //         onPressed: () => _onDeletePressed(ref),
+                        //         label: "Delete",
+                        //         width: MediaQuery.sizeOf(context).width * 0.4,
+                        //         height: AppSizes.s48,
+                        //       ),
+                        //     );
+                        //   },
+                        // ),
                       ],
                     ),
                   ),
@@ -273,6 +295,22 @@ class _LeadDetailPageState extends State<LeadDetailPage> {
         ),
       ),
     );
+
+    if (Platform.isAndroid) {
+      return Consumer(
+        builder: (_, ref, __) {
+          return WillPopScope(
+            onWillPop: () async {
+              _onBackPressed(ref);
+              return true;
+            },
+            child: scaffold,
+          );
+        },
+      );
+    }
+
+    return scaffold;
   }
 
 // endregion
