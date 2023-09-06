@@ -18,27 +18,29 @@ class LeadDetailPageAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Platform.isIOS
-        ? CustomCupertinoAppBar(
-            onBackButtonPressed: onBackPressed,
-            title: "Lead",
-            trailing: LeadDetailAppBarDeleteButton(onPressed: onDeletePressed),
-          )
-        : AppBar(
-            leading: BackButton(onPressed: onBackPressed),
-            centerTitle: true,
-            title: const Text(
-              "Lead",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 22.0,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            actions: [
-              LeadDetailAppBarDeleteButton(onPressed: onDeletePressed),
-            ],
-          );
+    return AppBar(
+      leading: IconButton(
+        onPressed: onBackPressed,
+        icon: const Icon(
+          Icons.check,
+          color: Colors.green,
+          size: 30.0,
+        ),
+        tooltip: "Save",
+      ),
+      centerTitle: true,
+      title: const Text(
+        "Lead",
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 22.0,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      actions: [
+        LeadDetailAppBarDeleteButton(onPressed: onDeletePressed),
+      ],
+    );
   }
 }
 
@@ -59,6 +61,7 @@ class LeadDetailAppBarDeleteButton extends StatelessWidget {
         size: 24.0,
       ),
       color: AppConstants.primaryBlueLighter,
+      tooltip: "Delete",
     );
   }
 }
