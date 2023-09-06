@@ -53,6 +53,7 @@ class ShareButton extends ConsumerWidget {
         color: AppConstants.primaryBlueLightest,
         semanticLabel: "Share CSV",
       ),
+      tooltip: "Share CSV",
     );
   }
 }
