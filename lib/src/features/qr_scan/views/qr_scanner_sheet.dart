@@ -1,4 +1,7 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:mobile_scanner/mobile_scanner.dart';
 
@@ -37,11 +40,28 @@ class _QrScannerSheetState extends State<QrScannerSheet> {
   void initState() {
     super.initState();
 
+    // Lock the orientation to portraitUp and landscapeLeft
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
+
     _showPlaceholder = widget.showPlaceholder;
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _loadScanner();
     });
+  }
+
+  @override
+  void dispose() {
+    // Reset the orientation to default (both portrait and landscape)
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+    ]);
+    super.dispose();
   }
 
   void _loadScanner() {
@@ -105,7 +125,12 @@ class _QrScannerSheetState extends State<QrScannerSheet> {
           ? InactiveQrScannerContent(onStartScanner: _openScanner)
           : _scanner == null || _isLoading
               ? const CenteredProgressIndicator()
-              : _scanner,
+              : ClipRect(
+                  child: Transform.rotate(
+                    angle: 0.0,
+                    child: _scanner,
+                  ),
+                ),
     );
   }
 }
