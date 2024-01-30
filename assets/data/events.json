@@ -5,5 +5,12 @@
     "image": "SOPSE-Logo-White",
     "startDate": "2023/09/19 06:00",
     "endDate": "2023/09/21 23:59"
+  },
+  "sopdk793058": {
+    "eventId": "sopdk793058",
+    "title": "Sign Print & Pack",
+    "image": "SOPDK-Logo-White",
+    "startDate": "2024/09/18 06:00",
+    "endDate": "2024/09/19 23:59"
   }
 }
