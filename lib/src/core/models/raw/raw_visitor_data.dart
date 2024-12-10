@@ -29,8 +29,8 @@ final class RawVisitorData extends RawUserData {
         map.containsKey("countryCode") ? map["countryCode"] as String : "";
     final position =
         map.containsKey("position") ? map["position"] as String : "";
-    final address = map.containsKey("address") ? map["address"] as String : "";
-    final zipCode = map.containsKey("zipCode") ? map["zipCode"] as String : "";
+    final address = map.containsKey("addressField") ? map["addressField"] as String : "";
+    final zipCode = map.containsKey("zipcode") ? map["zipcode"] as String : "";
     final city = map.containsKey("city") ? map["city"] as String : "";
 
     return RawVisitorData(
